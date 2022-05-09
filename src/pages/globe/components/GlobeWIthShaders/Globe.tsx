@@ -1,18 +1,15 @@
 import { Sphere, useTexture } from "@react-three/drei";
 import React, { useRef } from "react";
-import { AtmosphereMaterial } from "./AtmosphereMaterial/";
+import AtmosphereMaterial from "./materials/Atmosphere/AtmosphereMaterial";
+import GlobeMaterial from "./materials/Globe/GlobeMaterial";
 import * as THREE from "three";
-import { Group, Mesh } from "three";
+import { Mesh } from "three";
 import { useFrame } from "@react-three/fiber";
 import {
   EARTH_RADIUS_KM_EQUATOR,
   EARTH_Y_TO_X_SCALE,
   UNIVERSAL_SCALE,
 } from "./globeConstants";
-import LocationMarker, {
-  LocationMarkerData,
-} from "../LocationMarker/LocationMarker";
-import LocationMarkers from "../LocationMarkers/LocationMarkers";
 
 type Props = {};
 
@@ -22,17 +19,7 @@ const INITIAL_EARTH_ARGS = [
   20000 * UNIVERSAL_SCALE,
 ] as [number, number, number];
 
-const locations: LocationMarkerData[] = [
-  { coords: [23.6345, -102.5528], name: "Mexico City" },
-  { coords: [36.56, -76.17], name: "Home" },
-  { coords: [-22.9068, -43.1729], name: "Rio" },
-  { coords: [20.5937, 76.9629], name: "India" },
-  { coords: [19.8968, -155.5858], name: "Hawaii" },
-  { coords: [1.3521, 109.8198], name: "Singapore" },
-];
-
 const Globe = (props: Props) => {
-  const groupRef = useRef<Group>(null);
   const globeRef = useRef<Mesh>(null);
   const blueGlowRef = useRef<Mesh>(null);
 
@@ -47,22 +34,29 @@ const Globe = (props: Props) => {
   );
 
   useFrame(() => {
-    if (groupRef.current) {
-      groupRef.current.rotation.y += 0.001;
+    if (globeRef.current) {
+      globeRef.current.rotation.y += 0.001;
+      blueGlowRef.current.rotation.y += 0.001;
     }
   });
 
   return (
-    <group name="globe" ref={groupRef}>
+    <group name="globe">
       <Sphere
         args={INITIAL_EARTH_ARGS}
         position={[0, 0, 0]}
         name="globe"
         ref={globeRef}
         scale={[1, EARTH_Y_TO_X_SCALE, 1]}
-        // this initial rotation is required to make the globe texture match the earth's longitude
-        rotation={[0, (-90 / 180) * Math.PI, 0]}
       >
+        {/* @ts-ignore Property 'globeMaterial' does not exist on type 'JSX.IntrinsicElements'. */}
+        {/* <globeMaterial
+          key={GlobeMaterial.key}
+          attach="material"
+          globeTexture={globeTexture.current.map}
+          bumpMap={globeTexture.current.bumpMap}
+          roughnessMap={globeTexture.current.roughnessMap}
+        /> */}
         <meshStandardMaterial
           attach="material"
           {...globeTexture.current}
@@ -99,7 +93,6 @@ const Globe = (props: Props) => {
           side={THREE.BackSide}
         />
       </Sphere>
-      <LocationMarkers locations={locations} globeRef={globeRef} />
     </group>
   );
 };

@@ -3,6 +3,12 @@ import { Canvas } from "@react-three/fiber";
 import React from "react";
 import Camera from "./components/Camera";
 import { Globe } from "./components/Globe";
+import {
+  EARTH_RADIUS_KM_EQUATOR,
+  STARS_DISTANCE,
+  UNIVERSAL_SCALE,
+} from "./components/Globe/globeConstants";
+import LocationMarker from "./components/LocationMarker/LocationMarker";
 
 type Props = {};
 
@@ -21,15 +27,24 @@ const index = (props: Props) => {
         <color attach="background" args={["black"]} />
         <Camera />
         <ambientLight />
-        <pointLight position={[10, 10, 10]} />
+        <pointLight
+          position={[
+            EARTH_RADIUS_KM_EQUATOR * 10,
+            EARTH_RADIUS_KM_EQUATOR * 10,
+            EARTH_RADIUS_KM_EQUATOR * 10,
+          ]}
+        />
         <Globe />
-        <OrbitControls />
+        <OrbitControls
+          maxDistance={STARS_DISTANCE - 100 * UNIVERSAL_SCALE}
+          minDistance={EARTH_RADIUS_KM_EQUATOR + 10 * UNIVERSAL_SCALE}
+        />
         <Stars
-          radius={100}
+          radius={STARS_DISTANCE}
           depth={50}
-          count={5000}
+          count={15000}
           factor={4}
-          saturation={0}
+          saturation={1}
           fade
           speed={1}
         />
