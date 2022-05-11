@@ -1,4 +1,4 @@
-import { Box, OrbitControls, Stars } from "@react-three/drei";
+import { Box, OrbitControls, Sphere, Stars } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import React from "react";
 import Camera from "./components/Camera";
@@ -8,7 +8,7 @@ import {
   STARS_DISTANCE,
   UNIVERSAL_SCALE,
 } from "./components/Globe/globeConstants";
-import LocationMarker from "./components/LocationMarker/LocationMarker";
+import { PointLightExample } from "./components/PointLightExample";
 
 type Props = {};
 
@@ -26,15 +26,17 @@ const index = (props: Props) => {
       <Canvas dpr={[1, 2]}>
         <color attach="background" args={["black"]} />
         <Camera />
-        <ambientLight />
+        <ambientLight intensity={0.25} />
         <pointLight
           position={[
             EARTH_RADIUS_KM_EQUATOR * 10,
             EARTH_RADIUS_KM_EQUATOR * 10,
             EARTH_RADIUS_KM_EQUATOR * 10,
           ]}
+          intensity={0.5}
         />
         <Globe />
+        {false && <PointLightExample />}
         <OrbitControls
           maxDistance={STARS_DISTANCE - 100 * UNIVERSAL_SCALE}
           minDistance={EARTH_RADIUS_KM_EQUATOR + 10 * UNIVERSAL_SCALE}
