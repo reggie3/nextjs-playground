@@ -16,7 +16,7 @@ import LocationMarkers from "../LocationMarkers/LocationMarkers";
 
 type Props = {};
 
-const INITIAL_EARTH_ARGS = [
+export const INITIAL_EARTH_ARGS = [
   EARTH_RADIUS_KM_EQUATOR,
   20000 * UNIVERSAL_SCALE,
   20000 * UNIVERSAL_SCALE,
@@ -24,11 +24,11 @@ const INITIAL_EARTH_ARGS = [
 
 const locations: LocationMarkerData[] = [
   { coords: [23.6345, -102.5528], name: "Mexico City" },
-  { coords: [36.56, -76.17], name: "Home" },
-  { coords: [-22.9068, -43.1729], name: "Rio" },
-  { coords: [20.5937, 76.9629], name: "India" },
-  { coords: [19.8968, -155.5858], name: "Hawaii" },
-  { coords: [1.3521, 109.8198], name: "Singapore" },
+  // { coords: [36.56, -76.17], name: "Home" },
+  // { coords: [-22.9068, -43.1729], name: "Rio" },
+  // { coords: [20.5937, 76.9629], name: "India" },
+  // { coords: [19.8968, -155.5858], name: "Hawaii" },
+  // { coords: [1.3521, 109.8198], name: "Singapore" },
 ];
 
 const Globe = (props: Props) => {
