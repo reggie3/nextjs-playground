@@ -29,6 +29,8 @@ const getPositionFromLatLong = (latitude: number, longitude: number) => {
 };
 
 const MARKER_HEIGHT = 5;
+const MARKER_COLOR = "#3BF7FF";
+const SELECTED_MARKER_COLOR = "#ffcc00";
 
 const LocationMarker = ({ globeRef, locationMarkerData }: Props) => {
   const [markerRef, setMarkerRef] = useState<Mesh>();
@@ -36,9 +38,10 @@ const LocationMarker = ({ globeRef, locationMarkerData }: Props) => {
   const [isInitialized, setIsInitialized] = useState<boolean>(false);
   const [isPointLightInitialized, setIsPointLightInitialized] =
     useState<boolean>(false);
-  const { coords, color = "#3BF7FF", name = "unknown" } = locationMarkerData;
+  const { coords, color = MARKER_COLOR, name = "unknown" } = locationMarkerData;
   const [isPointerOver, setIsPointerOver] = useState<boolean>(false);
   const [isSelected, setIsSelected] = useState<boolean>(false);
+  const initialPointLightVectorRef = useRef<Vector3>();
 
   const delay = useRef<number>(Math.random() + 0.5);
 
@@ -48,7 +51,7 @@ const LocationMarker = ({ globeRef, locationMarkerData }: Props) => {
   );
 
   useEffect(() => {
-    if (markerRef && !isInitialized) {
+    if (markerRef && pointLightRef && !isInitialized) {
       const origin = new Vector3(0, 0, 0);
 
       // move the base of the marker to the surface of the sphere
@@ -56,22 +59,16 @@ const LocationMarker = ({ globeRef, locationMarkerData }: Props) => {
       markerRef.geometry.applyMatrix4(
         new THREE.Matrix4().makeTranslation(0, 0, -MARKER_HEIGHT / 2)
       );
+
+      pointLightRef.lookAt(origin);
+      const markerRefLength = markerRef.position.length();
+      const lightVector = markerRef.position.clone();
+      lightVector.setLength(markerRefLength);
+      pointLightRef.position.copy(lightVector);
+      initialPointLightVectorRef.current = lightVector;
     }
     setIsInitialized(true);
-  }, [isInitialized, markerRef]);
-
-  useEffect(() => {
-    if (pointLightRef && !isPointLightInitialized) {
-      const origin = new Vector3(0, 0, 0);
-
-      // move the base of the marker to the surface of the sphere
-      pointLightRef.lookAt(origin);
-      //   pointLightRef.geometry.applyMatrix4(
-      //     new THREE.Matrix4().makeTranslation(0, 0, -MARKER_HEIGHT / 2)
-      //   );
-    }
-    setIsPointLightInitialized(true);
-  }, [isPointLightInitialized, pointLightRef]);
+  }, [isInitialized, markerRef, pointLightRef]);
 
   useFrame((state) => {
     const { clock } = state;
@@ -79,15 +76,34 @@ const LocationMarker = ({ globeRef, locationMarkerData }: Props) => {
     //console.log(time);
     if (markerRef) {
       markerRef.scale.z = Math.sin(elapsedTime * 2 * delay.current) + 1.1;
+
+      if (isSelected || isPointerOver) {
+        (markerRef.material as Material).opacity = isSelected ? 1 : 0.6;
+        (markerRef.material as Material).color = new THREE.Color(
+          SELECTED_MARKER_COLOR
+        );
+      } else {
+        (markerRef.material as Material).opacity = 0.4;
+        (markerRef.material as Material).color = new THREE.Color(color);
+      }
     }
-    if (isSelected) {
-      (markerRef.material as Material).opacity = 1;
-    } else if (isPointerOver) {
-      (markerRef.material as Material).opacity = 0.6;
-      (markerRef.material as Material).color = new THREE.Color("#ffcc00");
-    } else {
-      (markerRef.material as Material).opacity = 0.4;
-      (markerRef.material as Material).color = new THREE.Color(color);
+
+    if (pointLightRef && initialPointLightVectorRef.current) {
+      const newLightVector = initialPointLightVectorRef.current.clone();
+      newLightVector.setLength(
+        Math.max(
+          initialPointLightVectorRef.current.length(),
+          initialPointLightVectorRef.current.length() +
+            MARKER_HEIGHT * 1.5 * Math.sin(elapsedTime * 2 * delay.current) +
+            1.2
+        )
+      );
+      pointLightRef.position.copy(newLightVector);
+      if (isSelected || isPointerOver) {
+        pointLightRef.color = new THREE.Color(SELECTED_MARKER_COLOR);
+      } else {
+        pointLightRef.color = new THREE.Color(MARKER_COLOR);
+      }
     }
   });
 
@@ -105,13 +121,7 @@ const LocationMarker = ({ globeRef, locationMarkerData }: Props) => {
         onPointerLeave={() => setIsPointerOver(false)}
         onClick={() => setIsSelected(!isSelected)}
       >
-        <meshPhongMaterial
-          color={color}
-          opacity={1}
-          transparent={false}
-          emissive={"#0000ff"}
-          emissiveIntensity={1}
-        />
+        <meshPhongMaterial color={color} opacity={0.25} transparent />
         {isSelected && (
           <LocationMarkerLabel
             globeRef={globeRef}
@@ -119,16 +129,16 @@ const LocationMarker = ({ globeRef, locationMarkerData }: Props) => {
             onClose={onCloseLocationMarker}
           />
         )}
-        <pointLight
-          ref={setPointLightRef}
-          args={["white", 1, 23]}
-          position={position}
-        >
-          <Sphere args={[2, 2, 20]}>
-            <meshBasicMaterial color="green" />
-          </Sphere>
-        </pointLight>
       </Box>
+      <pointLight
+        ref={setPointLightRef}
+        args={[MARKER_COLOR, 1, 100]}
+        position={position}
+      >
+        <Sphere args={[1, 10]}>
+          <meshBasicMaterial color="green" visible={false} />
+        </Sphere>
+      </pointLight>
     </group>
   );
 };
