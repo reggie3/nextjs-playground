@@ -79,11 +79,13 @@ const LocationMarker = ({ globeRef, locationMarkerData }: Props) => {
 
       if (isSelected || isPointerOver) {
         (markerRef.material as Material).opacity = isSelected ? 1 : 0.6;
+        // @ts-ignore Property 'color' does not exist on type 'Material'.
         (markerRef.material as Material).color = new THREE.Color(
           SELECTED_MARKER_COLOR
         );
       } else {
         (markerRef.material as Material).opacity = 0.4;
+        // @ts-ignore Property 'color' does not exist on type 'Material'.
         (markerRef.material as Material).color = new THREE.Color(color);
       }
     }

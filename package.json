@@ -6,15 +6,24 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "build-rust": "rustc --target wasm32-unknown-unknown -O --crate-type=cdylib ./rust/src/add.rs -o ./wasm/add.wasm"
   },
   "dependencies": {
+    "@emotion/react": "^11.9.0",
+    "@emotion/server": "^11.4.0",
+    "@emotion/styled": "^11.8.1",
+    "@mui/icons-material": "^5.6.2",
+    "@mui/material": "^5.7.0",
     "@react-three/drei": "^9.7.1",
     "@react-three/fiber": "^8.0.13",
+    "@wasm-tool/wasm-pack-plugin": "^1.6.0",
+    "@welldone-software/why-did-you-render": "^7.0.1",
     "next": "12.1.6",
     "react": "18.1.0",
     "react-dom": "18.1.0",
-    "three": "^0.140.0"
+    "three": "^0.140.0",
+    "use-resize-observer": "^8.0.0"
   },
   "devDependencies": {
     "@types/node": "^17.0.31",
