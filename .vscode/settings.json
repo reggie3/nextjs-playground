@@ -1,3 +1,11 @@
 {
-  "cSpell.words": ["glsl", "modulehash", "Phong", "webassembly", "webp"]
+  "cSpell.words": [
+    "clsx",
+    "glsl",
+    "modulehash",
+    "Phong",
+    "prefetch",
+    "webassembly",
+    "webp"
+  ]
 }
