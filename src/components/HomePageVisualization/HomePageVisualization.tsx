@@ -1,6 +1,6 @@
-import { Box } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import React from "react";
+import { HomePageVisualizationContent } from "./Components/HomePageVisualizationContent";
 
 type Props = {};
 
@@ -9,8 +9,7 @@ const HomePageVisualization = (props: Props) => {
     <Canvas>
       <ambientLight />
       <pointLight position={[10, 10, 10]} />
-      <Box position={[-1.2, 0, 0]} />
-      <Box position={[1.2, 0, 0]} />
+      <HomePageVisualizationContent />
     </Canvas>
   );
 };
