@@ -1,7 +1,7 @@
 import { Box, OrbitControls, Sphere, Stars } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import React from "react";
-import Camera from "./Components/Camera/Camera";
+import { Camera } from "./Components/Camera";
 import { Globe } from "./Components/Globe";
 import {
   EARTH_RADIUS_KM_EQUATOR,

@@ -9,6 +9,8 @@ import Container from "@mui/material/Container";
 import ListItem from "@mui/material/ListItem";
 import Typography from "@mui/material/Typography";
 import { CustomLink } from "../components/CustomLink";
+import { HomePageVisualization } from "../components/HomePageVisualization";
+import { Box } from "@mui/material";
 
 // async function init() {
 //   const rustModule = await import("../wasm/add.wasm");
@@ -52,6 +54,9 @@ function Home() {
           </ListItem>
         </List>
       </Container>
+      <Box sx={{ position: "absolute", top: 0, bottom: 0, right: 0, left: 0 }}>
+        <HomePageVisualization />
+      </Box>
     </>
   );
 }
