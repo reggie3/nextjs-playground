@@ -4,9 +4,8 @@ import { EARTH_RADIUS_KM_EQUATOR } from "../Globe/globeConstants";
 import * as THREE from "three";
 import { Material, Mesh, PointLight, Vector3 } from "three";
 import { useFrame } from "@react-three/fiber";
-import styles from "./LocationMarker.module.css";
+import styles from "./locationMarker.module.css";
 import { LocationMarkerLabel } from "../LocationMakerLabel";
-import { INITIAL_EARTH_ARGS } from "../Globe/Globe";
 
 console.log(styles);
 export interface LocationMarkerData {
