@@ -1,7 +1,6 @@
 import { Sphere, useTexture } from "@react-three/drei";
 import React, { useRef } from "react";
 import AtmosphereMaterial from "./materials/Atmosphere/AtmosphereMaterial";
-import GlobeMaterial from "./materials/Globe/GlobeMaterial";
 import * as THREE from "three";
 import { Mesh } from "three";
 import { useFrame } from "@react-three/fiber";
@@ -9,7 +8,7 @@ import {
   EARTH_RADIUS_KM_EQUATOR,
   EARTH_Y_TO_X_SCALE,
   UNIVERSAL_SCALE,
-} from "./globeConstants";
+} from "../globeConstants";
 
 type Props = {};
 

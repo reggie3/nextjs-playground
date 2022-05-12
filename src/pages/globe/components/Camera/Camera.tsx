@@ -4,7 +4,7 @@ import React from "react";
 import {
   EARTH_RADIUS_KM_EQUATOR,
   INITIAL_CAMERA_HEIGHT_ABOVE_EARTH_KM,
-} from "./Globe/globeConstants";
+} from "../globeConstants";
 
 type Props = {};
 

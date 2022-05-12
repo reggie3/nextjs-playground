@@ -4,12 +4,12 @@ import PlayCircleIcon from "@mui/icons-material/PlayCircle";
 import PauseCircleIcon from "@mui/icons-material/PauseCircle";
 import StopCircleIcon from "@mui/icons-material/StopCircle";
 
-export type playbackStatus = "playing" | "paused" | "stopped";
+export type PlaybackStatus = "playing" | "paused" | "stopped";
 export type PlaybackControlsEvent = "play" | "pause" | "stop";
 
 type PlaybackControlsProps = {
   isAudioPlayable: boolean;
-  playbackStatus: playbackStatus;
+  playbackStatus: PlaybackStatus;
   onClickControls: (event: PlaybackControlsEvent) => void;
 };
 

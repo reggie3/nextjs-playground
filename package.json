@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "build-rust": "rustc --target wasm32-unknown-unknown -O --crate-type=cdylib ./rust/src/add.rs -o ./wasm/add.wasm"
+    "build-rust": "rustc --target wasm32-unknown-unknown -O --crate-type=cdylib ./rust/src/add.rs -o ./wasm/add.wasm",
+    "tsc": "tsc --noEmit"
   },
   "dependencies": {
     "@emotion/react": "^11.9.0",

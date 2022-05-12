@@ -1,7 +1,7 @@
 import { Box, Sphere } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import React from "react";
-import { EARTH_RADIUS_KM_EQUATOR } from "../Globe/globeConstants";
+import { EARTH_RADIUS_KM_EQUATOR } from "../globeConstants";
 
 const SPHERE_SIZE = [0.5, 10, 10] as [number, number, number];
 const LIGHT_DISTANCE = EARTH_RADIUS_KM_EQUATOR + 20;

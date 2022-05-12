@@ -2,11 +2,13 @@ import { Box, TextField } from "@mui/material";
 import useResizeObserver from "use-resize-observer";
 
 import React, { ChangeEvent, useEffect, useRef, useState } from "react";
-import PlaybackControls, {
+
+import Canvas from "./Components/Canvas/Canvas";
+import {
   PlaybackControlsEvent,
-  playbackStatus as PlaybackStatus,
-} from "../../components/PlaybackControls";
-import Canvas from "./Canvas/Canvas";
+  PlaybackControls,
+  PlaybackStatus,
+} from "./Components/PlaybackControls";
 
 type Props = {};
 

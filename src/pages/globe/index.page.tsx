@@ -1,14 +1,14 @@
 import { Box, OrbitControls, Sphere, Stars } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import React from "react";
-import Camera from "./components/Camera";
-import { Globe } from "./components/Globe";
+import Camera from "./Components/Camera/Camera";
+import { Globe } from "./Components/Globe";
 import {
   EARTH_RADIUS_KM_EQUATOR,
   STARS_DISTANCE,
   UNIVERSAL_SCALE,
-} from "./components/Globe/globeConstants";
-import { PointLightExample } from "./components/PointLightExample";
+} from "./Components/globeConstants";
+import { PointLightExample } from "./Components/PointLightExample";
 
 type Props = {};
 

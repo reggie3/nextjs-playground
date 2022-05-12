@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Box, Sphere } from "@react-three/drei";
-import { EARTH_RADIUS_KM_EQUATOR } from "../Globe/globeConstants";
+import { EARTH_RADIUS_KM_EQUATOR } from "../globeConstants";
 import * as THREE from "three";
 import { Material, Mesh, PointLight, Vector3 } from "three";
 import { useFrame } from "@react-three/fiber";

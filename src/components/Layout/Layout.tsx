@@ -1,5 +1,6 @@
 import { Box } from "@mui/material";
-import NavBar from "./NavBar";
+import NavBar from "../Navbar/NavBar";
+
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <Box

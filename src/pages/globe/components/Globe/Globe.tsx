@@ -1,6 +1,6 @@
 import { Sphere, useTexture } from "@react-three/drei";
 import React, { useRef } from "react";
-import { AtmosphereMaterial } from "./AtmosphereMaterial/";
+import { AtmosphereMaterial } from "./AtmosphereMaterial";
 import * as THREE from "three";
 import { Group, Mesh } from "three";
 import { useFrame } from "@react-three/fiber";
@@ -8,7 +8,7 @@ import {
   EARTH_RADIUS_KM_EQUATOR,
   EARTH_Y_TO_X_SCALE,
   UNIVERSAL_SCALE,
-} from "./globeConstants";
+} from "../globeConstants";
 import LocationMarker, {
   LocationMarkerData,
 } from "../LocationMarker/LocationMarker";

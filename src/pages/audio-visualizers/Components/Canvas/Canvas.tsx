@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useRef } from "react";
-import { playbackStatus } from "../../../components/PlaybackControls";
+import { PlaybackStatus } from "../PlaybackControls";
 import styles from "./canvas.module.css";
 
 type Props = {
@@ -7,7 +7,7 @@ type Props = {
   bufferLength: number | undefined;
   dataArray: Uint8Array | undefined;
   height: number;
-  playbackStatus: playbackStatus | undefined;
+  playbackStatus: PlaybackStatus | undefined;
   width: number;
 };
 

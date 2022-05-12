@@ -4,6 +4,7 @@ import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
 import dynamic from "next/dynamic";
+import { ReactElement } from "react";
 
 // async function init() {
 //   const rustModule = await import("../wasm/add.wasm");
@@ -25,7 +26,7 @@ import dynamic from "next/dynamic";
 //   },
 // });
 
-const Home: NextPage = () => {
+function Home() {
   //init();
   return (
     <>
@@ -36,6 +37,10 @@ const Home: NextPage = () => {
       </Head>
     </>
   );
-};
+}
 
 export default Home;
+
+Home.getLayout = function getLayout(page: ReactElement) {
+  return page;
+};

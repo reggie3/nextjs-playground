@@ -20,19 +20,10 @@ function NavBar(): ReactElement {
               </Link>
               {/* <Link href="/fibonacci">
                 <a>Fibonacci</a>
-              </Link> */}
-              {/* <Link href="/hello-wasm">
+              </Link>
+              <Link href="/hello-wasm">
                 <a>Hello WASM</a>
               </Link> */}
-              <Link href="/web-audio">
-                <a>Web Audio</a>
-              </Link>
-              <Link href="/audio-visualizers">
-                <a>Audio Visualizers</a>
-              </Link>
-              <Link href="/globe">
-                <a>Three JS Globe</a>
-              </Link>
             </Box>
           </Toolbar>
         </AppBar>
