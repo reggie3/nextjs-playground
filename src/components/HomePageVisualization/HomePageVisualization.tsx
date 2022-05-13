@@ -1,15 +1,10 @@
-import {
-  Box,
-  OrbitControls,
-  PerspectiveCamera,
-  Stars,
-} from "@react-three/drei";
+import { OrbitControls, Stars } from "@react-three/drei";
 import { Canvas, Vector3 } from "@react-three/fiber";
 import React, { useRef, useState } from "react";
 import * as THREE from "three";
-import { ClickableBackgroundPlane } from "./Components/ClickableBackgroundPlane";
-import { ClickPoints } from "./Components/ClickPoints";
-import { HomePageVisualizationContent } from "./Components/HomePageVisualizationContent";
+import { ClickableBackgroundPlane } from "./components/ClickableBackgroundPlane";
+import { ClickPoints } from "./components/ClickPoints";
+import { HomePageVisualizationContent } from "./components/HomePageVisualizationContent";
 import { ClickPoint } from "./types";
 
 const HomePageVisualization = () => {

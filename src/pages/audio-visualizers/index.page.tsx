@@ -3,12 +3,12 @@ import useResizeObserver from "use-resize-observer";
 
 import React, { ChangeEvent, useEffect, useRef, useState } from "react";
 
-import Canvas from "./Components/Canvas/Canvas";
+import Canvas from "./components/Canvas/Canvas";
 import {
   PlaybackControlsEvent,
   PlaybackControls,
   PlaybackStatus,
-} from "./Components/PlaybackControls";
+} from "./components/PlaybackControls";
 
 type Props = {};
 

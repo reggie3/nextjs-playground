@@ -7,8 +7,8 @@ import dynamic from "next/dynamic";
 import { ReactElement } from "react";
 import Container from "@mui/material/Container";
 import ListItem from "@mui/material/ListItem";
-import { CustomLink } from "../Components/CustomLink";
-import { HomePageVisualization } from "../Components/HomePageVisualization";
+import { CustomLink } from "../components/CustomLink";
+import { HomePageVisualization } from "../components/HomePageVisualization";
 import { Box } from "@mui/material";
 
 // async function init() {
