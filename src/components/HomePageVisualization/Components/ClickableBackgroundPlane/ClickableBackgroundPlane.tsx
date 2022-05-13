@@ -1,4 +1,4 @@
-import { Box, Plane } from "@react-three/drei";
+import { Plane } from "@react-three/drei";
 import { ThreeEvent, useFrame, useThree, Vector3 } from "@react-three/fiber";
 import React, { useRef, useState } from "react";
 
