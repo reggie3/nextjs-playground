@@ -1,6 +1,6 @@
 import { Plane } from "@react-three/drei";
 import { ThreeEvent, useFrame, useThree, Vector3 } from "@react-three/fiber";
-import React, { useRef, useState } from "react";
+import React, { useRef } from "react";
 
 type ClickableBackgroundPlaneProps = {
   addNewPosition: (pos: Vector3) => void;
@@ -10,8 +10,7 @@ const ClickableBackgroundPlane = ({
   addNewPosition,
 }: ClickableBackgroundPlaneProps) => {
   const planeRef = useRef<THREE.Mesh>();
-  const { camera, scene } = useThree();
-  const [clickPoints, setClickPoints] = useState<Vector3[]>([]);
+  const { camera } = useThree();
 
   useFrame(() => {
     if (planeRef) {
