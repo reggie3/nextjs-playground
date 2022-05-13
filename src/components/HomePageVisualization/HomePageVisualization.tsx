@@ -13,7 +13,6 @@ import { HomePageVisualizationContent } from "./Components/HomePageVisualization
 import { ClickPoint } from "./types";
 
 const HomePageVisualization = () => {
-  const cameraRef = useRef<THREE.Camera>();
   const canvasRef = useRef<HTMLCanvasElement>();
   const [clickPoints, setClickPoints] = useState<ClickPoint[]>([]);
 
@@ -28,7 +27,6 @@ const HomePageVisualization = () => {
 
   return (
     <Canvas ref={canvasRef}>
-      <PerspectiveCamera ref={cameraRef} />
       <ambientLight />
       <pointLight position={[10, 10, 10]} />
       <HomePageVisualizationContent />
