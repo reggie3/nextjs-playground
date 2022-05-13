@@ -2,8 +2,8 @@ import { OrbitControls, Stars } from "@react-three/drei";
 import { Canvas, Vector3 } from "@react-three/fiber";
 import React, { useRef, useState } from "react";
 import * as THREE from "three";
-import { ClickPoints } from "./components/ClickPoints";
-import { HomePageVisualizationContent } from "./components/HomePageVisualizationContent";
+import { ClickPoints } from "./ClickPoints";
+import { HomePageVisualizationContent } from "./HomePageVisualizationContent";
 import { ClickPoint } from "./types";
 import { ClickableBackgroundPlane } from "./ClickableBackgroundPlane";
 
