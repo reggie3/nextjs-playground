@@ -5,8 +5,11 @@
     "modulehash",
     "Phong",
     "prefetch",
+    "unproject",
+    "unprojected",
     "wdyr",
     "webassembly",
-    "webp"
+    "webp",
+    "wireframe"
   ]
 }
