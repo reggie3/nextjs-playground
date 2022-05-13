@@ -3,7 +3,7 @@ import { useFrame } from "@react-three/fiber";
 import { Sphere } from "@react-three/drei";
 import { ClickPointMaterial } from "./material";
 import { ShaderMaterial, Vector3 } from "three";
-import { ClickPoint } from "../types";
+import { ClickPoint } from "../../types";
 
 type ClickPointsProps = {
   clickPoints: ClickPoint[];
