@@ -5,7 +5,7 @@ import * as THREE from "three";
 import { ClickPoints } from "./components/ClickPoints";
 import { HomePageVisualizationContent } from "./components/HomePageVisualizationContent";
 import { ClickPoint } from "./types";
-import { ClickableBackgroundPlane } from "./components/ClickableBackgroundPlane";
+import { ClickableBackgroundPlane } from "./ClickableBackgroundPlane";
 
 const HomePageVisualization = () => {
   const canvasRef = useRef<HTMLCanvasElement>();
