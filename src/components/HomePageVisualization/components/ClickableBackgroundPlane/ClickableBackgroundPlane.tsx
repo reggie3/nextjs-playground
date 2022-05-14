@@ -3,14 +3,14 @@ import { ThreeEvent, useFrame, useThree, Vector3 } from "@react-three/fiber";
 import React, { useRef } from "react";
 
 type ClickableBackgroundPlaneProps = {
-  addNewPosition: (pos: Vector3) => void;
+  addNewPosition: (pos: Vector3, time: number) => void;
 };
 
 const ClickableBackgroundPlane = ({
   addNewPosition,
 }: ClickableBackgroundPlaneProps) => {
   const planeRef = useRef<THREE.Mesh>();
-  const { camera } = useThree();
+  const { camera, clock } = useThree();
 
   useFrame(() => {
     if (planeRef) {
@@ -20,7 +20,7 @@ const ClickableBackgroundPlane = ({
   });
 
   const onClick = (event: ThreeEvent<MouseEvent>) => {
-    addNewPosition(event.point);
+    addNewPosition(event.point, clock.getElapsedTime());
   };
 
   return (

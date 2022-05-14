@@ -2,22 +2,34 @@ import { OrbitControls, Stars } from "@react-three/drei";
 import { Canvas, Vector3 } from "@react-three/fiber";
 import React, { useRef, useState } from "react";
 import * as THREE from "three";
-import { ClickPoints } from "./components/ClickPoints";
 import { HomePageVisualizationContent } from "./components/HomePageVisualizationContent";
-import { ClickPoint } from "./types";
+import { ClickPoint, Jellyfish } from "./types";
 import { ClickableBackgroundPlane } from "./components/ClickableBackgroundPlane";
+import { Jellies } from "./components/Jellies";
 
 const HomePageVisualization = () => {
   const canvasRef = useRef<HTMLCanvasElement>();
-  const [clickPoints, setClickPoints] = useState<ClickPoint[]>([]);
+  const [jellies, setJellies] = useState<Record<string, Jellyfish>>({});
 
-  const addNewPosition = (position: Vector3) => {
-    const newClickPoint: ClickPoint = {
-      id: Date.now().toString(),
+  const addNewPosition = (position: Vector3, time: number) => {
+    const id = Date.now().toString();
+    const newJelly: Jellyfish = {
+      id,
       position,
       color: new THREE.Vector3(Math.random(), Math.random(), Math.random()),
+      creationTime: time,
+      speed: Math.random(),
+      lifespanSeconds: Math.random() * 10,
+      isDead: false,
     };
-    setClickPoints((prevClickPoints) => [...prevClickPoints, newClickPoint]);
+    const newJellies = { ...jellies, [id]: newJelly };
+    setJellies(newJellies);
+  };
+
+  const killJellyfish = (idToDelete: string) => {
+    console.log("kill", idToDelete);
+    const { [idToDelete]: id, ...rest } = jellies;
+    setJellies(rest);
   };
 
   return (
@@ -36,7 +48,7 @@ const HomePageVisualization = () => {
       />
       <OrbitControls />
       <ClickableBackgroundPlane addNewPosition={addNewPosition} />
-      <ClickPoints clickPoints={clickPoints} />
+      <Jellies jellies={jellies} killJellyfish={killJellyfish} />
     </Canvas>
   );
 };
