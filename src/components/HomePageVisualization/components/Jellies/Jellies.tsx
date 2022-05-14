@@ -1,9 +1,11 @@
-import React, { useRef } from "react";
-import { useFrame, useThree } from "@react-three/fiber";
-import { Sphere } from "@react-three/drei";
+import React, { Suspense, useRef } from "react";
+import { useFrame } from "@react-three/fiber";
+import { Sphere, useGLTF } from "@react-three/drei";
 import { JellyfishMaterial } from "./material";
-import { ShaderMaterial, Vector3 } from "three";
+import { ShaderMaterial } from "three";
 import { ClickPoint, Jellyfish } from "../../types";
+import { Suzanne } from "../../../Suzanne";
+import { LowPolyJellyfish } from "../../../LowPolyJellyfish";
 
 type JellyfishProps = {
   jellies: Record<string, Jellyfish>;
@@ -50,30 +52,52 @@ const Jellies = ({ jellies, killJellyfish }: JellyfishProps) => {
     jelliesRef.current[point.id] = ref as THREE.Mesh;
   };
 
-  console.log(jellies);
   return (
     <group name="click-points">
       {Object.entries(jellies).map(([id, jelly], index) => {
         if (jelly.isDead) return null;
+        // return (
+        //   <Sphere
+        //     args={[0.1, 20]}
+        //     position={jelly.position}
+        //     key={index}
+        //     ref={(ref) => setRef(ref as THREE.Mesh, jelly)}
+        //     userData={{
+        //       creationTime: jelly.creationTime,
+        //       speed: jelly.speed,
+        //       index,
+        //       id,
+        //       lifespanSeconds: jelly.lifespanSeconds,
+        //       isDead: false,
+        //       position: jelly.position,
+        //     }}
+        //   >
+        //     {/* @ts-ignore Property 'clickPointMaterial' does not exist on type 'JSX.IntrinsicElements'. */}
+        //     <jellyfishMaterial key={JellyfishMaterial.key} attach="material" />
+        //   </Sphere>
+        // );
+        // <mesh
+        //   castShadow
+        //   receiveShadow
+        //   geometry={jellyNodes}
+        //   material={jellyMaterials}
+        //   position={jelly.position}
+        //   key={index}
+        //   ref={(ref) => setRef(ref as THREE.Mesh, jelly)}
+        //   userData={{
+        //     creationTime: jelly.creationTime,
+        //     speed: jelly.speed,
+        //     index,
+        //     id,
+        //     lifespanSeconds: jelly.lifespanSeconds,
+        //     isDead: false,
+        //     position: jelly.position,
+        //   }}
+        // />;
         return (
-          <Sphere
-            args={[0.1, 20]}
-            position={jelly.position}
-            key={index}
-            ref={(ref) => setRef(ref as THREE.Mesh, jelly)}
-            userData={{
-              creationTime: jelly.creationTime,
-              speed: jelly.speed,
-              index,
-              id,
-              lifespanSeconds: jelly.lifespanSeconds,
-              isDead: false,
-              position: jelly.position,
-            }}
-          >
-            {/* @ts-ignore Property 'clickPointMaterial' does not exist on type 'JSX.IntrinsicElements'. */}
-            <jellyfishMaterial key={JellyfishMaterial.key} attach="material" />
-          </Sphere>
+          <Suspense fallback={null} key={index.toString()}>
+            <LowPolyJellyfish position={jelly.position} />
+          </Suspense>
         );
       })}
     </group>

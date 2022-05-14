@@ -3,7 +3,7 @@ import { Canvas, Vector3 } from "@react-three/fiber";
 import React, { useRef, useState } from "react";
 import * as THREE from "three";
 import { HomePageVisualizationContent } from "./components/HomePageVisualizationContent";
-import { ClickPoint, Jellyfish } from "./types";
+import { Jellyfish } from "./types";
 import { ClickableBackgroundPlane } from "./components/ClickableBackgroundPlane";
 import { Jellies } from "./components/Jellies";
 
