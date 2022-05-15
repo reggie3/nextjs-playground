@@ -31,6 +31,7 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
   const { nodes, materials, animations } = useGLTF(
     "/gltf/lowPolyJellyfish/scene-transformed.glb"
   ) as GLTFResult;
+  // @ts-ignore Type 'GLTFActions' does not satisfy the constraint 'AnimationClip'.
   const { actions } = useAnimations<GLTFActions>(animations, group);
   return (
     <group ref={group} {...props} dispose={null}>

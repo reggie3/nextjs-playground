@@ -7,8 +7,9 @@ import { Vector3 } from "three";
 const JellyfishMaterial = shaderMaterial(
   {
     uTime: 0,
-    uSpeed: Math.random() * 0.5 + 0.1,
+    uSpeed: Math.random() * 0.25 + 0.05,
     v3Color: new Vector3(),
+    lookAt: new Vector3(),
   },
   vertexShader,
   fragmentShader
