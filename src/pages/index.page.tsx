@@ -1,7 +1,6 @@
 import Head from "next/head";
 import { ReactElement } from "react";
 import { Box } from "@mui/material";
-import { Controls, useControl } from "react-three-gui";
 import { HomePageVisualization } from "../components/HomePageVisualization";
 
 // async function init() {

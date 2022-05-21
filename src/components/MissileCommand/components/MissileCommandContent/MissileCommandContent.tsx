@@ -5,31 +5,40 @@ import {
   Sphere,
   Stars,
 } from "@react-three/drei";
-import { useThree } from "@react-three/fiber";
+import { useFrame, useThree } from "@react-three/fiber";
 import { useEffect, useRef } from "react";
+import { GAME_FIELD_WIDTH } from "../../missileCommandGlobals";
 import useMissileCommandControl from "../../useMissileCommandControls";
 import { McFloor } from "./McFloor";
 
-const REFERENCE_BLOCK_SIZE = 0.25;
+const REFERENCE_BLOCK_SIZE = 1;
 const MissileCommandContent = () => {
   const starsRef = useRef<THREE.Mesh>(null);
-  const { camera, viewport } = useThree();
+  const { camera, viewport, size } = useThree();
   const { aspect } = viewport;
   console.log({ aspect });
-  const { cameraPos, cameraZoom } = useMissileCommandControl();
+  const { cameraPos, cameraZoom, setCameraControls } =
+    useMissileCommandControl();
+  const { width: canvasWidth, height: canvasHeight } = size;
 
-  useEffect(() => {
-    // camera.updateProjectionMatrix();
-  }, [camera, cameraPos, cameraZoom]);
+  // useFrame(() => {
+  //   setCameraControls({ cameraZoom: camera.zoom });
+  // });
 
-  useEffect(() => {}, [viewport]);
+  // useEffect(() => {
+  //   camera.position.x = 0;
+  //   camera.position.y = cameraPos.y;
+  //   setCameraControls({ cameraPos: camera.position });
+  // }, [canvasWidth, canvasHeight, camera.position, cameraPos.y]);
+
+  // useEffect(() => {}, [viewport]);
 
   return (
     <group>
       <color attach="background" args={["black"]} />
       {/* <Stars ref={starsRef} /> */}
       <ambientLight intensity={0.25} />
-      <axesHelper args={[11]} />
+      <pointLight position={[0, 2, -2]} />
       <McFloor />
       <Box
         userData={{ name: "reference-block" }}

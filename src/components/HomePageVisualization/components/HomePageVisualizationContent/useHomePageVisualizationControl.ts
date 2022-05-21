@@ -2,11 +2,17 @@ import { useControls } from "leva";
 
 const useHomePageVisualizationControl = () => {
   const {
+    // @ts-ignore
     pointLightIntensity,
+    // @ts-ignore
     pointLightDistance,
+    // @ts-ignore
     pointLightDecay,
+    // @ts-ignore
     pointLightPos,
+    // @ts-ignore
     pointLightColor,
+    // @ts-ignore
     pointLightRadius,
   } = useControls("Point Light Controls", {
     pointLightIntensity: {
@@ -31,6 +37,7 @@ const useHomePageVisualizationControl = () => {
       max: 1,
       step: 0.01,
     },
+    // @ts-ignore
     pointLightPos: { label: "Position", x: 0, y: 2, z: 0 },
     pointLightColor: { label: "Color", value: "#ffffff" },
     pointLightRadius: {
