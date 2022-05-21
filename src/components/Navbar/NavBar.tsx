@@ -1,12 +1,13 @@
-import { Box, AppBar, Toolbar, Typography } from "@mui/material";
+import { Box, AppBar, Toolbar, Typography, useTheme } from "@mui/material";
 import Link from "next/link";
 import React, { ReactElement } from "react";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import { CustomLink } from "../CustomLink";
 
 function NavBar(): ReactElement {
+  const theme = useTheme();
   return (
-    <div>
+    <div style={{ zIndex: 100 }}>
       <Box sx={{ flexGrow: 1 }}>
         <AppBar position="static">
           <Toolbar>
@@ -15,6 +16,7 @@ function NavBar(): ReactElement {
                 display: "flex",
                 flexDirection: "row",
                 gap: "1rem",
+                alignItems: "center",
               }}
             >
               <Link href="/">
@@ -24,11 +26,15 @@ function NavBar(): ReactElement {
                     gap: 1,
                     alignItems: "center",
                     cursor: "pointer",
+                    color: theme.palette.text.primary,
+                    textDecoration: "underline",
                   }}
                 >
-                  <HomeOutlinedIcon />
+                  <HomeOutlinedIcon style={{ fontSize: "1.75rem" }} />
                   <a>
-                    <Typography>Home</Typography>
+                    <Typography style={{ fontSize: "1.25rem" }}>
+                      Home
+                    </Typography>
                   </a>
                 </Box>
               </Link>
@@ -41,6 +47,9 @@ function NavBar(): ReactElement {
               <CustomLink href="/audio-visualizers">Audio Viz</CustomLink>
               <CustomLink href="/web-audio">Web Audio</CustomLink>
               <CustomLink href="/globe">3D Globe</CustomLink>
+              <CustomLink href="/chasing-blobs">Chasing Blobs</CustomLink>
+              {/* <CustomLink href="/trigger-example">Trigger Example</CustomLink> */}
+              {/* <CustomLink href="/space-invaders">Space Shooter</CustomLink> */}
             </Box>
           </Toolbar>
         </AppBar>

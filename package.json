@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "build-rust": "rustc --target wasm32-unknown-unknown -O --crate-type=cdylib ./rust/src/add.rs -o ./wasm/add.wasm",
-    "tsc": "tsc --noEmit"
+    "tsc": "tsc --noEmit",
+    "component": "plop component"
   },
   "dependencies": {
     "@emotion/react": "^11.9.0",
@@ -21,7 +22,9 @@
     "@wasm-tool/wasm-pack-plugin": "^1.6.0",
     "@welldone-software/why-did-you-render": "^7.0.1",
     "clsx": "^1.1.1",
+    "leva": "^0.9.27",
     "next": "12.1.6",
+    "plop": "^3.1.0",
     "react": "18.1.0",
     "react-dom": "18.1.0",
     "three": "^0.140.0",
