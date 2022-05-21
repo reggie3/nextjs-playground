@@ -29,7 +29,7 @@ const MissileCommandContent = () => {
       <color attach="background" args={["black"]} />
       {/* <Stars ref={starsRef} /> */}
       <ambientLight intensity={0.25} />
-      <axesHelper args={[10]} />
+      <axesHelper args={[11]} />
       <McFloor />
       <Box
         userData={{ name: "reference-block" }}
