@@ -7,6 +7,7 @@ import {
 } from "@react-three/drei";
 import { useFrame, useThree } from "@react-three/fiber";
 import { useEffect, useRef } from "react";
+import { ProjectileImpact } from "../../mcTypes";
 import { GAME_FIELD_WIDTH } from "../../missileCommandGlobals";
 import useMissileCommandControl from "../../useMissileCommandControls";
 import { IncomingProjectiles } from "../IncomingProjectiles";
@@ -34,6 +35,8 @@ const MissileCommandContent = () => {
 
   // useEffect(() => {}, [viewport]);
 
+  const addProjectileImpact = (impact: ProjectileImpact) => {};
+
   return (
     <group>
       <color attach="background" args={["black"]} />
@@ -50,7 +53,7 @@ const MissileCommandContent = () => {
         ]}
         position={[0, REFERENCE_BLOCK_SIZE / 2, 0]}
       />
-      <IncomingProjectiles />
+      <IncomingProjectiles addProjectileImpact={addProjectileImpact} />
     </group>
   );
 };

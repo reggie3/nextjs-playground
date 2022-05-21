@@ -2,10 +2,16 @@ import { Sphere } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import { useRef, useState } from "react";
 import { MeshStandardMaterial, Vector3 } from "three";
-import { IncomingProjectile } from "../../mcTypes";
+import { IncomingProjectile, ProjectileImpact } from "../../mcTypes";
 import getProjectile from "../../utilities/getProjectile";
 
-const IncomingProjectiles = () => {
+interface IncomingProjectilesProps {
+  addProjectileImpact: (projectileImpact: ProjectileImpact) => void;
+}
+
+const IncomingProjectiles = ({
+  addProjectileImpact,
+}: IncomingProjectilesProps) => {
   const lastMissileTimeSeconds = useRef<number>(0);
   const missileMeshRefs = useRef<Record<string, THREE.Mesh>>({});
   const [missileData, setMissileData] = useState<
@@ -30,6 +36,16 @@ const IncomingProjectiles = () => {
       const missileMesh = missileMeshRefs.current[missile.id];
 
       if (missileMesh) {
+        // mark a hit if the missile hits the ground
+        if (missileMesh.position.y < 0) {
+          let missileHit = {
+            location: missileMesh.position.clone(),
+            id: missile.id,
+            type: missile.type,
+          };
+          addProjectileImpact(missileHit);
+        }
+        // remove the missile mesh if it is below the ground
         if (missileMesh.position.y < -0.5) {
           delete missileData[missile.id];
           delete missileMeshRefs.current[missile.id];
@@ -37,6 +53,7 @@ const IncomingProjectiles = () => {
           return;
         } else {
           const { direction, speed } = missile;
+          // @ts-ignore Property 'clone' does not exist on type 'Vector3'.
           const movementVector = direction.clone().multiplyScalar(speed);
           const newPosition = missileMesh.position.clone().add(movementVector);
           missileMesh.position.set(newPosition.x, newPosition.y, newPosition.z);

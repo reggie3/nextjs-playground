@@ -29,6 +29,7 @@ const getProjectile = ({
     direction,
     speed: 0.025,
     id: uuidv4(),
+    type,
   };
 };
 
