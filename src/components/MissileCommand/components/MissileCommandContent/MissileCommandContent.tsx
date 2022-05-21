@@ -9,6 +9,7 @@ import { useFrame, useThree } from "@react-three/fiber";
 import { useEffect, useRef } from "react";
 import { GAME_FIELD_WIDTH } from "../../missileCommandGlobals";
 import useMissileCommandControl from "../../useMissileCommandControls";
+import { IncomingProjectiles } from "../IncomingProjectiles";
 import { McFloor } from "./McFloor";
 
 const REFERENCE_BLOCK_SIZE = 1;
@@ -21,9 +22,9 @@ const MissileCommandContent = () => {
     useMissileCommandControl();
   const { width: canvasWidth, height: canvasHeight } = size;
 
-  // useFrame(() => {
-  //   setCameraControls({ cameraZoom: camera.zoom });
-  // });
+  useFrame(() => {
+    setCameraControls({ cameraZoom: camera.zoom });
+  });
 
   // useEffect(() => {
   //   camera.position.x = 0;
@@ -49,6 +50,7 @@ const MissileCommandContent = () => {
         ]}
         position={[0, REFERENCE_BLOCK_SIZE / 2, 0]}
       />
+      <IncomingProjectiles />
     </group>
   );
 };
