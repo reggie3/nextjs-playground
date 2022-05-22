@@ -1,4 +1,5 @@
 import { useContextBridge } from "@react-three/drei";
+import { OrbitControls } from "@react-three/drei";
 import { OrthographicCamera } from "@react-three/drei";
 import { ThreeEvent } from "@react-three/fiber";
 import { Canvas } from "@react-three/fiber";
@@ -44,6 +45,7 @@ const MissileCommand = () => {
         />
         <MissileCommandContent ref={contentRef} />
       </ReduxProvider>
+      {/* <OrbitControls /> */}
     </Canvas>
   );
 };

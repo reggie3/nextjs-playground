@@ -15,8 +15,10 @@ import useMissileCommandControl from "../../useMissileCommandControls";
 import { Explosions } from "../Explosions";
 import { IncomingProjectiles } from "../IncomingProjectiles";
 import { Interceptors } from "../Interceptors";
-import { MissileCommandBackground } from "../MissileCommandBackground";
+import { McMouseIndicator } from "../McMouseIndicator";
+import { McClickableBackground } from "../McClickableBackground";
 import { McFloor } from "./McFloor";
+import { Launchers } from "../Launchers";
 
 type MissileCommandContentProps = {};
 
@@ -67,9 +69,9 @@ const MissileCommandContent: React.ForwardRefRenderFunction<
     <group>
       <color attach="background" args={["black"]} />
       {/* <Stars ref={starsRef} /> */}
-      <ambientLight intensity={0.25} />
+      <ambientLight intensity={1} />
       <pointLight position={[0, 2, -2]} />
-      <McFloor />
+
       <Box
         visible={false}
         userData={{ name: "reference-block" }}
@@ -83,7 +85,10 @@ const MissileCommandContent: React.ForwardRefRenderFunction<
       <IncomingProjectiles />
       <Interceptors />
       <Explosions />
-      <MissileCommandBackground />
+      <McClickableBackground />
+      <McMouseIndicator />
+      <Launchers />
+      <McFloor />
     </group>
   );
 };

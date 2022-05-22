@@ -1,19 +1,24 @@
 import { Plane } from "@react-three/drei";
 import { ThreeEvent, useFrame, useThree, Vector3 } from "@react-three/fiber";
 import React, { useRef } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import * as THREE from "three";
 import { v4 as uuidV4 } from "uuid";
-import { Interceptor } from "../../mcTypes";
+import { Interceptor, Launcher } from "../../mcTypes";
 import { addInterceptor } from "../../redux/interceptorsSlice";
 import interceptorData from "../../gameData/interceptors.json";
+import { MissileCommandRootState } from "../../redux/store";
+import { addLauncher } from "../../redux/launchersSlice";
 
-type MissileCommandBackgroundProps = {};
+type McClickableBackgroundProps = {};
 
-const MissileCommandBackground = ({}: MissileCommandBackgroundProps) => {
+const McClickableBackground = ({}: McClickableBackgroundProps) => {
   const planeRef = useRef<THREE.Mesh>();
   const { camera } = useThree();
   const dispatch = useDispatch();
+  const { indicatorMode } = useSelector(
+    (state: MissileCommandRootState) => state.mcMouseIndicatorState
+  );
 
   useFrame(() => {
     if (planeRef) {
@@ -22,8 +27,7 @@ const MissileCommandBackground = ({}: MissileCommandBackgroundProps) => {
     }
   });
 
-  const onClick = (event: ThreeEvent<MouseEvent>) => {
-    console.log("onClick", event.point);
+  const fireInterceptor = (event: ThreeEvent<MouseEvent>) => {
     const interceptorOrigin = new THREE.Vector3(0, 0, 0);
     const targetPosition = new THREE.Vector3().fromArray([
       event.point.x,
@@ -35,8 +39,6 @@ const MissileCommandBackground = ({}: MissileCommandBackgroundProps) => {
     const normalizedDirection = direction.normalize();
     const normalizedDirectionArray = normalizedDirection.toArray();
 
-    debugger;
-
     const newInterceptor: Interceptor = {
       id: uuidV4(),
       targetLocation: event.point.toArray() as [number, number, number],
@@ -47,8 +49,24 @@ const MissileCommandBackground = ({}: MissileCommandBackgroundProps) => {
       interceptorType: "interceptor1",
     };
     dispatch(addInterceptor(newInterceptor));
+  };
 
-    console.log("newInterceptor", newInterceptor);
+  const createNewLauncher = (event: ThreeEvent<MouseEvent>) => {
+    const newLauncher: Launcher = {
+      id: uuidV4(),
+      location: [event.point.x, 0, -1],
+      type: "launcher1",
+    };
+
+    dispatch(addLauncher(newLauncher));
+  };
+
+  const onClick = (event: ThreeEvent<MouseEvent>) => {
+    if (indicatorMode === "interceptor") {
+      fireInterceptor(event);
+    } else if (indicatorMode === "launcher_placement") {
+      createNewLauncher(event);
+    }
   };
 
   return (
@@ -70,4 +88,4 @@ const MissileCommandBackground = ({}: MissileCommandBackgroundProps) => {
   );
 };
 
-export default MissileCommandBackground;
+export default McClickableBackground;

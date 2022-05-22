@@ -39,7 +39,7 @@ const getProjectile = ({
   const directionVector = new Vector3(
     randomDestinationX - randomOriginX,
     -GAME_FIELD_HEIGHT * 1.25,
-    0
+    -1
   ).normalize();
 
   const incomingType = getRandomKeyFromObject(

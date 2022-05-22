@@ -64,7 +64,7 @@ const IncomingProjectiles = () => {
               args={[0.1]}
               position={missile.origin}
             >
-              <meshStandardMaterial color="red" />
+              <meshStandardMaterial attach="material" color="red" />
             </Sphere>
           );
         })}
