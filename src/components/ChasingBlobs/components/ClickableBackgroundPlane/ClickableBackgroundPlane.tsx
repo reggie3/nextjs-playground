@@ -20,6 +20,7 @@ const ClickableBackgroundPlane = ({
   });
 
   const onClick = (event: ThreeEvent<MouseEvent>) => {
+    console.log("onClick", event.point);
     addNewPosition(event.point, clock.getElapsedTime());
   };
 

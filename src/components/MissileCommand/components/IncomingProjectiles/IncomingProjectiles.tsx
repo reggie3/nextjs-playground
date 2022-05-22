@@ -1,60 +1,47 @@
+import React from "react";
 import { Sphere } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
-import { useRef, useState } from "react";
-import { MeshStandardMaterial, Vector3 } from "three";
-import { IncomingProjectile, ProjectileImpact } from "../../mcTypes";
-import getProjectile from "../../utilities/getProjectile";
+import { useRef } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Vector3 } from "three";
+import { Explosion, IncomingProjectile } from "../../mcTypes";
+import { addExplosion } from "../../redux/explosionsSlice";
+import { MissileCommandRootState } from "../../redux/store";
+import { removeIncomingProjectile } from "../../redux/incomingProjectilesSlice";
+import { useThree } from "@react-three/fiber";
 
-interface IncomingProjectilesProps {
-  addProjectileImpact: (projectileImpact: ProjectileImpact) => void;
-}
-
-const IncomingProjectiles = ({
-  addProjectileImpact,
-}: IncomingProjectilesProps) => {
-  const lastMissileTimeSeconds = useRef<number>(0);
+const IncomingProjectiles = () => {
   const missileMeshRefs = useRef<Record<string, THREE.Mesh>>({});
-  const [missileData, setMissileData] = useState<
-    Record<string, IncomingProjectile>
-  >({});
+  const { incomingProjectiles: missileData } = useSelector(
+    (state: MissileCommandRootState) => state.incomingProjectilesState
+  );
+  const dispatch = useDispatch();
+  const { clock } = useThree();
 
-  useFrame(({ clock }) => {
-    // create new missiles if time
-    if (clock.getElapsedTime() - lastMissileTimeSeconds.current > 1) {
-      console.log(clock.getElapsedTime());
-      lastMissileTimeSeconds.current = clock.getElapsedTime();
-
-      const newMissile = getProjectile({});
-      setMissileData((prevMissileData) => ({
-        ...prevMissileData,
-        [newMissile.id]: newMissile,
-      }));
-    }
-
+  useFrame(() => {
     // move current missiles
-    Object.values(missileData).forEach((missile) => {
+    Object.values(missileData).forEach((missile: IncomingProjectile) => {
       const missileMesh = missileMeshRefs.current[missile.id];
 
       if (missileMesh) {
         // mark a hit if the missile hits the ground
-        if (missileMesh.position.y < 0) {
-          let missileHit = {
-            location: missileMesh.position.clone(),
+        // remove the missile mesh if it is below the ground
+        if (missileMesh.position.y < -0.25) {
+          let missileHit: Explosion = {
+            location: [missileMesh.position.x, missileMesh.position.y, -1],
             id: missile.id,
             type: missile.type,
+            time: clock.getElapsedTime(),
           };
-          addProjectileImpact(missileHit);
-        }
-        // remove the missile mesh if it is below the ground
-        if (missileMesh.position.y < -0.5) {
-          delete missileData[missile.id];
+          dispatch(addExplosion(missileHit));
+          dispatch(removeIncomingProjectile(missile.id));
           delete missileMeshRefs.current[missile.id];
-          console.log("kill", missile.id);
           return;
         } else {
           const { direction, speed } = missile;
-          // @ts-ignore Property 'clone' does not exist on type 'Vector3'.
-          const movementVector = direction.clone().multiplyScalar(speed);
+          const movementVector = new Vector3()
+            .fromArray(direction)
+            .multiplyScalar(speed);
           const newPosition = missileMesh.position.clone().add(movementVector);
           missileMesh.position.set(newPosition.x, newPosition.y, newPosition.z);
         }
@@ -62,13 +49,10 @@ const IncomingProjectiles = ({
     });
   });
 
-  console.log(missileData);
-  console.log(missileMeshRefs.current);
-
   return (
     <group name="incoming-projectiles">
       <group name="missiles">
-        {Object.values(missileData).map((missile) => {
+        {Object.values(missileData).map((missile: IncomingProjectile) => {
           return (
             <Sphere
               ref={(ref: THREE.Mesh) => {
@@ -88,4 +72,4 @@ const IncomingProjectiles = ({
     </group>
   );
 };
-export default IncomingProjectiles;
+export default React.memo(IncomingProjectiles);

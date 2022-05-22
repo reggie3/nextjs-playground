@@ -6,23 +6,43 @@ import {
   Stars,
 } from "@react-three/drei";
 import { useFrame, useThree } from "@react-three/fiber";
-import { useEffect, useRef } from "react";
+import { forwardRef, useImperativeHandle, useRef } from "react";
 import { ProjectileImpact } from "../../mcTypes";
 import { GAME_FIELD_WIDTH } from "../../missileCommandGlobals";
+import useIncomingProjectilesManager from "../../useIncomingProjectilesManager";
+import useInterceptorsManager from "../../useInterceptorsManager";
 import useMissileCommandControl from "../../useMissileCommandControls";
+import { Explosions } from "../Explosions";
 import { IncomingProjectiles } from "../IncomingProjectiles";
+import { Interceptors } from "../Interceptors";
+import { MissileCommandBackground } from "../MissileCommandBackground";
 import { McFloor } from "./McFloor";
 
+type MissileCommandContentProps = {};
+
+type MissileCommandContentHandle = {
+  onClickCanvas: () => void;
+};
+
 const REFERENCE_BLOCK_SIZE = 1;
-const MissileCommandContent = () => {
+
+const MissileCommandContent: React.ForwardRefRenderFunction<
+  MissileCommandContentHandle,
+  MissileCommandContentProps
+> = (props, forwardedRef) => {
   const starsRef = useRef<THREE.Mesh>(null);
-  const { camera, viewport, size } = useThree();
+  const { camera, mouse, viewport, size } = useThree();
   const { aspect } = viewport;
   console.log({ aspect });
   const { cameraPos, cameraZoom, setCameraControls } =
     useMissileCommandControl();
   const { width: canvasWidth, height: canvasHeight } = size;
 
+  // game managers
+  useIncomingProjectilesManager({});
+  const addInterceptor = useInterceptorsManager({});
+
+  // camera management
   useFrame(() => {
     setCameraControls({ cameraZoom: camera.zoom });
   });
@@ -35,7 +55,13 @@ const MissileCommandContent = () => {
 
   // useEffect(() => {}, [viewport]);
 
-  const addProjectileImpact = (impact: ProjectileImpact) => {};
+  const onClickCanvas = () => {
+    console.log("onClickCanvas", mouse.x, mouse.y);
+  };
+
+  useImperativeHandle(forwardedRef, () => ({
+    onClickCanvas,
+  }));
 
   return (
     <group>
@@ -45,6 +71,7 @@ const MissileCommandContent = () => {
       <pointLight position={[0, 2, -2]} />
       <McFloor />
       <Box
+        visible={false}
         userData={{ name: "reference-block" }}
         args={[
           REFERENCE_BLOCK_SIZE,
@@ -53,8 +80,11 @@ const MissileCommandContent = () => {
         ]}
         position={[0, REFERENCE_BLOCK_SIZE / 2, 0]}
       />
-      <IncomingProjectiles addProjectileImpact={addProjectileImpact} />
+      <IncomingProjectiles />
+      <Interceptors />
+      <Explosions />
+      <MissileCommandBackground />
     </group>
   );
 };
-export default MissileCommandContent;
+export default forwardRef(MissileCommandContent);
