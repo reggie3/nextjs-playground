@@ -1,0 +1,20 @@
+{
+  "incomingProjectile1": {
+    "speed": 0.025,
+    "projectileColor": "#ff0000",
+    "explosionColor": "#cc0000",
+    "blastRadius": 0.25
+  },
+  "incomingProjectile2": {
+    "speed": 0.035,
+    "projectileColor": "#ff0000",
+    "explosionColor": "#ee0000",
+    "blastRadius": 0.35
+  },
+  "incomingProjectile3": {
+    "speed": 0.045,
+    "projectileColor": "#ff0000",
+    "explosionColor": "#ff0000",
+    "blastRadius": 0.55
+  }
+}

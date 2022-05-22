@@ -6,10 +6,13 @@ import { Vector3 } from "three";
 import {
   Explosion,
   IncomingProjectileTypes,
-  InterceptorProjectileTypes,
+  InterceptorTypes,
+  ProjectileTypes,
 } from "../../mcTypes";
 import { removeExplosion } from "../../redux/explosionsSlice";
 import { MissileCommandRootState } from "../../redux/store";
+import interceptorData from "../../gameData/interceptors.json";
+import incomingProjectileData from "../../gameData/incomingProjectiles.json";
 
 export interface ExplosionsProps {}
 
@@ -24,15 +27,32 @@ const Explosions = (props: ExplosionsProps) => {
   const dispatch = useDispatch();
 
   const getExplosionColor = (
-    type: InterceptorProjectileTypes | IncomingProjectileTypes
+    type: ProjectileTypes,
+    specificType: IncomingProjectileTypes | InterceptorTypes
   ) => {
     switch (type) {
-      case "standard":
-        return 0xff0000;
-      case "proximity":
-        return 0xffff00;
+      case "incoming":
+        return incomingProjectileData[specificType].explosionColor;
+      case "interceptor":
+        return interceptorData[specificType].explosionColor;
+
       default:
         return 0xffffff;
+    }
+  };
+
+  const getExplosionRadius = (
+    type: ProjectileTypes,
+    specificType: IncomingProjectileTypes | InterceptorTypes
+  ) => {
+    switch (type) {
+      case "incoming":
+        return incomingProjectileData[specificType].blastRadius;
+      case "interceptor":
+        return interceptorData[specificType].blastRadius;
+
+      default:
+        return 0.25;
     }
   };
 
@@ -58,19 +78,28 @@ const Explosions = (props: ExplosionsProps) => {
   return (
     <group name="explosions">
       {Object.values(explosions).map((explosion: Explosion) => {
+        const radius = getExplosionRadius(
+          explosion.type,
+          explosion.specificType
+        );
         return (
           <Sphere
             key={explosion.id}
-            position={explosion.location}
+            position={[
+              explosion.location[0],
+              explosion.type === "incoming" ? 0 : explosion.location[1],
+              explosion.location[2],
+            ]}
             ref={(ref: THREE.Mesh) => {
               if (ref) {
                 explosionMeshRefs.current[explosion.id] = ref;
               }
             }}
+            args={[radius, 10]}
           >
             <meshStandardMaterial
               attach="material"
-              color={getExplosionColor(explosion.type)}
+              color={getExplosionColor(explosion.type, explosion.specificType)}
               transparent
               opacity={0.25}
             />

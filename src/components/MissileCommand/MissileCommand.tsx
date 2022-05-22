@@ -20,7 +20,7 @@ const MissileCommand = () => {
   // Need this to make Redux work inside the canvas
   const ReduxProvider = useContextBridge(ReactReduxContext);
 
-  const onClickCanvas = (event: ThreeEvent<MouseEvent>) => {
+  const onClickCanvas = (event: unknown) => {
     console.log(event);
     if (contentRef.current) {
       contentRef.current.onClickCanvas();

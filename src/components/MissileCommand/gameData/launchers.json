@@ -1,0 +1,14 @@
+{
+  "launcher1": {
+    "detectionRange": 5,
+    "coolDownMillis": 500
+  },
+  "launcher2": {
+    "detectionRange": 10,
+    "coolDownMillis": 1000
+  },
+  "launcher3": {
+    "detectionRange": 20,
+    "coolDownMillis": 2000
+  }
+}

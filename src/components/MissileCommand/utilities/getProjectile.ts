@@ -1,8 +1,10 @@
 import { Vector3 } from "three";
-import { IncomingProjectile } from "../mcTypes";
+import { IncomingProjectile, IncomingProjectileTypes } from "../mcTypes";
 import { v4 as uuidv4 } from "uuid";
 import { GAME_FIELD_HEIGHT, GAME_FIELD_WIDTH } from "../missileCommandGlobals";
 import { randomNumberFromInterval } from "../../../utils/getRandomIntFromInterval";
+import incomingProjectileData from "../gameData/incomingProjectiles.json";
+import { getRandomKeyFromObject } from "../../../utils/getRandomKeyFromObject";
 
 const MAX_HORIZONTAL_TRAVEL_DISTANCE = 4;
 
@@ -40,12 +42,17 @@ const getProjectile = ({
     0
   ).normalize();
 
+  const incomingType = getRandomKeyFromObject(
+    incomingProjectileData
+  ) as IncomingProjectileTypes;
+
   return {
     origin,
     direction: [directionVector.x, directionVector.y, directionVector.z],
-    speed: 0.025,
+    speed: incomingProjectileData[incomingType].speed,
     id: uuidv4(),
-    type,
+    projectileType: "incoming",
+    incomingType,
   };
 };
 

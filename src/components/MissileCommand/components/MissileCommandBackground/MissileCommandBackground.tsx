@@ -6,6 +6,7 @@ import * as THREE from "three";
 import { v4 as uuidV4 } from "uuid";
 import { Interceptor } from "../../mcTypes";
 import { addInterceptor } from "../../redux/interceptorsSlice";
+import interceptorData from "../../gameData/interceptors.json";
 
 type MissileCommandBackgroundProps = {};
 
@@ -39,10 +40,11 @@ const MissileCommandBackground = ({}: MissileCommandBackgroundProps) => {
     const newInterceptor: Interceptor = {
       id: uuidV4(),
       targetLocation: event.point.toArray() as [number, number, number],
-      type: "proximity",
+      projectileType: "interceptor",
       origin: interceptorOrigin.toArray() as [number, number, number],
-      speed: 0.05,
+      speed: interceptorData.interceptor1.speed,
       direction: normalizedDirectionArray as [number, number, number],
+      interceptorType: "interceptor1",
     };
     dispatch(addInterceptor(newInterceptor));
 

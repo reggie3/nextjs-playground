@@ -1,6 +1,6 @@
 import React from "react";
 import { Sphere } from "@react-three/drei";
-import { useFrame } from "@react-three/fiber";
+import { useFrame, useThree } from "@react-three/fiber";
 import { useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Vector3 } from "three";
@@ -8,7 +8,6 @@ import { Explosion, IncomingProjectile } from "../../mcTypes";
 import { addExplosion } from "../../redux/explosionsSlice";
 import { MissileCommandRootState } from "../../redux/store";
 import { removeIncomingProjectile } from "../../redux/incomingProjectilesSlice";
-import { useThree } from "@react-three/fiber";
 
 const IncomingProjectiles = () => {
   const missileMeshRefs = useRef<Record<string, THREE.Mesh>>({});
@@ -30,7 +29,8 @@ const IncomingProjectiles = () => {
           let missileHit: Explosion = {
             location: [missileMesh.position.x, missileMesh.position.y, -1],
             id: missile.id,
-            type: missile.type,
+            type: "incoming",
+            specificType: missile.incomingType,
             time: clock.getElapsedTime(),
           };
           dispatch(addExplosion(missileHit));

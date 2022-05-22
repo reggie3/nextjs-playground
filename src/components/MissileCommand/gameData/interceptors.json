@@ -1,0 +1,26 @@
+{
+  "interceptor1": {
+    "maxRange": 2,
+    "blastRadius": 0.5,
+    "damage": 1,
+    "color": "#ffcc00",
+    "speed": 0.25,
+    "explosionColor": "#ffee00"
+  },
+  "interceptor2": {
+    "maxRange": 5,
+    "blastRadius": 0.75,
+    "damage": 2,
+    "color": "#ffcc00",
+    "speed": 0.35,
+    "explosionColor": "#ffee00"
+  },
+  "interceptor3": {
+    "maxRange": 20,
+    "blastRadius": 1,
+    "damage": 4,
+    "color": "#ffcc00",
+    "speed": 0.4,
+    "explosionColor": "#ffee00"
+  }
+}
