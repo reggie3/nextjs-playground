@@ -19,22 +19,24 @@ const Launchers = () => {
     <group name="launchers">
       {Object.values(launchers).map((launcher: Launcher) => {
         return (
-          <Plane
-            ref={(ref: THREE.Mesh) => {
-              if (ref) {
-                launcherMeshRefs.current[launcher.id] = ref;
-              }
-            }}
-            key={launcher.id}
-            args={[0.25, 0.25]}
-            rotation={[0, 0, Math.PI / 4]}
-            position={launcher.location}
-          >
-            <meshStandardMaterial
-              attach="material"
-              color={launcherData[launcher.type].color}
-            />
-          </Plane>
+          <group name={`launcher-${launcher.id}`} key={launcher.id}>
+            <Plane
+              ref={(ref: THREE.Mesh) => {
+                if (ref) {
+                  launcherMeshRefs.current[launcher.id] = ref;
+                }
+              }}
+              key={launcher.id}
+              args={[0.25, 0.25]}
+              rotation={[0, 0, Math.PI / 4]}
+              position={launcher.location}
+            >
+              <meshStandardMaterial
+                attach="material"
+                color={launcherData[launcher.type].color}
+              />
+            </Plane>
+          </group>
         );
       })}
     </group>
