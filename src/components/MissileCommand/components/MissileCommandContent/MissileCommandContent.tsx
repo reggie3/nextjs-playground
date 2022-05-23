@@ -35,7 +35,7 @@ const MissileCommandContent: React.ForwardRefRenderFunction<
   const starsRef = useRef<THREE.Mesh>(null);
   const { camera, mouse, viewport, size } = useThree();
   const { aspect } = viewport;
-  console.log({ aspect });
+
   const { cameraPos, cameraZoom, setCameraControls } =
     useMissileCommandControl();
   const { width: canvasWidth, height: canvasHeight } = size;
@@ -58,7 +58,7 @@ const MissileCommandContent: React.ForwardRefRenderFunction<
   // useEffect(() => {}, [viewport]);
 
   const onClickCanvas = () => {
-    console.log("onClickCanvas", mouse.x, mouse.y);
+    // console.log("onClickCanvas", mouse.x, mouse.y);
   };
 
   useImperativeHandle(forwardedRef, () => ({

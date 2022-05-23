@@ -7,6 +7,7 @@ import getProjectile from "./utilities/getProjectile";
 
 type Props = {};
 
+const INTERVAL = 10;
 const useIncomingProjectilesManager = (props: Props) => {
   const dispatch = useDispatch();
 
@@ -14,7 +15,10 @@ const useIncomingProjectilesManager = (props: Props) => {
 
   useFrame(({ clock }) => {
     // create new missiles if time
-    if (clock.getElapsedTime() - lastMissileTimeSeconds.current > 0.15) {
+    if (
+      !lastMissileTimeSeconds.current ||
+      clock.getElapsedTime() - lastMissileTimeSeconds.current > INTERVAL
+    ) {
       lastMissileTimeSeconds.current = clock.getElapsedTime();
 
       const newMissile: IncomingProjectile = getProjectile({});

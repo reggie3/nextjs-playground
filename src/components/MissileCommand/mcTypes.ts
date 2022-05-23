@@ -14,6 +14,7 @@ interface Projectile {
   speed: number;
   id: string;
   projectileType: ProjectileTypes;
+  position: [number, number, number];
 }
 
 export interface IncomingProjectile extends Projectile {
@@ -41,6 +42,6 @@ export interface Explosion {
 
 export interface Launcher {
   id: string;
-  location: [number, number, number];
+  position: [number, number, number];
   type: LauncherTypes;
 }

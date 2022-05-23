@@ -7,7 +7,10 @@ import { Vector3 } from "three";
 import { Explosion, IncomingProjectile } from "../../mcTypes";
 import { addExplosion } from "../../redux/explosionsSlice";
 import { MissileCommandRootState } from "../../redux/store";
-import { removeIncomingProjectile } from "../../redux/incomingProjectilesSlice";
+import {
+  removeIncomingProjectile,
+  updateProjectile,
+} from "../../redux/incomingProjectilesSlice";
 
 const IncomingProjectiles = () => {
   const missileMeshRefs = useRef<Record<string, THREE.Mesh>>({});
@@ -44,6 +47,15 @@ const IncomingProjectiles = () => {
             .multiplyScalar(speed);
           const newPosition = missileMesh.position.clone().add(movementVector);
           missileMesh.position.set(newPosition.x, newPosition.y, newPosition.z);
+
+          dispatch(
+            updateProjectile({
+              id: missile.id,
+              update: {
+                position: [newPosition.x, newPosition.y, newPosition.z],
+              },
+            })
+          );
         }
       }
     });

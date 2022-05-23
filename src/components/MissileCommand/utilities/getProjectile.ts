@@ -53,6 +53,7 @@ const getProjectile = ({
     id: uuidv4(),
     projectileType: "incoming",
     incomingType,
+    position: origin,
   };
 };
 

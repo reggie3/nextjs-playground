@@ -90,7 +90,6 @@ const Interceptors = (props: InterceptorsProps) => {
     });
   });
 
-  console.log("interceptors", Object.keys(interceptors).length);
   return (
     <group name="interceptors">
       {Object.values(interceptors).map((interceptor: Interceptor) => {

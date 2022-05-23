@@ -20,7 +20,15 @@ export const incomingProjectilesSlice = createSlice({
     ) => {
       state.incomingProjectiles[action.payload.id] = action.payload;
     },
-
+    updateProjectile: (
+      state: IncomingProjectilesState,
+      action: PayloadAction<{ id: string; update: Partial<IncomingProjectile> }>
+    ) => {
+      state.incomingProjectiles[action.payload.id] = {
+        ...state.incomingProjectiles[action.payload.id],
+        ...action.payload.update,
+      };
+    },
     removeIncomingProjectile: (
       state: IncomingProjectilesState,
       action: PayloadAction<string>
@@ -43,7 +51,10 @@ export const incomingProjectilesSlice = createSlice({
   },
 });
 
-export const { addIncomingProjectile, removeIncomingProjectile } =
-  incomingProjectilesSlice.actions;
+export const {
+  addIncomingProjectile,
+  removeIncomingProjectile,
+  updateProjectile,
+} = incomingProjectilesSlice.actions;
 
 export default incomingProjectilesSlice.reducer;

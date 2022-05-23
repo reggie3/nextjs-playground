@@ -47,6 +47,7 @@ const McClickableBackground = ({}: McClickableBackgroundProps) => {
       speed: interceptorData.interceptor1.speed,
       direction: normalizedDirectionArray as [number, number, number],
       interceptorType: "interceptor1",
+      position: interceptorOrigin.toArray() as [number, number, number],
     };
     dispatch(addInterceptor(newInterceptor));
   };
@@ -54,7 +55,7 @@ const McClickableBackground = ({}: McClickableBackgroundProps) => {
   const createNewLauncher = (event: ThreeEvent<MouseEvent>) => {
     const newLauncher: Launcher = {
       id: uuidV4(),
-      location: [event.point.x, 0, -1],
+      position: [event.point.x, 0, -1],
       type: "launcher1",
     };
 
