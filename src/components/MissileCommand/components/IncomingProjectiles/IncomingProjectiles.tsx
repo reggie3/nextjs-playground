@@ -4,7 +4,7 @@ import { useRef } from "react";
 import { useSelector } from "react-redux";
 import { IncomingProjectile } from "../../mcTypes";
 import { MissileCommandRootState } from "../../redux/store";
-import useIncomingProjectiles from "../../useIncomingProjectiles";
+import useIncomingProjectiles from "./useIncomingProjectiles";
 
 const IncomingProjectiles = () => {
   const missileMeshRefs = useRef<Record<string, THREE.Mesh>>({});

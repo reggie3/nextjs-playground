@@ -9,7 +9,7 @@ import { useFrame, useThree } from "@react-three/fiber";
 import { forwardRef, useImperativeHandle, useRef } from "react";
 import { ProjectileImpact } from "../../mcTypes";
 import { GAME_FIELD_WIDTH } from "../../missileCommandGlobals";
-import useIncomingProjectiles from "../../useIncomingProjectiles";
+import useIncomingProjectiles from "../IncomingProjectiles/useIncomingProjectiles";
 import useInterceptors from "../Interceptors/useInterceptors";
 import useMissileCommandControl from "../../useMissileCommandControls";
 import { Explosions } from "../Explosions";

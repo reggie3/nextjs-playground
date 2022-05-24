@@ -2,15 +2,15 @@ import { useFrame } from "@react-three/fiber";
 import { useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Vector3 } from "three";
-import { Explosion, IncomingProjectile } from "./mcTypes";
-import { addExplosion } from "./redux/explosionsSlice";
+import { Explosion, IncomingProjectile } from "../../mcTypes";
+import { addExplosion } from "../../redux/explosionsSlice";
 import {
   addIncomingProjectile,
   removeIncomingProjectile,
   updateProjectile,
-} from "./redux/incomingProjectilesSlice";
-import { MissileCommandRootState } from "./redux/store";
-import getProjectile from "./utilities/getProjectile";
+} from "../../redux/incomingProjectilesSlice";
+import { MissileCommandRootState } from "../../redux/store";
+import getProjectile from "../../utilities/getProjectile";
 
 type Props = {
   projectileMeshes: Record<string, THREE.Mesh>;
