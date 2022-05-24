@@ -9,8 +9,8 @@ import { useFrame, useThree } from "@react-three/fiber";
 import { forwardRef, useImperativeHandle, useRef } from "react";
 import { ProjectileImpact } from "../../mcTypes";
 import { GAME_FIELD_WIDTH } from "../../missileCommandGlobals";
-import useIncomingProjectilesManager from "../../useIncomingProjectilesManager";
-import useInterceptorsManager from "../../useInterceptorsManager";
+import useIncomingProjectiles from "../../useIncomingProjectiles";
+import useInterceptors from "../Interceptors/useInterceptors";
 import useMissileCommandControl from "../../useMissileCommandControls";
 import { Explosions } from "../Explosions";
 import { IncomingProjectiles } from "../IncomingProjectiles";
@@ -39,10 +39,6 @@ const MissileCommandContent: React.ForwardRefRenderFunction<
   const { cameraPos, cameraZoom, setCameraControls } =
     useMissileCommandControl();
   const { width: canvasWidth, height: canvasHeight } = size;
-
-  // game managers
-  useIncomingProjectilesManager({});
-  const addInterceptor = useInterceptorsManager({});
 
   // camera management
   useFrame(() => {

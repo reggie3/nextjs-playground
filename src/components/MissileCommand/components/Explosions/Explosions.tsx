@@ -1,78 +1,19 @@
 import { Sphere } from "@react-three/drei";
-import { useFrame } from "@react-three/fiber";
 import { useRef } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Vector3 } from "three";
-import {
-  Explosion,
-  IncomingProjectileTypes,
-  InterceptorTypes,
-  ProjectileTypes,
-} from "../../mcTypes";
-import { removeExplosion } from "../../redux/explosionsSlice";
+import { useSelector } from "react-redux";
+import { Explosion } from "../../mcTypes";
 import { MissileCommandRootState } from "../../redux/store";
-import interceptorData from "../../gameData/interceptors.json";
-import incomingProjectileData from "../../gameData/incomingProjectiles.json";
 
-export interface ExplosionsProps {}
+import useExplosions from "./useExplosions";
 
-const EXPLOSION_LIFE_SECONDS = 2;
-
-const Explosions = (props: ExplosionsProps) => {
+const Explosions = () => {
   const { explosions } = useSelector(
     (state: MissileCommandRootState) => state.explosionsState
   );
   const explosionMeshRefs = useRef<Record<string, THREE.Mesh>>({});
 
-  const dispatch = useDispatch();
-
-  const getExplosionColor = (
-    type: ProjectileTypes,
-    specificType: IncomingProjectileTypes | InterceptorTypes
-  ) => {
-    switch (type) {
-      case "incoming":
-        return incomingProjectileData[specificType].explosionColor;
-      case "interceptor":
-        return interceptorData[specificType].explosionColor;
-
-      default:
-        return 0xffffff;
-    }
-  };
-
-  const getExplosionRadius = (
-    type: ProjectileTypes,
-    specificType: IncomingProjectileTypes | InterceptorTypes
-  ) => {
-    switch (type) {
-      case "incoming":
-        return incomingProjectileData[specificType].blastRadius;
-      case "interceptor":
-        return interceptorData[specificType].blastRadius;
-
-      default:
-        return 0.25;
-    }
-  };
-
-  useFrame(({ clock }) => {
-    Object.values(explosions).map((explosion: Explosion) => {
-      if (clock.getElapsedTime() - explosion.time > EXPLOSION_LIFE_SECONDS) {
-        dispatch(removeExplosion(explosion.id));
-        delete explosionMeshRefs.current[explosion.id];
-        return;
-      } else {
-        // scale the explosion based on the first half of a sin wave
-        const scale = Math.sin(
-          (clock.getElapsedTime() - explosion.time) /
-            (EXPLOSION_LIFE_SECONDS / Math.PI)
-        );
-        explosionMeshRefs.current[explosion.id].scale.x = scale;
-        explosionMeshRefs.current[explosion.id].scale.y = scale;
-        explosionMeshRefs.current[explosion.id].scale.z = scale;
-      }
-    });
+  const { getExplosionColor, getExplosionRadius } = useExplosions({
+    explosionMeshes: explosionMeshRefs.current,
   });
 
   return (

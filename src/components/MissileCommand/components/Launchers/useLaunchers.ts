@@ -12,6 +12,8 @@ import { addInterceptor } from "../../redux/interceptorsSlice";
 
 const useLaunchers = () => {
   const firingTimes = useRef<Record<string, number>>({});
+  const targetTable = useRef<Record<string, string>>({});
+
   const { launchers } = useSelector(
     (state: MissileCommandRootState) => state.launchersState
   );
@@ -27,10 +29,33 @@ const useLaunchers = () => {
     Object.values(incomingProjectiles).map((projectile) => {
       Object.values(launchers).map((launcher: Launcher) => {
         const { detectionRange } = launcherData[launcher.type];
-        const distance = new Vector3()
-          .fromArray(projectile.position)
-          .distanceTo(new Vector3().fromArray(launcher.position));
-        if (distance < detectionRange) {
+        // don't do collision detection of the projectile is beyond the max range
+        if (projectile.position[1] > detectionRange) {
+          return;
+        }
+        // don't do collision detection if projectile is outside the horizontal detection range
+        if (
+          projectile.position[0] < launcher.position[0] - detectionRange ||
+          projectile.position[0] > launcher.position[0] + detectionRange
+        ) {
+          return;
+        }
+
+        // don't do collision detection if the launcher is still cooling down
+        const coolDownSeconds =
+          launcherData[launcher.type].coolDownMillis / 1000;
+        const lastFiredTime = currentTime - firingTimes.current[launcher.id];
+        if (coolDownSeconds > lastFiredTime) {
+          return;
+        }
+        const xDistance = Math.abs(
+          projectile.position[0] - launcher.position[0]
+        );
+        const yDistance = Math.abs(
+          projectile.position[1] - launcher.position[1]
+        );
+        const squaredDistance = xDistance * xDistance + yDistance * yDistance;
+        if (squaredDistance < detectionRange * detectionRange) {
           const direction = new Vector3()
             .fromArray(projectile.position)
             .sub(new Vector3().fromArray(launcher.position));
@@ -47,6 +72,7 @@ const useLaunchers = () => {
             position: launcher.position,
           };
           dispatch(addInterceptor(newInterceptor));
+          firingTimes.current[launcher.id] = currentTime;
         }
       });
     });

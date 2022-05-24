@@ -1,65 +1,18 @@
 import React from "react";
 import { Sphere } from "@react-three/drei";
-import { useFrame, useThree } from "@react-three/fiber";
 import { useRef } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Vector3 } from "three";
-import { Explosion, IncomingProjectile } from "../../mcTypes";
-import { addExplosion } from "../../redux/explosionsSlice";
+import { useSelector } from "react-redux";
+import { IncomingProjectile } from "../../mcTypes";
 import { MissileCommandRootState } from "../../redux/store";
-import {
-  removeIncomingProjectile,
-  updateProjectile,
-} from "../../redux/incomingProjectilesSlice";
+import useIncomingProjectiles from "../../useIncomingProjectiles";
 
 const IncomingProjectiles = () => {
   const missileMeshRefs = useRef<Record<string, THREE.Mesh>>({});
   const { incomingProjectiles: missileData } = useSelector(
     (state: MissileCommandRootState) => state.incomingProjectilesState
   );
-  const dispatch = useDispatch();
-  const { clock } = useThree();
 
-  useFrame(() => {
-    // move current missiles
-    Object.values(missileData).forEach((missile: IncomingProjectile) => {
-      const missileMesh = missileMeshRefs.current[missile.id];
-
-      if (missileMesh) {
-        // mark a hit if the missile hits the ground
-        // remove the missile mesh if it is below the ground
-        if (missileMesh.position.y < -0.25) {
-          let missileHit: Explosion = {
-            location: [missileMesh.position.x, missileMesh.position.y, -1],
-            id: missile.id,
-            type: "incoming",
-            specificType: missile.incomingType,
-            time: clock.getElapsedTime(),
-          };
-          dispatch(addExplosion(missileHit));
-          dispatch(removeIncomingProjectile(missile.id));
-          delete missileMeshRefs.current[missile.id];
-          return;
-        } else {
-          const { direction, speed } = missile;
-          const movementVector = new Vector3()
-            .fromArray(direction)
-            .multiplyScalar(speed);
-          const newPosition = missileMesh.position.clone().add(movementVector);
-          missileMesh.position.set(newPosition.x, newPosition.y, newPosition.z);
-
-          dispatch(
-            updateProjectile({
-              id: missile.id,
-              update: {
-                position: [newPosition.x, newPosition.y, newPosition.z],
-              },
-            })
-          );
-        }
-      }
-    });
-  });
+  useIncomingProjectiles({ projectileMeshes: missileMeshRefs.current });
 
   return (
     <group name="incoming-projectiles">

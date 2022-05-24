@@ -44,4 +44,5 @@ export interface Launcher {
   id: string;
   position: [number, number, number];
   type: LauncherTypes;
+  targetId: string;
 }
