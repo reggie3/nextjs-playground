@@ -9,6 +9,7 @@ const useMissileCommandControl = () => {
     () => ({
       cameraZoom: { label: "zoom", value: 55, min: 10, max: 100, step: 1 },
       cameraPos: { label: "Position", x: 0, y: CAMERA_Y_POS, z: 5 },
+      orbitControls: { label: "Orbit Controls", value: false },
     })
   );
   return { cameraPos, cameraZoom, setCameraControls: set };

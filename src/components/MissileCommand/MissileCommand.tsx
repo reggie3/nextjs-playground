@@ -11,7 +11,7 @@ import { GAME_FIELD_HEIGHT, GAME_FIELD_WIDTH } from "./missileCommandGlobals";
 import useMissileCommandControl from "./useMissileCommandControls";
 
 const MissileCommand = () => {
-  const { cameraPos, cameraZoom } = useMissileCommandControl();
+  const { cameraPos, cameraZoom, orbitControls } = useMissileCommandControl();
   type MissileCommandContentHandle = React.ElementRef<
     typeof MissileCommandContent
   >;
@@ -45,7 +45,7 @@ const MissileCommand = () => {
         />
         <MissileCommandContent ref={contentRef} />
       </ReduxProvider>
-      {/* <OrbitControls /> */}
+      {true && <OrbitControls />}
     </Canvas>
   );
 };
