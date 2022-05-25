@@ -3347,6 +3347,11 @@
     "picocolors" "^1.0.0"
     "source-map-js" "^1.0.1"
 
+"postprocessing@^6.26.4":
+  "integrity" "sha512-8u3ERu8va0bhJ3E97r33tAqhMgOdX9ndSTQnL2KlNNOeO9L5h2w3Qi8UGzrU+R7s/Kwz51KxcB90XODcrpa0SA=="
+  "resolved" "https://registry.npmjs.org/postprocessing/-/postprocessing-6.26.4.tgz"
+  "version" "6.26.4"
+
 "potpack@^1.0.1":
   "integrity" "sha512-choctRBIV9EMT9WGAZHn3V7t0Z2pMQyl0EZE6pFc/6ml3ssw7Dlf/oAOvFwjm1HVsqfQN8GfeFyJ+d8tRzqueQ=="
   "resolved" "https://registry.npmjs.org/potpack/-/potpack-1.0.2.tgz"
@@ -3916,10 +3921,10 @@
     "potpack" "^1.0.1"
     "zstddec" "^0.0.2"
 
-"three@^0.140.0", "three@>= 0.123.0", "three@>=0.103.0", "three@>=0.122.0", "three@>=0.126", "three@>=0.133", "three@>=0.137":
-  "integrity" "sha512-jcHjbnYspPLDdsDQChmzyAoZ5KhJbgFk6pNGlAIc9fQMvsfPGjF5H9glrngqvb2CR/qXcClMyp5PYdF996lldA=="
-  "resolved" "https://registry.npmjs.org/three/-/three-0.140.0.tgz"
-  "version" "0.140.0"
+"three@^0.140.2", "three@>= 0.107.0 < 0.141.0", "three@>= 0.123.0", "three@>=0.103.0", "three@>=0.122.0", "three@>=0.126", "three@>=0.133", "three@>=0.137":
+  "integrity" "sha512-DdT/AHm/TbZXEhQKQpGt5/iSgBrmXpjU26FNtj1KhllVPTKj1eG4X/ShyD5W2fngE+I1s1wa4ttC4C3oCJt7Ag=="
+  "resolved" "https://registry.npmjs.org/three/-/three-0.140.2.tgz"
+  "version" "0.140.2"
 
 "through@^2.3.6", "through@^2.3.8":
   "integrity" "sha1-DdTJ/6q8NXlgsbckEV1+Doai4fU="

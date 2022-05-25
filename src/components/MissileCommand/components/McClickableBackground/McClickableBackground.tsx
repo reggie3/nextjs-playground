@@ -41,7 +41,7 @@ const McClickableBackground = ({}: McClickableBackgroundProps) => {
 
     const newInterceptor: Interceptor = {
       id: uuidV4(),
-      targetLocation: event.point.toArray() as [number, number, number],
+      targetPosition: event.point.toArray() as [number, number, number],
       projectileType: "interceptor",
       origin: interceptorOrigin.toArray() as [number, number, number],
       speed: interceptorData.interceptor1.speed,

@@ -1,6 +1,7 @@
 import launcherData from "./gameData/launchers.json";
 import interceptorProjectileData from "./gameData/interceptors.json";
 import incomingProjectileData from "./gameData/incomingProjectiles.json";
+import { IncomingProjectileStatus } from "./redux/incomingProjectilesSlice";
 
 export type LauncherTypes = keyof typeof launcherData;
 export type InterceptorTypes = keyof typeof interceptorProjectileData;
@@ -19,24 +20,25 @@ interface Projectile {
 
 export interface IncomingProjectile extends Projectile {
   incomingType: IncomingProjectileTypes;
+  status: IncomingProjectileStatus;
 }
 
 export interface Interceptor extends Projectile {
   interceptorType: InterceptorTypes;
-  targetLocation: [number, number, number];
+  targetPosition: [number, number, number];
 }
 
 export interface ProjectileImpact {
   id: string;
   type: IncomingProjectileTypes;
-  location: [number, number, number];
+  position: [number, number, number];
 }
 
 export interface Explosion {
   id: string;
   type: ProjectileTypes;
   specificType: IncomingProjectileTypes | InterceptorTypes;
-  location: [number, number, number];
+  position: [number, number, number];
   time: number;
 }
 

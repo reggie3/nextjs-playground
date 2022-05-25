@@ -29,6 +29,10 @@ const useLaunchers = () => {
     Object.values(incomingProjectiles).map((projectile) => {
       Object.values(launchers).map((launcher: Launcher) => {
         const { detectionRange } = launcherData[launcher.type];
+
+        // don't shoot at projectiles if they are not active
+        if (projectile.status !== "active") return;
+
         // don't do collision detection of the projectile is beyond the max range
         if (projectile.position[1] > detectionRange) {
           return;
@@ -63,7 +67,7 @@ const useLaunchers = () => {
           const normalizedDirectionArray = normalizedDirection.toArray();
           const newInterceptor: Interceptor = {
             id: uuidV4(),
-            targetLocation: projectile.position,
+            targetPosition: projectile.position,
             projectileType: "interceptor",
             interceptorType: "interceptor1",
             origin: launcher.position,

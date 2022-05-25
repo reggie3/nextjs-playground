@@ -58,7 +58,11 @@ const Launchers = () => {
             </Plane>
             <Sphere
               args={[launcherData[launcher.type].detectionRange, 64]}
-              position={launcher.position}
+              position={[
+                launcher.position[0],
+                launcher.position[1],
+                -1 * launcherData[launcher.type].detectionRange - 2,
+              ]}
               ref={(ref: THREE.Mesh) => {
                 if (ref) {
                   launcherMeshRefs.current[launcher.id].detectionRangeRing =

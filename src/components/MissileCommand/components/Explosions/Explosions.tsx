@@ -27,9 +27,9 @@ const Explosions = () => {
           <Sphere
             key={explosion.id}
             position={[
-              explosion.location[0],
-              explosion.type === "incoming" ? 0 : explosion.location[1],
-              explosion.location[2],
+              explosion.position[0],
+              explosion.type === "incoming" ? 0 : explosion.position[1],
+              -1 * radius,
             ]}
             ref={(ref: THREE.Mesh) => {
               if (ref) {

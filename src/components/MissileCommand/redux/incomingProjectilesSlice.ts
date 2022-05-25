@@ -2,6 +2,11 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { IncomingProjectile } from "../mcTypes";
 import { createWrapper, HYDRATE } from "next-redux-wrapper";
 
+export type IncomingProjectileStatus =
+  | "active"
+  | "intercepted"
+  | "destroyed"
+  | "dead";
 export interface IncomingProjectilesState {
   incomingProjectiles: Record<string, IncomingProjectile>;
 }
@@ -29,6 +34,16 @@ export const incomingProjectilesSlice = createSlice({
         ...action.payload.update,
       };
     },
+    updateProjectileStatus: (
+      state: IncomingProjectilesState,
+      action: PayloadAction<{ id: string; status: IncomingProjectileStatus }>
+    ) => {
+      const { id, status } = action.payload;
+      // check to see if the projectile is exists before attempting to update it
+      if (state.incomingProjectiles[id]) {
+        state.incomingProjectiles[id].status = status;
+      }
+    },
     removeIncomingProjectile: (
       state: IncomingProjectilesState,
       action: PayloadAction<string>
@@ -55,6 +70,7 @@ export const {
   addIncomingProjectile,
   removeIncomingProjectile,
   updateProjectile,
+  updateProjectileStatus,
 } = incomingProjectilesSlice.actions;
 
 export default incomingProjectilesSlice.reducer;

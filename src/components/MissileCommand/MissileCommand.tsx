@@ -41,6 +41,11 @@ const MissileCommand = () => {
     if (!shouldUseOrbitControls && cameraRef.current) {
       cameraRef.current.position.set(0, 5.5, 5);
       cameraRef.current.lookAt(0, 5.5, 5);
+
+      // @ts-ignore zoom does not exist on OrthographicCamera
+      cameraRef.current.zoom = 55;
+      // @ts-ignore updateProjectionMatrix does not exist on OrthographicCamera
+      cameraRef.current.updateProjectionMatrix();
     }
   }, [shouldUseOrbitControls]);
 

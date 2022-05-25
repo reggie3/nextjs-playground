@@ -29,7 +29,7 @@ const useInterceptors = ({ interceptorMeshes }: Props) => {
     interceptorMesh: THREE.Mesh
   ) => {
     let interceptorHit: Explosion = {
-      location: [interceptorMesh.position.x, interceptorMesh.position.y, 0],
+      position: [interceptorMesh.position.x, interceptorMesh.position.y, 0],
       id: interceptor.id,
       type: "interceptor",
       specificType: interceptor.interceptorType,
@@ -64,7 +64,7 @@ const useInterceptors = ({ interceptorMeshes }: Props) => {
 
         //  explode any interceptors that reach their target
         const distanceToTarget = interceptorMesh.position.distanceTo(
-          new Vector3().fromArray(interceptor.targetLocation)
+          new Vector3().fromArray(interceptor.targetPosition)
         );
         if (distanceToTarget < 0.1) {
           killInterceptor(interceptor);

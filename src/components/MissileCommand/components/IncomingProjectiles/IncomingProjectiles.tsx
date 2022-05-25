@@ -5,34 +5,46 @@ import { useSelector } from "react-redux";
 import { IncomingProjectile } from "../../mcTypes";
 import { MissileCommandRootState } from "../../redux/store";
 import useIncomingProjectiles from "./useIncomingProjectiles";
+import { ActiveProjectile } from "./ActiveProjectile";
+import { InterceptedProjectile } from "./InterceptedProjectile";
 
 const IncomingProjectiles = () => {
   const missileMeshRefs = useRef<Record<string, THREE.Mesh>>({});
-  const { incomingProjectiles: missileData } = useSelector(
+  const { incomingProjectiles } = useSelector(
     (state: MissileCommandRootState) => state.incomingProjectilesState
   );
 
   useIncomingProjectiles({ projectileMeshes: missileMeshRefs.current });
 
+  const setProjectileMeshRef = (ref: THREE.Mesh, id: string) => {
+    if (ref) {
+      missileMeshRefs.current[id] = ref;
+    }
+  };
+
   return (
     <group name="incoming-projectiles">
       <group name="missiles">
-        {Object.values(missileData).map((missile: IncomingProjectile) => {
-          return (
-            <Sphere
-              ref={(ref: THREE.Mesh) => {
-                if (ref) {
-                  missileMeshRefs.current[missile.id] = ref;
-                }
-              }}
-              key={missile.id}
-              args={[0.1]}
-              position={missile.origin}
-            >
-              <meshStandardMaterial attach="material" color="red" />
-            </Sphere>
-          );
-        })}
+        {Object.values(incomingProjectiles).map(
+          (incomingProjectile: IncomingProjectile) => {
+            if (incomingProjectile.status === "active") {
+              return (
+                <ActiveProjectile
+                  key={incomingProjectile.id}
+                  incomingProjectile={incomingProjectile}
+                  setProjectileMeshRef={setProjectileMeshRef}
+                />
+              );
+            }
+            return (
+              <InterceptedProjectile
+                key={incomingProjectile.id}
+                incomingProjectile={incomingProjectile}
+                setProjectileMeshRef={setProjectileMeshRef}
+              />
+            );
+          }
+        )}
       </group>
     </group>
   );

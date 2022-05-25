@@ -1,7 +1,7 @@
 {
   "launcher1": {
     "detectionRange": 2,
-    "coolDownMillis": 500,
+    "coolDownMillis": 750,
     "color": "#00FFFF"
   },
   "launcher2": {

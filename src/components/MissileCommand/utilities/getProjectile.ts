@@ -54,6 +54,7 @@ const getProjectile = ({
     projectileType: "incoming",
     incomingType,
     position: origin,
+    status: "active",
   };
 };
 

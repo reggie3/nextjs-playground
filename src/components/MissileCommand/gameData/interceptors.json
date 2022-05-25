@@ -1,7 +1,7 @@
 {
   "interceptor1": {
     "maxRange": 2,
-    "blastRadius": 0.5,
+    "blastRadius": 0.25,
     "blastTime": 0.25,
     "damage": 1,
     "color": "#ffcc00",
@@ -10,7 +10,7 @@
   },
   "interceptor2": {
     "maxRange": 5,
-    "blastRadius": 0.75,
+    "blastRadius": 0.35,
     "blastTime": 0.25,
     "damage": 2,
     "color": "#ffcc00",
@@ -20,7 +20,7 @@
   "interceptor3": {
     "maxRange": 20,
     "blastRadius": 1,
-    "blastTime": 0.25,
+    "blastTime": 0.45,
     "damage": 4,
     "color": "#ffcc00",
     "speed": 0.4,

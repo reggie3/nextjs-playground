@@ -8,6 +8,7 @@ import {
   addIncomingProjectile,
   removeIncomingProjectile,
   updateProjectile,
+  updateProjectileStatus,
 } from "../../redux/incomingProjectilesSlice";
 import { MissileCommandRootState } from "../../redux/store";
 import getProjectile from "../../utilities/getProjectile";
@@ -36,23 +37,38 @@ const useIncomingProjectiles = ({ projectileMeshes }: Props) => {
       const newMissile: IncomingProjectile = getProjectile({});
       dispatch(addIncomingProjectile(newMissile));
     }
+
     Object.values(missileData).forEach((projectile: IncomingProjectile) => {
       const missileMesh = projectileMeshes[projectile.id];
 
       if (missileMesh) {
         // mark a hit if the projectile hits the ground
         // remove the projectile mesh if it is below the ground
+        if (projectile.status === "destroyed") {
+          dispatch(removeIncomingProjectile(projectile.id));
+          delete projectileMeshes[projectile.id];
+          return;
+        }
+        // don't move projectiles that have been intercepted
+        if (projectile.status === "intercepted") {
+          return;
+        }
+
         if (missileMesh.position.y < -0.25) {
           let missileHit: Explosion = {
-            location: [missileMesh.position.x, missileMesh.position.y, -1],
+            position: [missileMesh.position.x, missileMesh.position.y, -1],
             id: projectile.id,
             type: "incoming",
             specificType: projectile.incomingType,
             time: clock.getElapsedTime(),
           };
           dispatch(addExplosion(missileHit));
-          dispatch(removeIncomingProjectile(projectile.id));
-          delete projectileMeshes[projectile.id];
+          dispatch(
+            updateProjectileStatus({
+              id: projectile.id,
+              status: "destroyed",
+            })
+          );
           return;
         } else {
           const { direction, speed } = projectile;
