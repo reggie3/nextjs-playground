@@ -70,7 +70,14 @@ const Launchers = () => {
                 color="hotpink"
                 transparent
                 opacity={0.1}
+                blending={THREE.NormalBlending}
               />
+              {/* <lineBasicMaterial
+                color="#ffff00"
+                linewidth={1}
+                linecap="round" //ignored by WebGLRenderer
+                linejoin="round"
+              /> */}
             </Sphere>
           </group>
         );

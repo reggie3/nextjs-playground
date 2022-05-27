@@ -4,6 +4,7 @@
     "clsx",
     "glsl",
     "gltf",
+    "linewidth",
     "maath",
     "modulehash",
     "Phong",
