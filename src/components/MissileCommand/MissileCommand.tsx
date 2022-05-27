@@ -4,6 +4,14 @@ import { OrthographicCamera } from "@react-three/drei";
 import { ThreeEvent } from "@react-three/fiber";
 import { Canvas } from "@react-three/fiber";
 import {
+  EffectComposer,
+  DepthOfField,
+  Bloom,
+  Noise,
+  Vignette,
+  Selection,
+} from "@react-three/postprocessing";
+import {
   ForwardRefExoticComponent,
   RefAttributes,
   useEffect,
@@ -65,7 +73,20 @@ const MissileCommand = () => {
           makeDefault
           zoom={cameraZoom}
         />
-        <MissileCommandContent ref={contentRef} />
+        <Selection>
+          <MissileCommandContent ref={contentRef} />
+        </Selection>
+        <EffectComposer>
+          {/* <DepthOfField
+            focusDistance={0}
+            focalLength={0.02}
+            bokehScale={2}
+            height={480}
+          /> */}
+          {/* <Bloom luminanceThreshold={0} luminanceSmoothing={0.9} height={300} /> */}
+          {/* <Noise opacity={0.5} /> */}
+          {/* <Vignette eskil={false} offset={0.1} darkness={1.1} /> */}
+        </EffectComposer>
       </ReduxProvider>
       {shouldUseOrbitControls && <OrbitControls />}
     </Canvas>

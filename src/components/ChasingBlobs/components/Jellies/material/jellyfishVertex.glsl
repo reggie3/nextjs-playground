@@ -1,8 +1,6 @@
 varying vec3 vertexNormal;
 varying vec2 vertexUV;
-
 uniform float uTime;
-uniform vec3 v3Color;
 
 void main() {
     vertexUV = uv;

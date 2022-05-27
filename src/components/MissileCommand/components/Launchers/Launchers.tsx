@@ -9,10 +9,14 @@ import * as THREE from "three";
 import { Vector2 } from "three";
 import { OutlineMaterial } from "../../../../Materials/OutlineMaterial";
 import useLaunchers from "./useLaunchers";
+import {
+  EffectComposer,
+  Outline,
+  Selection,
+  Select,
+} from "@react-three/postprocessing";
 
 const Launchers = () => {
-  const { gl, scene, camera, size } = useThree();
-  const aspect = useMemo(() => new Vector2(size.width, size.height), [size]);
   useLaunchers();
   const launcherMeshRefs = useRef<
     Record<string, { launcher: THREE.Mesh; detectionRangeRing: THREE.Mesh }>
@@ -20,17 +24,6 @@ const Launchers = () => {
   const { launchers } = useSelector(
     (state: MissileCommandRootState) => state.launchersState
   );
-  const dispatch = useDispatch();
-  const { clock } = useThree();
-  const elapsedTime = clock.getElapsedTime();
-
-  const rangeRings = useMemo(() => {
-    return launcherMeshRefs.current
-      ? Object.values(launcherMeshRefs.current).map(
-          (value) => value.detectionRangeRing
-        )
-      : [];
-  }, []);
 
   return (
     <group name="launchers">
@@ -56,6 +49,7 @@ const Launchers = () => {
                 color={launcherData[launcher.type].color}
               />
             </Plane>
+
             <Sphere
               args={[launcherData[launcher.type].detectionRange, 64]}
               position={[

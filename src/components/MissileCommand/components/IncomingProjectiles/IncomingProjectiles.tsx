@@ -9,7 +9,7 @@ import { ActiveProjectile } from "./ActiveProjectile";
 import { InterceptedProjectile } from "./InterceptedProjectile";
 
 const IncomingProjectiles = () => {
-  const missileMeshRefs = useRef<Record<string, THREE.Mesh>>({});
+  const missileMeshRefs = useRef<Record<string, THREE.Mesh | THREE.Points>>({});
   const { incomingProjectiles } = useSelector(
     (state: MissileCommandRootState) => state.incomingProjectilesState
   );

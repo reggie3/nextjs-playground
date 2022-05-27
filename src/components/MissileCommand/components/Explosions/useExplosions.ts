@@ -12,13 +12,14 @@ import incomingProjectileData from "../../gameData/incomingProjectiles.json";
 import { MissileCommandRootState } from "../../redux/store";
 import isInBounds from "../../../../utils/getIsInBounds";
 import { updateProjectileStatus } from "../../redux/incomingProjectilesSlice";
-import { Vector3 } from "three";
+import * as THREE from "three";
+import { ShaderMaterial } from "three";
 
 type Props = {
   explosionMeshes: Record<string, THREE.Mesh>;
 };
 
-const EXPLOSION_LIFE_SECONDS = 2;
+const EXPLOSION_LIFE_SPAN_SECONDS = 2;
 
 const useExplosions = ({ explosionMeshes }: Props) => {
   const { explosions } = useSelector(
@@ -33,22 +34,24 @@ const useExplosions = ({ explosionMeshes }: Props) => {
   const getExplosionColor = (
     type: ProjectileTypes,
     specificType: IncomingProjectileTypes | InterceptorTypes
-  ) => {
+  ): THREE.Color => {
     switch (type) {
       case "incoming":
-        return incomingProjectileData[specificType].explosionColor;
+        return new THREE.Color(
+          incomingProjectileData[specificType].explosionColor
+        );
       case "interceptor":
-        return interceptorData[specificType].explosionColor;
+        return new THREE.Color(interceptorData[specificType].explosionColor);
 
       default:
-        return 0xffffff;
+        return new THREE.Color(0xffffff);
     }
   };
 
   const getExplosionRadius = (
     type: ProjectileTypes,
     specificType: IncomingProjectileTypes | InterceptorTypes
-  ) => {
+  ): number => {
     switch (type) {
       case "incoming":
         return incomingProjectileData[specificType].blastRadius;
@@ -60,7 +63,7 @@ const useExplosions = ({ explosionMeshes }: Props) => {
     }
   };
 
-  const getExplosionTime = (
+  const getExplosionLifeSpan = (
     type: ProjectileTypes,
     specificType: IncomingProjectileTypes | InterceptorTypes
   ) => {
@@ -68,7 +71,7 @@ const useExplosions = ({ explosionMeshes }: Props) => {
       case "incoming":
         return (
           incomingProjectileData[specificType].blastTime ||
-          EXPLOSION_LIFE_SECONDS
+          EXPLOSION_LIFE_SPAN_SECONDS
         );
       case "interceptor":
         return interceptorData[specificType].blastTime;
@@ -98,15 +101,14 @@ const useExplosions = ({ explosionMeshes }: Props) => {
       }
       const scaledRadius = blastRadius * scale;
 
-      const distanceFromExplosionToProjectile = new Vector3()
+      const distanceFromExplosionToProjectile = new THREE.Vector3()
         .fromArray([
           explosionPosition[0],
           explosionPosition[1],
           incomingProjectile.position[2],
         ])
-        .distanceTo(new Vector3().fromArray(incomingProjectile.position));
+        .distanceTo(new THREE.Vector3().fromArray(incomingProjectile.position));
       if (distanceFromExplosionToProjectile < blastRadius) {
-        console.log("intercept projectile", incomingProjectile.id);
         if (incomingProjectile.status !== "intercepted") {
           dispatch(
             updateProjectileStatus({
@@ -121,22 +123,27 @@ const useExplosions = ({ explosionMeshes }: Props) => {
 
   useFrame(({ clock }) => {
     Object.values(explosions).map((explosion: Explosion) => {
-      const explosionTime = getExplosionTime(
+      const explosionLifeSpan = getExplosionLifeSpan(
         explosion.type,
         explosion.specificType
       );
-      if (clock.getElapsedTime() - explosion.time > explosionTime) {
+      if (clock.getElapsedTime() - explosion.time > explosionLifeSpan) {
         dispatch(removeExplosion(explosion.id));
         delete explosionMeshes[explosion.id];
         return;
       } else {
         // scale the explosion based on the first half of a sin wave
         const scale = Math.sin(
-          (clock.getElapsedTime() - explosion.time) / (explosionTime / Math.PI)
+          (clock.getElapsedTime() - explosion.time) /
+            (explosionLifeSpan / Math.PI)
         );
         explosionMeshes[explosion.id].scale.x = scale;
         explosionMeshes[explosion.id].scale.y = scale;
         explosionMeshes[explosion.id].scale.z = scale;
+
+        const material = explosionMeshes[explosion.id]
+          .material as ShaderMaterial;
+        material.uniforms.uAge.value = clock.getElapsedTime() - explosion.time;
 
         if (explosion.type === "interceptor") {
           destroyProjectiles(
@@ -149,7 +156,7 @@ const useExplosions = ({ explosionMeshes }: Props) => {
     });
   });
 
-  return { getExplosionColor, getExplosionRadius };
+  return { getExplosionColor, getExplosionRadius, getExplosionLifeSpan };
 };
 
 export default useExplosions;
