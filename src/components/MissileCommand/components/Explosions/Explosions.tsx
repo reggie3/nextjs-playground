@@ -23,20 +23,6 @@ const Explosions = () => {
       explosionMeshes: explosionMeshRefs.current,
     });
 
-  // useFrame(({ clock }) => {
-  //   if (explosionMeshRefs.current) {
-  //     Object.entries(explosionMeshRefs.current).forEach(
-  //       ([key, explosionMesh]) => {
-  //         const explosion = explosions[key];
-  //         const explosionAge = clock.getElapsedTime() - explosion.time;
-  //         const lifePercentage = explosionAge / explosion.lifespan;
-  //         const material = explosionMesh.material as ShaderMaterial;
-  //         material.uniforms.uTime.value = lifePercentage;
-  //       }
-  //     );
-  //   }
-  // });
-
   return (
     <group name="explosions">
       <directionalLight
@@ -71,6 +57,7 @@ const Explosions = () => {
               ]}
               ref={(ref: THREE.Mesh) => {
                 if (ref) {
+                  // ref.material.transparent = true;
                   explosionMeshRefs.current[explosion.id] = ref;
                 }
               }}

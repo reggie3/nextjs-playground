@@ -1,6 +1,7 @@
 import {
   Box,
   OrbitControls,
+  Plane,
   softShadows,
   Sphere,
   Stars,
@@ -85,6 +86,13 @@ const MissileCommandContent: React.ForwardRefRenderFunction<
       <McMouseIndicator />
       <Launchers />
       <McFloor />
+      {true && (
+        <Plane
+          name="debug-plane"
+          args={[GAME_FIELD_WIDTH, GAME_FIELD_WIDTH]}
+          position={[0, 0, -50]}
+        />
+      )}
     </group>
   );
 };

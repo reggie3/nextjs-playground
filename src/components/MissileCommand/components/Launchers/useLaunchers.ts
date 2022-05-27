@@ -10,7 +10,11 @@ import launcherData from "../../gameData/launchers.json";
 import interceptorData from "../../gameData/interceptors.json";
 import { addInterceptor } from "../../redux/interceptorsSlice";
 
-const useLaunchers = () => {
+type Props = {
+  explosionMeshes: Record<string, THREE.Mesh>;
+};
+
+const useLaunchers = ({ launcherMeshes }: Props) => {
   const firingTimes = useRef<Record<string, number>>({});
   const targetTable = useRef<Record<string, string>>({});
 

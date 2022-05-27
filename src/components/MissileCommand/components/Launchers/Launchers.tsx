@@ -17,10 +17,10 @@ import {
 } from "@react-three/postprocessing";
 
 const Launchers = () => {
-  useLaunchers();
   const launcherMeshRefs = useRef<
     Record<string, { launcher: THREE.Mesh; detectionRangeRing: THREE.Mesh }>
   >({});
+  useLaunchers(launcherMeshRefs.current);
   const { launchers } = useSelector(
     (state: MissileCommandRootState) => state.launchersState
   );
@@ -59,6 +59,7 @@ const Launchers = () => {
               ]}
               ref={(ref: THREE.Mesh) => {
                 if (ref) {
+                  ref.material.transparent = true;
                   launcherMeshRefs.current[launcher.id].detectionRangeRing =
                     ref;
                 }
