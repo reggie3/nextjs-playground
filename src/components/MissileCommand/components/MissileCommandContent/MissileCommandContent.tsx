@@ -86,7 +86,7 @@ const MissileCommandContent: React.ForwardRefRenderFunction<
       <McMouseIndicator />
       <Launchers />
       <McFloor />
-      {true && (
+      {false && (
         <Plane
           name="debug-plane"
           args={[GAME_FIELD_WIDTH, GAME_FIELD_WIDTH]}

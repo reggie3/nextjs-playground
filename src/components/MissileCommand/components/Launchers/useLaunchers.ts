@@ -9,12 +9,13 @@ import { Vector3 } from "three";
 import launcherData from "../../gameData/launchers.json";
 import interceptorData from "../../gameData/interceptors.json";
 import { addInterceptor } from "../../redux/interceptorsSlice";
+import { Z_INTERCEPTORS } from "../../missileCommandGlobals";
 
 type Props = {
   explosionMeshes: Record<string, THREE.Mesh>;
 };
 
-const useLaunchers = ({ launcherMeshes }: Props) => {
+const useLaunchers = ({ _launcherMeshes }: Props) => {
   const firingTimes = useRef<Record<string, number>>({});
   const targetTable = useRef<Record<string, string>>({});
 
@@ -74,7 +75,7 @@ const useLaunchers = ({ launcherMeshes }: Props) => {
             targetPosition: projectile.position,
             projectileType: "interceptor",
             interceptorType: "interceptor1",
-            origin: launcher.position,
+            origin: [launcher.position[0], launcher.position[1], Z_INTERCEPTORS],
             speed: interceptorData.interceptor1.speed,
             direction: normalizedDirectionArray as [number, number, number],
             position: launcher.position,

@@ -51,6 +51,7 @@ function NavBar(): ReactElement {
               {/* <CustomLink href="/trigger-example">Trigger Example</CustomLink> */}
               {/* <CustomLink href="/space-invaders">Space Shooter</CustomLink> */}
               <CustomLink href="/missile-command">Missile Command</CustomLink>
+              <CustomLink href="/particles">Explosions</CustomLink>
             </Box>
           </Toolbar>
         </AppBar>

@@ -1,7 +1,7 @@
 import { Vector3 } from "three";
 import { IncomingProjectile, IncomingProjectileTypes } from "../mcTypes";
 import { v4 as uuidv4 } from "uuid";
-import { GAME_FIELD_HEIGHT, GAME_FIELD_WIDTH } from "../missileCommandGlobals";
+import { GAME_FIELD_HEIGHT, GAME_FIELD_WIDTH, Z_INCOMING_PROJECTILES } from "../missileCommandGlobals";
 import { randomNumberFromInterval } from "../../../utils/getRandomIntFromInterval";
 import incomingProjectileData from "../gameData/incomingProjectiles.json";
 import { getRandomKeyFromObject } from "../../../utils/getRandomKeyFromObject";
@@ -30,7 +30,7 @@ const getProjectile = ({
 
   const randomDestinationX = randomNumberFromInterval(minDestX, maxDestX);
 
-  const origin = [randomOriginX, GAME_FIELD_HEIGHT * 1.25, 0] as [
+  const origin = [randomOriginX, GAME_FIELD_HEIGHT * 1.25, Z_INCOMING_PROJECTILES] as [
     number,
     number,
     number
@@ -39,7 +39,7 @@ const getProjectile = ({
   const directionVector = new Vector3(
     randomDestinationX - randomOriginX,
     -GAME_FIELD_HEIGHT * 1.25,
-    -1
+    0
   ).normalize();
 
   const incomingType = getRandomKeyFromObject(
