@@ -20,7 +20,7 @@ const Launchers = () => {
   const launcherMeshRefs = useRef<
     Record<string, { launcher: THREE.Mesh; detectionRangeRing: THREE.Mesh }>
   >({});
-  useLaunchers(launcherMeshRefs.current);
+  useLaunchers();
   const { launchers } = useSelector(
     (state: MissileCommandRootState) => state.launchersState
   );
@@ -59,7 +59,7 @@ const Launchers = () => {
               ]}
               ref={(ref: THREE.Mesh) => {
                 if (ref) {
-                  ref.material.transparent = true;
+                  (ref.material as THREE.Material).transparent = true;
                   launcherMeshRefs.current[launcher.id].detectionRangeRing =
                     ref;
                 }

@@ -73,11 +73,17 @@ const CustomLink = React.forwardRef<HTMLAnchorElement, CustomLinkProps>(
     } = props;
 
     const router = useRouter();
+
     const pathname = typeof href === "string" ? href : href.pathname;
     const className = clsx(classNameProps, {
       [activeClassName]: router.pathname === pathname && activeClassName,
     });
 
+    debugger;
+    const isActive = router.asPath === pathname;
+    if (isActive) {
+      console.log("active route ", pathname);
+    }
     const isExternal =
       typeof href === "string" &&
       (href.indexOf("http") === 0 || href.indexOf("mailto:") === 0);
@@ -92,25 +98,15 @@ const CustomLink = React.forwardRef<HTMLAnchorElement, CustomLinkProps>(
       return <MuiLink className={className} href={href} ref={ref} {...other} />;
     }
 
-    if (noLinkStyle) {
-      return (
-        <NextLinkComposed
-          className={className}
-          ref={ref}
-          to={href}
-          {...other}
-        />
-      );
-    }
-
     return (
       <MuiLink
         component={NextLinkComposed}
         linkAs={linkAs}
-        className={className}
         ref={ref}
         to={href}
         {...other}
+        color={isActive ? "secondary" : "primary"}
+        underline={isActive ? "always" : "hover"}
       />
     );
   }

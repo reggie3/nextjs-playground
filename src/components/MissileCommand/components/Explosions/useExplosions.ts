@@ -132,7 +132,8 @@ const useExplosions = ({ explosionMeshes }: Props) => {
         delete explosionMeshes[explosion.id];
         return;
       } else {
-        explosionMeshes[explosion.id].material.transparent = true;
+        (explosionMeshes[explosion.id].material as THREE.Material).transparent =
+          true;
         // scale the explosion based on the first half of a sin wave
         const scale = Math.sin(
           (clock.getElapsedTime() - explosion.time) /

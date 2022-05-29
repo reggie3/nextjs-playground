@@ -1,62 +1,92 @@
-import { Box, AppBar, Toolbar, Typography, useTheme } from "@mui/material";
+import { Box, useTheme, IconButton } from "@mui/material";
 import Link from "next/link";
-import React, { ReactElement } from "react";
-import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
-import { CustomLink } from "../CustomLink";
+import React, { ReactElement, useState } from "react";
+import KeyboardDoubleArrowDownIcon from "@mui/icons-material/KeyboardDoubleArrowDown";
+import { NavbarExpandedMenu } from "./components/NavbarExpandedMenu";
+import { motion } from "framer-motion";
+import { AnimatedHomeIcon } from "../AnimatedHomeIcon";
+
+const MoreIcon = ({ isOpen }: { isOpen: boolean }) => {
+  const theme = useTheme();
+  return (
+    <motion.div
+      animate={{
+        rotate: isOpen ? 540 : 0,
+        color: isOpen
+          ? theme.palette.secondary.dark
+          : theme.palette.primary.main,
+      }}
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <KeyboardDoubleArrowDownIcon />
+    </motion.div>
+  );
+};
 
 function NavBar(): ReactElement {
   const theme = useTheme();
+
+  const [isOpen, setIsOpen] = useState(true);
+
   return (
-    <div style={{ zIndex: 100 }}>
-      <Box sx={{ flexGrow: 1 }}>
-        <AppBar position="static">
-          <Toolbar>
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: "row",
-                gap: "1rem",
-                alignItems: "center",
-              }}
-            >
-              <Link href="/">
-                <Box
-                  sx={{
-                    display: "flex",
-                    gap: 1,
-                    alignItems: "center",
-                    cursor: "pointer",
-                    color: theme.palette.text.primary,
-                    textDecoration: "underline",
-                  }}
-                >
-                  <HomeOutlinedIcon style={{ fontSize: "1.75rem" }} />
-                  <a>
-                    <Typography style={{ fontSize: "1.25rem" }}>
-                      Home
-                    </Typography>
-                  </a>
-                </Box>
-              </Link>
-              {/* <Link href="/fibonacci">
+    <Box
+      sx={{
+        zIndex: 100,
+        position: "fixed",
+      }}
+    >
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "row",
+          gap: theme.spacing(0.5),
+          alignItems: "center",
+          px: 1,
+          py: 0,
+          backgroundColor: "rgba(255,255,255,.15)",
+          margin: 1,
+          borderRadius: 2,
+          width: "10rem",
+          justifyContent: "space-between",
+          position: "relative",
+        }}
+      >
+        <Link href="/" data-testid="home-link">
+          <Box
+            sx={{
+              display: "flex",
+              gap: 1,
+              alignItems: "center",
+              cursor: "pointer",
+              color: theme.palette.text.primary,
+              textDecoration: "underline",
+            }}
+          >
+            <AnimatedHomeIcon />
+          </Box>
+        </Link>
+        <IconButton
+          aria-label={isOpen ? "close more menu" : "close more menu"}
+          color="primary"
+          onClick={() => {
+            setIsOpen(!isOpen);
+          }}
+        >
+          <MoreIcon isOpen={isOpen} />
+        </IconButton>
+        {/* <Link href="/fibonacci">
                 <a>Fibonacci</a>
               </Link>
               <Link href="/hello-wasm">
                 <a>Hello WASM</a>
               </Link> */}
-              <CustomLink href="/audio-visualizers">Audio Viz</CustomLink>
-              <CustomLink href="/web-audio">Web Audio</CustomLink>
-              <CustomLink href="/globe">3D Globe</CustomLink>
-              <CustomLink href="/chasing-blobs">Chasing Blobs</CustomLink>
-              {/* <CustomLink href="/trigger-example">Trigger Example</CustomLink> */}
-              {/* <CustomLink href="/space-invaders">Space Shooter</CustomLink> */}
-              <CustomLink href="/missile-command">Missile Command</CustomLink>
-              <CustomLink href="/particles">Particles</CustomLink>
-            </Box>
-          </Toolbar>
-        </AppBar>
       </Box>
-    </div>
+      <NavbarExpandedMenu isVisible={isOpen} />
+    </Box>
   );
 }
 

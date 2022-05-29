@@ -7,9 +7,10 @@ import * as THREE from "three";
 
 export interface MultiPlanesProps {
   pos: [number, number];
+  clickTimeSeconds: number;
 }
-const MultiPlanes = ({ pos }: MultiPlanesProps) => {
-  const particlesRef = useRef<{ mesh: THREE.Mesh; direction: Vector3 }[]>([]);
+const MultiPlanes = ({ pos, clickTimeSeconds }: MultiPlanesProps) => {
+  const particlesRef = useRef<{ mesh: THREE.Mesh; direction?: Vector3 }[]>([]);
   const { color, number, size, speed, lifespan } = useParticlesControls();
   const [startTime, setStartTime] = useState(0);
 
@@ -21,7 +22,9 @@ const MultiPlanes = ({ pos }: MultiPlanesProps) => {
         mesh.visible = true;
       }
 
-      mesh.position.addScaledVector(direction, speed);
+      if (direction) {
+        mesh.position.addScaledVector(direction, speed);
+      }
     });
     if (clock.getElapsedTime() - startTime > lifespan) {
       particlesRef.current.forEach((particle) => {
@@ -30,22 +33,29 @@ const MultiPlanes = ({ pos }: MultiPlanesProps) => {
     }
   });
 
+  const resetParticles = (pos: [number, number]) => {
+    particlesRef.current.forEach((particle) => {
+      particle.direction = new Vector3(
+        Math.random() * 2 - 1,
+        Math.random() * 2 - 1,
+        0
+      ).normalize();
+      particle.mesh.position.set(pos[0], pos[1], 0);
+    });
+  };
+
   useEffect(() => {
     if (particlesRef.current.length) {
+      console.log("updating directions");
       setStartTime(clock.getElapsedTime());
+      resetParticles(pos);
     }
-  }, [clock, pos]);
+  }, [clock, pos, clickTimeSeconds]);
 
   console.count("render");
   return (
     <group name="multi-spheres">
       {Array.from(Array(number)).map((_, index) => {
-        const direction = new Vector3(
-          Math.random() * 2 - 1,
-          Math.random() * 2 - 1,
-          0
-        ).normalize();
-
         return (
           <Plane
             args={[size, size, 1]}
@@ -55,7 +65,6 @@ const MultiPlanes = ({ pos }: MultiPlanesProps) => {
               if (ref) {
                 particlesRef.current.push({
                   mesh: ref,
-                  direction,
                 });
               }
             }}

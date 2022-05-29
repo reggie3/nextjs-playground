@@ -26,7 +26,14 @@ function WebAudio({}: Props) {
   };
 
   return (
-    <Container>
+    <Container
+      sx={{
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        flexDirection: "column",
+      }}
+    >
       <Typography variant="h4" paddingY={1}>
         WebAudio Demos
       </Typography>
