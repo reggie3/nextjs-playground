@@ -13,11 +13,26 @@ const useMissileCommandControl = () => {
     })
   );
 
+  const [{ incomingInterval }] = useControls(
+    "Game Controls",
+    // @ts-ignore
+    () => ({
+      incomingInterval: {
+        label: "incoming interval",
+        value: 1,
+        min: 0.1,
+        max: 5,
+        step: 0.1,
+      },
+    })
+  );
+
   return {
     cameraPos,
     cameraZoom,
     setCameraControls: set,
     orbitControls,
+    incomingInterval,
   };
 };
 

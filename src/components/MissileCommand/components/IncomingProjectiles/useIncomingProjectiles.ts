@@ -11,15 +11,17 @@ import {
   updateProjectileStatus,
 } from "../../redux/incomingProjectilesSlice";
 import { MissileCommandRootState } from "../../redux/store";
+import useMissileCommandControl from "../../useMissileCommandControls";
 import getProjectile from "../../utilities/getProjectile";
 
 type Props = {
   projectileMeshes: Record<string, THREE.Mesh | THREE.Points>;
 };
 
-const INTERVAL = 1;
 const useIncomingProjectiles = ({ projectileMeshes }: Props) => {
   const dispatch = useDispatch();
+  const { incomingInterval } = useMissileCommandControl();
+
   const { incomingProjectiles } = useSelector(
     (state: MissileCommandRootState) => state.incomingProjectilesState
   );
@@ -30,7 +32,7 @@ const useIncomingProjectiles = ({ projectileMeshes }: Props) => {
     // create new incomingProjectiles if time
     if (
       !lastMissileTimeSeconds.current ||
-      clock.getElapsedTime() - lastMissileTimeSeconds.current > INTERVAL
+      clock.getElapsedTime() - lastMissileTimeSeconds.current > incomingInterval
     ) {
       lastMissileTimeSeconds.current = clock.getElapsedTime();
 
@@ -59,7 +61,8 @@ const useIncomingProjectiles = ({ projectileMeshes }: Props) => {
             // incomingProjectileMesh.scale.x += 0.01;
             // incomingProjectileMesh.scale.y += 0.01;
             //incomingProjectileMesh.position.set(pos.x, pos.y, pos.z);
-
+            dispatch(removeIncomingProjectile(projectile.id));
+            delete projectileMeshes[projectile.id];
             return;
           }
 
@@ -76,12 +79,9 @@ const useIncomingProjectiles = ({ projectileMeshes }: Props) => {
               time: clock.getElapsedTime(),
             };
             dispatch(addExplosion(incomingProjectileHit));
-            dispatch(
-              updateProjectileStatus({
-                id: projectile.id,
-                status: "destroyed",
-              })
-            );
+            dispatch(removeIncomingProjectile(projectile.id));
+            delete projectileMeshes[projectile.id];
+
             return;
           } else {
             const { direction, speed } = projectile;

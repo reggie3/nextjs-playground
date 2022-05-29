@@ -10,5 +10,5 @@ void main() {
   float intensity = (uExplosionLifeSpan - uAge) / uExplosionLifeSpan;
   float brightness = noise(gl_FragCoord.xy);
 
-  gl_FragColor = vec4(v3Color * brightness, intensity);
+  gl_FragColor = vec4(v3Color * intensity, intensity);
 }

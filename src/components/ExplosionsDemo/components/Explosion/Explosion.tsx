@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { Explosion } from "../../explosionsTypes";
+import { Explosion } from "../../particleExplosionsTypes";
 import { ExplosionsRootState } from "../../redux/store";
 import { ExplosionPlanes } from "../ExplosionPlanes";
 import React from "react";

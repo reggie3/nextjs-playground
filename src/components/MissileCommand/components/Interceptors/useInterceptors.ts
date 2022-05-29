@@ -42,9 +42,9 @@ const useInterceptors = ({ interceptorMeshes }: Props) => {
     Object.values(interceptors).map((interceptor: Interceptor) => {
       const interceptorMesh = interceptorMeshes[interceptor.id];
 
-      if (interceptor) {
+      if (interceptorMesh && interceptor) {
         // remove any interceptors that have gone off the screen
-        if (interceptorMesh.position.y > GAME_FIELD_HEIGHT) {
+        if (interceptorMesh && interceptorMesh.position.y > GAME_FIELD_HEIGHT) {
           killInterceptor(interceptor);
           return;
         }

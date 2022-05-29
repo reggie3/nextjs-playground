@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Explosion } from "../explosionsTypes";
+import { Explosion } from "../particleExplosionsTypes";
 import { HYDRATE } from "next-redux-wrapper";
 import { Vector3 } from "three";
 

@@ -11,9 +11,16 @@ import interceptorData from "../../gameData/interceptors.json";
 import incomingProjectileData from "../../gameData/incomingProjectiles.json";
 import { MissileCommandRootState } from "../../redux/store";
 import isInBounds from "../../../../utils/getIsInBounds";
-import { updateProjectileStatus } from "../../redux/incomingProjectilesSlice";
+import {
+  markProjectileAsIntercepted,
+  updateProjectileStatus,
+} from "../../redux/incomingProjectilesSlice";
 import * as THREE from "three";
 import { ShaderMaterial } from "three";
+import {
+  activateExplosion,
+  activateParticleExplosion,
+} from "../../redux/particleExplosionsSlice";
 
 type Props = {
   explosionMeshes: Record<string, THREE.Mesh>;
@@ -85,7 +92,8 @@ const useExplosions = ({ explosionMeshes }: Props) => {
   const destroyProjectiles = (
     interceptorType: InterceptorTypes,
     explosionPosition: [number, number, number],
-    scale: number
+    scale: number,
+    timeSeconds: number
   ) => {
     const { blastRadius } = interceptorData[interceptorType];
     Object.values(incomingProjectiles).map((incomingProjectile) => {
@@ -110,10 +118,11 @@ const useExplosions = ({ explosionMeshes }: Props) => {
         .distanceTo(new THREE.Vector3().fromArray(incomingProjectile.position));
       if (distanceFromExplosionToProjectile < blastRadius) {
         if (incomingProjectile.status !== "intercepted") {
+          dispatch(markProjectileAsIntercepted(incomingProjectile.id));
           dispatch(
-            updateProjectileStatus({
-              id: incomingProjectile.id,
-              status: "intercepted",
+            activateParticleExplosion({
+              position: explosionPosition,
+              createdAtSeconds: timeSeconds,
             })
           );
         }
@@ -123,11 +132,12 @@ const useExplosions = ({ explosionMeshes }: Props) => {
 
   useFrame(({ clock }) => {
     Object.values(explosions).map((explosion: Explosion) => {
+      const currentTimeSeconds = clock.getElapsedTime();
       const explosionLifeSpan = getExplosionLifeSpan(
         explosion.type,
         explosion.specificType
       );
-      if (clock.getElapsedTime() - explosion.time > explosionLifeSpan) {
+      if (currentTimeSeconds - explosion.time > explosionLifeSpan) {
         dispatch(removeExplosion(explosion.id));
         delete explosionMeshes[explosion.id];
         return;
@@ -136,8 +146,7 @@ const useExplosions = ({ explosionMeshes }: Props) => {
           true;
         // scale the explosion based on the first half of a sin wave
         const scale = Math.sin(
-          (clock.getElapsedTime() - explosion.time) /
-            (explosionLifeSpan / Math.PI)
+          (currentTimeSeconds - explosion.time) / (explosionLifeSpan / Math.PI)
         );
         explosionMeshes[explosion.id].scale.x = scale;
         explosionMeshes[explosion.id].scale.y = scale;
@@ -145,13 +154,14 @@ const useExplosions = ({ explosionMeshes }: Props) => {
 
         const material = explosionMeshes[explosion.id]
           .material as ShaderMaterial;
-        material.uniforms.uAge.value = clock.getElapsedTime() - explosion.time;
+        material.uniforms.uAge.value = currentTimeSeconds - explosion.time;
 
         if (explosion.type === "interceptor") {
           destroyProjectiles(
             explosion.specificType as InterceptorTypes,
             explosion.position,
-            scale
+            scale,
+            currentTimeSeconds
           );
         }
       }

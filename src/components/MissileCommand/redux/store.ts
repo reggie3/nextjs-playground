@@ -3,7 +3,8 @@ import explosionsReducer from "./explosionsSlice";
 import incomingProjectilesReducer from "./incomingProjectilesSlice";
 import interceptorsReducer from "./interceptorsSlice";
 import mcMouseIndicatorReducer from "./mcMouseIndicatorSlice";
-import launchers from "./launchersSlice";
+import launchersReducer from "./launchersSlice";
+import particleExplosionsSliceReducer from "./particleExplosionsSlice";
 
 export const missileCommandStore = configureStore({
   reducer: {
@@ -11,7 +12,8 @@ export const missileCommandStore = configureStore({
     incomingProjectilesState: incomingProjectilesReducer,
     interceptorsState: interceptorsReducer,
     mcMouseIndicatorState: mcMouseIndicatorReducer,
-    launchersState: launchers,
+    launchersState: launchersReducer,
+    particleExplosionsState: particleExplosionsSliceReducer,
   },
   devTools: true,
 });

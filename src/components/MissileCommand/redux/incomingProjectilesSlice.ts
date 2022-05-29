@@ -29,10 +29,13 @@ export const incomingProjectilesSlice = createSlice({
       state: IncomingProjectilesState,
       action: PayloadAction<{ id: string; update: Partial<IncomingProjectile> }>
     ) => {
-      state.incomingProjectiles[action.payload.id] = {
-        ...state.incomingProjectiles[action.payload.id],
-        ...action.payload.update,
-      };
+      const { id, update } = action.payload;
+      if (state.incomingProjectiles[id]) {
+        state.incomingProjectiles[id] = {
+          ...state.incomingProjectiles[id],
+          ...update,
+        };
+      }
     },
     updateProjectileStatus: (
       state: IncomingProjectilesState,
@@ -50,6 +53,16 @@ export const incomingProjectilesSlice = createSlice({
     ) => {
       const incomingProjectileId = action.payload;
       delete state.incomingProjectiles[incomingProjectileId];
+    },
+    markProjectileAsIntercepted: (
+      state: IncomingProjectilesState,
+      action: PayloadAction<string>
+    ) => {
+      const id = action.payload;
+
+      if (state.incomingProjectiles[id]) {
+        state.incomingProjectiles[id].status = "intercepted";
+      }
     },
   },
   extraReducers: {
@@ -71,6 +84,7 @@ export const {
   removeIncomingProjectile,
   updateProjectile,
   updateProjectileStatus,
+  markProjectileAsIntercepted,
 } = incomingProjectilesSlice.actions;
 
 export default incomingProjectilesSlice.reducer;

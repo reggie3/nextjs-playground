@@ -1,68 +1,75 @@
-import React, { useRef } from "react";
 import { Plane } from "@react-three/drei";
-import useParticlesControls from "../../useExplosionsControls";
-import { ShaderMaterial, Vector3 } from "three";
 import { useFrame } from "@react-three/fiber";
-import * as THREE from "three";
+import { useRef } from "react";
 import { useDispatch } from "react-redux";
-import { resetExplosion } from "../../redux/explosionsSlice";
-import { Explosion } from "../../particleExplosionsTypes";
-import { ParticleExplosionMaterial } from "../../../../Materials/ParticleExplosion";
+import * as THREE from "three";
+import { Vector3, ShaderMaterial } from "three";
+import { ParticleExplosionMaterial } from "../../../../../Materials/ParticleExplosion";
+import { ParticleExplosion } from "../../../mcTypes";
+import {
+  PARTICLE_EXPLOSIONS,
+  Z_INTERCEPTOR_EXPLOSIONS,
+} from "../../../missileCommandGlobals";
+import { resetParticleExplosion } from "../../../redux/particleExplosionsSlice";
 
-export interface MultiPlanesProps {
+export interface ParticleExplosionPlanesProps {
   pos: [number, number];
-  explosionCreatedAtSeconds: number;
-  explosion: Explosion;
+  particleExplosionCreatedAtSeconds: number;
+  particleExplosion: ParticleExplosion;
 }
-const ExplosionPlanes = ({
+const ParticleExplosionPlanes = ({
   pos,
-  explosionCreatedAtSeconds,
-  explosion,
-}: MultiPlanesProps) => {
+  particleExplosionCreatedAtSeconds,
+  particleExplosion,
+}: ParticleExplosionPlanesProps) => {
   const particlesRef = useRef<{ mesh: THREE.Mesh; direction?: Vector3 }[]>([]);
-  const { color, number, size, speed, lifespan } = useParticlesControls();
+  const { color, number, size, speed, lifespan } = PARTICLE_EXPLOSIONS;
   const isActiveRef = useRef<boolean>(false);
   const colorRGB = new THREE.Color(color);
 
   const dispatch = useDispatch();
   useFrame(({ clock }) => {
-    if (!explosion) return;
+    if (!particleExplosion) return;
 
     const currentTime = clock.getElapsedTime();
     particlesRef.current.forEach((particle) => {
-      if (explosion.isActive && !particle.mesh.visible) {
+      if (particleExplosion.isActive && !particle.mesh.visible) {
         particle.mesh.visible = true;
         isActiveRef.current = true;
 
         particle.direction = new Vector3(
           Math.random() * 2 - 1,
           Math.random() * 2 - 1,
-          0
+          Z_INTERCEPTOR_EXPLOSIONS
         ).normalize();
       }
 
-      if (explosion.isActive && particle.mesh.visible && particle.direction) {
+      if (
+        particleExplosion.isActive &&
+        particle.mesh.visible &&
+        particle.direction
+      ) {
         particle.mesh.position.addScaledVector(
           particle.direction,
           speed + Math.random() * speed - Math.random() * speed
         );
-        const age = currentTime - explosionCreatedAtSeconds;
+        const age = currentTime - particleExplosionCreatedAtSeconds;
         // particle.mesh.scale.x = (lifespan - age) / lifespan;
         // particle.mesh.scale.y = (lifespan - age) / lifespan;
         (particle.mesh.material as ShaderMaterial).uniforms.uAge.value =
-          currentTime - explosion.createdAtSeconds;
+          currentTime - particleExplosion.createdAtSeconds;
       }
 
       if (
-        explosion.isActive &&
+        particleExplosion.isActive &&
         particle.mesh.visible &&
-        currentTime - explosionCreatedAtSeconds > lifespan
+        currentTime - particleExplosionCreatedAtSeconds > lifespan
       ) {
         particle.mesh.visible = false;
 
         isActiveRef.current = false;
-        if (explosion.isActive) {
-          dispatch(resetExplosion(explosion.id));
+        if (particleExplosion.isActive) {
+          dispatch(resetParticleExplosion(particleExplosion.id));
         }
       }
 
@@ -100,4 +107,4 @@ const ExplosionPlanes = ({
     </group>
   );
 };
-export default ExplosionPlanes;
+export default ParticleExplosionPlanes;

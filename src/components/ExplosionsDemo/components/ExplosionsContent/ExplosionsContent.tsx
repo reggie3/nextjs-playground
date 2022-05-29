@@ -5,7 +5,7 @@ import { useEffect, useState, useRef } from "react";
 import useParticlesControls from "../../useExplosionsControls";
 import { ExplosionPlanes } from "../ExplosionPlanes";
 import { v4 as uuidV4 } from "uuid";
-import { Explosion } from "../../explosionsTypes";
+import { Explosion } from "../../particleExplosionsTypes";
 import { activateExplosion } from "../../redux/explosionsSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { ExplosionsRootState } from "../../redux/store";

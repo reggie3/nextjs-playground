@@ -48,3 +48,10 @@ export interface Launcher {
   type: LauncherTypes;
   targetId?: string;
 }
+
+export interface ParticleExplosion {
+  id: string;
+  position: [number, number, number];
+  createdAtSeconds: number;
+  isActive: boolean;
+}

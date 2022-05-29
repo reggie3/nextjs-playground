@@ -10,6 +10,7 @@ const InterceptedProjectile = ({
   incomingProjectile,
   setProjectileMeshRef,
 }: InterceptedProjectileProps) => {
+  return null;
   return (
     <Sphere
       ref={(ref: THREE.Mesh) => {

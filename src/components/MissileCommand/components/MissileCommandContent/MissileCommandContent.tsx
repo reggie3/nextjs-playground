@@ -1,17 +1,7 @@
-import {
-  Box,
-  OrbitControls,
-  Plane,
-  softShadows,
-  Sphere,
-  Stars,
-} from "@react-three/drei";
+import { Box, Plane } from "@react-three/drei";
 import { useFrame, useThree } from "@react-three/fiber";
 import { forwardRef, useImperativeHandle, useRef } from "react";
-import { ProjectileImpact } from "../../mcTypes";
 import { GAME_FIELD_WIDTH } from "../../missileCommandGlobals";
-import useIncomingProjectiles from "../IncomingProjectiles/useIncomingProjectiles";
-import useInterceptors from "../Interceptors/useInterceptors";
 import useMissileCommandControl from "../../useMissileCommandControls";
 import { Explosions } from "../Explosions";
 import { IncomingProjectiles } from "../IncomingProjectiles";
@@ -20,6 +10,7 @@ import { McMouseIndicator } from "../McMouseIndicator";
 import { McClickableBackground } from "../McClickableBackground";
 import { McFloor } from "./McFloor";
 import { Launchers } from "../Launchers";
+import { ParticleExplosions } from "../ParticleExplosions";
 
 type MissileCommandContentProps = {};
 
@@ -77,6 +68,7 @@ const MissileCommandContent: React.ForwardRefRenderFunction<
       <McClickableBackground />
       <McMouseIndicator />
       <Launchers />
+      <ParticleExplosions />
       <McFloor />
       {false && (
         <Plane
