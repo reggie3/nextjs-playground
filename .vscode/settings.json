@@ -3,6 +3,7 @@
     "autoclear",
     "clsx",
     "glsl",
+    "glslify",
     "gltf",
     "linewidth",
     "maath",

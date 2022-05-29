@@ -47,8 +47,8 @@ const ExplosionPlanes = ({
           speed + Math.random() * speed - Math.random() * speed
         );
         const age = currentTime - explosionCreatedAtSeconds;
-        particle.mesh.scale.x = (lifespan - age) / lifespan;
-        particle.mesh.scale.y = (lifespan - age) / lifespan;
+        // particle.mesh.scale.x = (lifespan - age) / lifespan;
+        // particle.mesh.scale.y = (lifespan - age) / lifespan;
         (particle.mesh.material as ShaderMaterial).uniforms.uAge.value =
           currentTime - explosion.createdAtSeconds;
       }
