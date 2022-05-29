@@ -79,7 +79,6 @@ const CustomLink = React.forwardRef<HTMLAnchorElement, CustomLinkProps>(
       [activeClassName]: router.pathname === pathname && activeClassName,
     });
 
-    debugger;
     const isActive = router.asPath === pathname;
     if (isActive) {
       console.log("active route ", pathname);

@@ -11,7 +11,7 @@ const MoreIcon = ({ isOpen }: { isOpen: boolean }) => {
   return (
     <motion.div
       animate={{
-        rotate: isOpen ? 540 : 0,
+        rotate: isOpen ? 1620 : 0,
         color: isOpen
           ? theme.palette.secondary.dark
           : theme.palette.primary.main,
