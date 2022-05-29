@@ -1,12 +1,13 @@
 import React, { useRef } from "react";
 import { Plane } from "@react-three/drei";
 import useParticlesControls from "../../useExplosionsControls";
-import { Vector3 } from "three";
+import { ShaderMaterial, Vector3 } from "three";
 import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 import { useDispatch } from "react-redux";
 import { resetExplosion } from "../../redux/explosionsSlice";
 import { Explosion } from "../../explosionsTypes";
+import { ParticleExplosionMaterial } from "../../../../Materials/ParticleExplosion";
 
 export interface MultiPlanesProps {
   pos: [number, number];
@@ -21,6 +22,7 @@ const ExplosionPlanes = ({
   const particlesRef = useRef<{ mesh: THREE.Mesh; direction?: Vector3 }[]>([]);
   const { color, number, size, speed, lifespan } = useParticlesControls();
   const isActiveRef = useRef<boolean>(false);
+  const colorRGB = new THREE.Color(color);
 
   const dispatch = useDispatch();
   useFrame(({ clock }) => {
@@ -47,6 +49,8 @@ const ExplosionPlanes = ({
         const age = currentTime - explosionCreatedAtSeconds;
         particle.mesh.scale.x = (lifespan - age) / lifespan;
         particle.mesh.scale.y = (lifespan - age) / lifespan;
+        (particle.mesh.material as ShaderMaterial).uniforms.uAge.value =
+          currentTime - explosion.createdAtSeconds;
       }
 
       if (
@@ -84,7 +88,12 @@ const ExplosionPlanes = ({
               }
             }}
           >
-            <meshBasicMaterial color={color} />
+            {/* @ts-ignore Property 'particleExplosionMaterial' does not exist on type 'JSX.IntrinsicElements'.*/}
+            <particleExplosionMaterial
+              key={ParticleExplosionMaterial.key}
+              v3Color={[colorRGB.r, colorRGB.g, colorRGB.b]}
+              uExplosionLifeSpan={lifespan}
+            />
           </Plane>
         );
       })}
