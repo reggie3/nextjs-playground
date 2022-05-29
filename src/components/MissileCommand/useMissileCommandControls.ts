@@ -12,7 +12,13 @@ const useMissileCommandControl = () => {
       orbitControls: { label: "UseOrbit Controls", value: false },
     })
   );
-  return { cameraPos, cameraZoom, setCameraControls: set, orbitControls };
+
+  return {
+    cameraPos,
+    cameraZoom,
+    setCameraControls: set,
+    orbitControls,
+  };
 };
 
 export default useMissileCommandControl;

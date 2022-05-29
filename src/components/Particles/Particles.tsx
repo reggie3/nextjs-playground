@@ -1,12 +1,33 @@
-import { Canvas } from "@react-three/fiber";
+import { Box, OrbitControls, PerspectiveCamera } from "@react-three/drei";
+import { Camera, Canvas } from "@react-three/fiber";
+import { useEffect, useRef } from "react";
+import { ParticlesCameraController } from "./components/ParticlesCameraController";
 import { ParticlesContent } from "./components/ParticlesContent";
+import useParticlesControls from "./useParticlesControls";
 
-export interface ParticlesProps {}
-const Particles = (props: ParticlesProps) => {
+const Particles = () => {
+  const cameraRef = useRef<Camera>();
+
+  const {
+    cameraPos,
+    cameraZoom,
+    orbitControls: shouldUseOrbitControls,
+  } = useParticlesControls();
+
+  useEffect(() => {});
   return (
     <Canvas>
-      <ambientLight intensity={0.5} />
+      {/* <PerspectiveCamera
+        makeDefault
+        ref={cameraRef}
+        position={cameraPos}
+        zoom={cameraZoom}
+      /> */}
+      <axesHelper args={[10]} />
+      <ambientLight />
       <ParticlesContent />
+      {/* <ParticlesCameraController /> */}
+      {shouldUseOrbitControls && <OrbitControls />}
     </Canvas>
   );
 };

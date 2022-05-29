@@ -46,14 +46,6 @@ const MissileCommandContent: React.ForwardRefRenderFunction<
     setCameraControls({ cameraZoom: camera.zoom });
   });
 
-  // useEffect(() => {
-  //   camera.position.x = 0;
-  //   camera.position.y = cameraPos.y;
-  //   setCameraControls({ cameraPos: camera.position });
-  // }, [canvasWidth, canvasHeight, camera.position, cameraPos.y]);
-
-  // useEffect(() => {}, [viewport]);
-
   const onClickCanvas = () => {
     // console.log("onClickCanvas", mouse.x, mouse.y);
   };
