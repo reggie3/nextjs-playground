@@ -48,9 +48,9 @@ const useHomePageVisualizationControl = () => {
     },
     // @ts-ignore
     pointLightPos: { label: "Position", x: 0, y: 2, z: 0 },
-    pointLightColor: { label: "Color", value: "#ffffff" },
+    pointLightColor: { label: "Color", value: "#ff99ff" },
     pointLightRadius: {
-      value: 10,
+      value: 3,
       min: 0,
       max: 25,
       step: 0.25,

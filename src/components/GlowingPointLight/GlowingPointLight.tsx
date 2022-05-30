@@ -1,7 +1,8 @@
-import { Dodecahedron } from "@react-three/drei";
-import * as THREE from "three";
-import { EffectComposer, SelectiveBloom } from "@react-three/postprocessing";
+import { Dodecahedron, Sphere } from "@react-three/drei";
+import { useFrame } from "@react-three/fiber";
 import { useRef } from "react";
+import * as THREE from "three";
+import { BloomMaterial } from "../../Materials/BloomMaterial";
 import useGlowingPointLightControl from "./useGlowingPointLightControls";
 
 export interface GlowingPointLightProps {
@@ -14,48 +15,85 @@ export interface GlowingPointLightProps {
 }
 const GlowingPointLight = ({
   color,
+  intensity,
   distance,
   decay,
-  intensity,
+  position,
   setRef,
 }: GlowingPointLightProps) => {
-  //   const {
-  //     luminanceThreshold,
-  //     luminanceSmoothing,
-  //     height,
-  //     intensity: glowIntensity,
-  //     resolutionScale,
-  //   } = useGlowingPointLightControl();
-  const indicatorRef = useRef<THREE.Mesh>();
-  const pointLightRef = useRef<THREE.PointLight>();
+  console.log({ color, intensity, distance, decay, position, setRef });
+  const glowRingsRef = useRef<THREE.Mesh[]>([]);
+  const rgbColor = new THREE.Color(color).toArray();
+
+  const { intensity: bloomIntensity, radiance: bloomRadiance } =
+    useGlowingPointLightControl();
+
+  useFrame(() => {
+    glowRingsRef.current.forEach((ring) => {
+      //   console.log("ring", ring);
+      //   debugger;
+      if (ring) {
+        // const material as THREE.Material = ring.material
+        // console.log("updating ring");
+        (ring.material as THREE.ShaderMaterial).uniforms.color.value = rgbColor;
+        (ring.material as THREE.ShaderMaterial).uniforms.intensity.value =
+          bloomIntensity;
+        (ring.material as THREE.ShaderMaterial).uniforms.radiance.value =
+          bloomRadiance;
+        //   (ring.material as THREE.Material).opacity = 0.5;
+        //   (ring.material as THREE.Material).color = new THREE.Color(color);
+      }
+    });
+  });
+
   return (
     <group name="glowing-point-light">
-      {/* <pointLight args={["hotpink", 1, 2, 1]} position={[2, 2, 2]} /> */}
       <pointLight
         args={[color, intensity, distance, decay]}
         position={[2, 2, 2]}
-        ref={(ref: THREE.PointLight) => {
-          setRef(ref);
-          pointLightRef.current = ref;
-        }}
+        ref={setRef}
         castShadow
         userData={{ name: "glowing-point-light" }}
       >
-        <Dodecahedron args={[0.08, 10]} ref={indicatorRef}>
-          <meshBasicMaterial color={color} />
+        <Dodecahedron
+          args={[0.1, 10]}
+          ref={(ref: THREE.Mesh) => {
+            glowRingsRef.current.push(ref);
+          }}
+        >
+          {/* <meshBasicMaterial /> */}
+          {/* @ts-ignore Property 'bloomMaterial' does not exist on type 'JSX.IntrinsicElements'. */}
+          <bloomMaterial
+            key={BloomMaterial.key}
+            blending={THREE.AdditiveBlending}
+            side={THREE.BackSide}
+          />
         </Dodecahedron>
+        {/* <Dodecahedron
+          args={[0.15, 10]}
+          ref={(ref: THREE.Mesh) => {
+            glowRingsRef.current.push(ref);
+          }}
+        >
+          <meshBasicMaterial transparent opacity={0.75} />
+        </Dodecahedron>
+        <Dodecahedron
+          args={[0.2, 10]}
+          ref={(ref: THREE.Mesh) => {
+            glowRingsRef.current.push(ref);
+          }}
+        >
+          <meshBasicMaterial transparent opacity={0.5} />
+        </Dodecahedron>
+        <Dodecahedron
+          args={[0.25, 10]}
+          ref={(ref: THREE.Mesh) => {
+            glowRingsRef.current.push(ref);
+          }}
+        >
+          <meshBasicMaterial transparent opacity={0.25} />
+        </Dodecahedron> */}
       </pointLight>
-      {/* <EffectComposer>
-        <SelectiveBloom
-          luminanceThreshold={luminanceThreshold}
-          luminanceSmoothing={luminanceSmoothing}
-          intensity={glowIntensity}
-          resolutionScale={resolutionScale}
-          height={height}
-          selection={indicatorRef}
-          lights={[pointLightRef]}
-        />
-      </EffectComposer> */}
     </group>
   );
 };
