@@ -1,4 +1,4 @@
-import { useContextBridge } from "@react-three/drei";
+import { Stars, useContextBridge } from "@react-three/drei";
 import { OrbitControls } from "@react-three/drei";
 import { OrthographicCamera } from "@react-three/drei";
 import { ThreeEvent } from "@react-three/fiber";
@@ -21,14 +21,17 @@ import { ReactReduxContext } from "react-redux";
 
 import { MissileCommandContent } from "./components/MissileCommandContent";
 import { GAME_FIELD_HEIGHT, GAME_FIELD_WIDTH } from "./missileCommandGlobals";
-import useMissileCommandControl from "./useMissileCommandControls";
+import sfx from "./soundEffects";
+import useMissileCommandControls from "./useMissileCommandControls";
+import { Howl, Howler } from "howler";
 
 const MissileCommand = () => {
   const {
     cameraPos,
     cameraZoom,
     orbitControls: shouldUseOrbitControls,
-  } = useMissileCommandControl();
+    isMuted,
+  } = useMissileCommandControls();
   type MissileCommandContentHandle = React.ElementRef<
     typeof MissileCommandContent
   >;
@@ -46,6 +49,12 @@ const MissileCommand = () => {
   };
 
   useEffect(() => {
+    console.log((isMuted ? "Muted" : "Unmuted") + " sound effects");
+    Howler.mute(isMuted);
+    sfx.toggleMute(isMuted);
+  }, [isMuted]);
+
+  useEffect(() => {
     if (!shouldUseOrbitControls && cameraRef.current) {
       cameraRef.current.position.set(0, 5.5, 5);
       cameraRef.current.lookAt(0, 5.5, 5);
@@ -60,7 +69,7 @@ const MissileCommand = () => {
   return (
     <Canvas dpr={[1, 2]} shadows onClick={onClickCanvas}>
       <ReduxProvider>
-        <axesHelper args={[10]} />
+        {/* <axesHelper args={[10]} /> */}
         <OrthographicCamera
           ref={cameraRef}
           args={[
@@ -76,19 +85,28 @@ const MissileCommand = () => {
         <Selection>
           <MissileCommandContent ref={contentRef} />
         </Selection>
-        <EffectComposer>
-          {/* <DepthOfField
+        {/* <EffectComposer> */}
+        {/* <DepthOfField
             focusDistance={0}
             focalLength={0.02}
             bokehScale={2}
             height={480}
           /> */}
-          {/* <Bloom luminanceThreshold={0} luminanceSmoothing={0.9} height={300} /> */}
-          {/* <Noise opacity={0.5} /> */}
-          {/* <Vignette eskil={false} offset={0.1} darkness={1.1} /> */}
-        </EffectComposer>
+        {/* <Bloom luminanceThreshold={0} luminanceSmoothing={0.9} height={300} /> */}
+        {/* <Noise opacity={0.5} /> */}
+        {/* <Vignette eskil={false} offset={0.1} darkness={1.1} /> */}
+        {/* </EffectComposer> */}
       </ReduxProvider>
       {shouldUseOrbitControls && <OrbitControls />}
+      <Stars
+        radius={25}
+        depth={50}
+        count={5000}
+        factor={4}
+        saturation={0}
+        fade
+        speed={1}
+      />
     </Canvas>
   );
 };

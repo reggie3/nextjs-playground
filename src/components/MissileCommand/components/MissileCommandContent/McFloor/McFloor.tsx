@@ -2,7 +2,7 @@ import { Plane } from "@react-three/drei";
 import { Box } from "@react-three/drei";
 import { GAME_FIELD_WIDTH, Z_GROUND } from "../../../missileCommandGlobals";
 
-const FLOOR_THICKNESS = 1;
+const FLOOR_THICKNESS = 8;
 
 const McFloor = () => {
   return (

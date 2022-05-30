@@ -11,7 +11,8 @@ import {
   updateProjectileStatus,
 } from "../../redux/incomingProjectilesSlice";
 import { MissileCommandRootState } from "../../redux/store";
-import useMissileCommandControl from "../../useMissileCommandControls";
+import sfx from "../../soundEffects";
+import useMissileCommandControls from "../../useMissileCommandControls";
 import getProjectile from "../../utilities/getProjectile";
 
 type Props = {
@@ -20,7 +21,7 @@ type Props = {
 
 const useIncomingProjectiles = ({ projectileMeshes }: Props) => {
   const dispatch = useDispatch();
-  const { incomingInterval } = useMissileCommandControl();
+  const { incomingInterval } = useMissileCommandControls();
 
   const { incomingProjectiles } = useSelector(
     (state: MissileCommandRootState) => state.incomingProjectilesState
@@ -66,6 +67,7 @@ const useIncomingProjectiles = ({ projectileMeshes }: Props) => {
             return;
           }
 
+          // check if the projectile has his the ground
           if (incomingProjectileMesh.position.y < -0.25) {
             let incomingProjectileHit: Explosion = {
               position: [
@@ -81,6 +83,8 @@ const useIncomingProjectiles = ({ projectileMeshes }: Props) => {
             dispatch(addExplosion(incomingProjectileHit));
             dispatch(removeIncomingProjectile(projectile.id));
             delete projectileMeshes[projectile.id];
+            debugger;
+            sfx.groundImpact.play();
 
             return;
           } else {

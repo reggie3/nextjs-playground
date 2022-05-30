@@ -26,7 +26,7 @@ const Interceptors = (props: InterceptorsProps) => {
               }
             }}
             key={interceptor.id}
-            args={[0.075]}
+            args={[0.025]}
             position={interceptor.origin}
           >
             <meshStandardMaterial color="yellow" />

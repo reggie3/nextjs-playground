@@ -21,7 +21,7 @@ const GlowingPointLight = ({
   position,
   setRef,
 }: GlowingPointLightProps) => {
-  console.log({ color, intensity, distance, decay, position, setRef });
+  // console.log({ color, intensity, distance, decay, position, setRef });
   const glowRingsRef = useRef<THREE.Mesh[]>([]);
   const rgbColor = new THREE.Color(color).toArray();
 

@@ -32,7 +32,7 @@ const Launchers = () => {
                 }
               }}
               key={launcher.id}
-              args={[0.25, 0.25]}
+              args={[0.15, 0.15]}
               rotation={[0, 0, Math.PI / 4]}
               position={launcher.position}
             >

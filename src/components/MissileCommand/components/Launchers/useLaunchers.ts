@@ -9,6 +9,7 @@ import launcherData from "../../gameData/launchers.json";
 import interceptorData from "../../gameData/interceptors.json";
 import { addInterceptor } from "../../redux/interceptorsSlice";
 import { Z_INTERCEPTORS } from "../../missileCommandGlobals";
+import sfx from "../../soundEffects";
 
 type Props = {
   explosionMeshes: Record<string, THREE.Mesh>;
@@ -84,6 +85,7 @@ const useLaunchers = () => {
             position: launcher.position,
           };
           dispatch(addInterceptor(newInterceptor));
+          sfx.flakShot.play();
           firingTimes.current[launcher.id] = currentTime;
         }
       });

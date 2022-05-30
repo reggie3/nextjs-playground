@@ -2,7 +2,7 @@ import { Box, Plane } from "@react-three/drei";
 import { useFrame, useThree } from "@react-three/fiber";
 import { forwardRef, useImperativeHandle, useRef } from "react";
 import { GAME_FIELD_WIDTH } from "../../missileCommandGlobals";
-import useMissileCommandControl from "../../useMissileCommandControls";
+import useMissileCommandControls from "../../useMissileCommandControls";
 import { Explosions } from "../Explosions";
 import { IncomingProjectiles } from "../IncomingProjectiles";
 import { Interceptors } from "../Interceptors";
@@ -29,7 +29,7 @@ const MissileCommandContent: React.ForwardRefRenderFunction<
   const { aspect } = viewport;
 
   const { cameraPos, cameraZoom, setCameraControls } =
-    useMissileCommandControl();
+    useMissileCommandControls();
   const { width: canvasWidth, height: canvasHeight } = size;
 
   // camera management

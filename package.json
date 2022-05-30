@@ -27,6 +27,7 @@
     "framer-motion": "^6.3.4",
     "glsl-noise": "^0.0.0",
     "glslify-loader": "^2.0.0",
+    "howler": "^2.2.3",
     "leva": "^0.9.27",
     "maath": "^0.0.2",
     "next": "12.1.6",

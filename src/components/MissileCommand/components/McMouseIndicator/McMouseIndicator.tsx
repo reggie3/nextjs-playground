@@ -6,7 +6,7 @@ import * as THREE from "three";
 import { Vector3 } from "three";
 import { setIndicatorMode } from "../../redux/mcMouseIndicatorSlice";
 import { MissileCommandRootState } from "../../redux/store";
-import useMissileCommandControl from "../../useMissileCommandControls";
+import useMissileCommandControls from "../../useMissileCommandControls";
 
 const LAUNCHER_PLACEMENT_Y_MAX = 0.25;
 

@@ -15,6 +15,7 @@ import { markProjectileAsIntercepted } from "../../redux/incomingProjectilesSlic
 import * as THREE from "three";
 import { ShaderMaterial } from "three";
 import { activateParticleExplosion } from "../../redux/particleExplosionsSlice";
+import sfx from "../../soundEffects";
 
 type Props = {
   explosionMeshes: Record<string, THREE.Mesh>;
@@ -119,6 +120,7 @@ const useExplosions = ({ explosionMeshes }: Props) => {
               createdAtSeconds: timeSeconds,
             })
           );
+          sfx.interceptorExplosion.play();
         }
       }
     });

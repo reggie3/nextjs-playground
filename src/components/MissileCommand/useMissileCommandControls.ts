@@ -1,7 +1,7 @@
 import { useControls } from "leva";
 import { CAMERA_Y_POS } from "./missileCommandGlobals";
 
-const useMissileCommandControl = () => {
+const useMissileCommandControls = () => {
   // @ts-ignore
   const [{ cameraPos, cameraZoom, orbitControls }, set] = useControls(
     "Camera Controls",
@@ -13,7 +13,7 @@ const useMissileCommandControl = () => {
     })
   );
 
-  const [{ incomingInterval }] = useControls(
+  const [{ incomingInterval, isMuted }] = useControls(
     "Game Controls",
     // @ts-ignore
     () => ({
@@ -24,10 +24,12 @@ const useMissileCommandControl = () => {
         max: 5,
         step: 0.1,
       },
+      isMuted: { label: "mute", value: false },
     })
   );
 
   return {
+    isMuted,
     cameraPos,
     cameraZoom,
     setCameraControls: set,
@@ -36,4 +38,4 @@ const useMissileCommandControl = () => {
   };
 };
 
-export default useMissileCommandControl;
+export default useMissileCommandControls;

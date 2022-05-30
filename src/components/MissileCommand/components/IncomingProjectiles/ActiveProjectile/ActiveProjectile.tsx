@@ -16,7 +16,7 @@ const ActiveProjectile = ({
         setProjectileMeshRef(ref, incomingProjectile.id);
       }}
       key={incomingProjectile.id}
-      args={[0.1]}
+      args={[0.035]}
       position={incomingProjectile.position}
     >
       <meshStandardMaterial attach="material" color="red" />
