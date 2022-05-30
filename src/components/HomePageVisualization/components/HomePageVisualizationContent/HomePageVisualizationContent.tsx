@@ -1,6 +1,7 @@
 import { Box, softShadows, Sphere, Stars } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import { useRef } from "react";
+import { GlowingPointLight } from "../../../GlowingPointLight";
 import useHomePageVisualizationControl from "./useHomePageVisualizationControl";
 
 softShadows();
@@ -18,6 +19,7 @@ const HomePageVisualizationContent = () => {
   });
 
   const {
+    ambientIntensity,
     boxColor,
     pointLightIntensity,
     pointLightDistance,
@@ -43,8 +45,19 @@ const HomePageVisualizationContent = () => {
   return (
     <group>
       <color attach="background" args={["black"]} />
-      <ambientLight intensity={0.25} />
-      <pointLight
+      <ambientLight intensity={ambientIntensity} />
+      <GlowingPointLight
+        color={pointLightColor}
+        intensity={pointLightIntensity}
+        distance={pointLightDistance}
+        decay={pointLightDecay}
+        position={pointLightPos}
+        setRef={(ref: THREE.PointLight) => {
+          pointLightRef.current = ref;
+        }}
+      />
+
+      {/* <pointLight
         args={[
           pointLightColor,
           pointLightIntensity,
@@ -58,7 +71,7 @@ const HomePageVisualizationContent = () => {
         <Sphere args={[0.08, 10]}>
           <meshBasicMaterial color={pointLightColor} />
         </Sphere>
-      </pointLight>
+      </pointLight> */}
       <Stars ref={starsRef} />
       <Box
         args={[1, 1, 1]}

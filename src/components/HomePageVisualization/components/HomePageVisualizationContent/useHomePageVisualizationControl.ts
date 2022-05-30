@@ -1,6 +1,16 @@
 import { useControls } from "leva";
 
 const useHomePageVisualizationControl = () => {
+  const { ambientIntensity } = useControls("Ambient Light Controls", {
+    ambientIntensity: {
+      label: "ambient intensity",
+      value: 0.25,
+      min: 0,
+      max: 1,
+      step: 0.01,
+    },
+  });
+
   const {
     // @ts-ignore
     pointLightIntensity,
@@ -16,22 +26,21 @@ const useHomePageVisualizationControl = () => {
     pointLightRadius,
   } = useControls("Point Light Controls", {
     pointLightIntensity: {
-      label: "Intensity",
+      label: "intensity",
       value: 1,
       min: 0,
       max: 1,
       step: 0.01,
     },
     pointLightDistance: {
-      label: "Distance",
-
+      label: "distance",
       value: 0,
       min: 0,
       max: 1,
       step: 0.01,
     },
     pointLightDecay: {
-      label: "Decay",
+      label: " decay",
       value: 0,
       min: 0,
       max: 1,
@@ -56,6 +65,7 @@ const useHomePageVisualizationControl = () => {
     sphereColor: { label: "Color", value: "#b0f89e" },
   });
   return {
+    ambientIntensity,
     boxColor,
     pointLightIntensity,
     pointLightDistance,
