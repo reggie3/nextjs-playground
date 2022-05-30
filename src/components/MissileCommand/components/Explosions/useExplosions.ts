@@ -11,16 +11,10 @@ import interceptorData from "../../gameData/interceptors.json";
 import incomingProjectileData from "../../gameData/incomingProjectiles.json";
 import { MissileCommandRootState } from "../../redux/store";
 import isInBounds from "../../../../utils/getIsInBounds";
-import {
-  markProjectileAsIntercepted,
-  updateProjectileStatus,
-} from "../../redux/incomingProjectilesSlice";
+import { markProjectileAsIntercepted } from "../../redux/incomingProjectilesSlice";
 import * as THREE from "three";
 import { ShaderMaterial } from "three";
-import {
-  activateExplosion,
-  activateParticleExplosion,
-} from "../../redux/particleExplosionsSlice";
+import { activateParticleExplosion } from "../../redux/particleExplosionsSlice";
 
 type Props = {
   explosionMeshes: Record<string, THREE.Mesh>;
