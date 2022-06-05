@@ -93,6 +93,7 @@ const ExplosionPlanes = ({
               key={ParticleExplosionMaterial.key}
               v3Color={[colorRGB.r, colorRGB.g, colorRGB.b]}
               uExplosionLifeSpan={lifespan}
+              transparent={true}
             />
           </Plane>
         );
