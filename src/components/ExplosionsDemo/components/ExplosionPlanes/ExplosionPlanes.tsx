@@ -44,7 +44,7 @@ const ExplosionPlanes = ({
       if (explosion.isActive && particle.mesh.visible && particle.direction) {
         particle.mesh.position.addScaledVector(
           particle.direction,
-          speed + Math.random() * speed - Math.random() * speed
+          Math.random() * speed
         );
         const age = currentTime - explosionCreatedAtSeconds;
         const { uniforms } = particle.mesh.material as ShaderMaterial;

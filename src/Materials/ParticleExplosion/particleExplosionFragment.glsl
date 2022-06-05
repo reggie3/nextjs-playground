@@ -5,7 +5,11 @@ uniform vec3 v3Color;
 uniform float uExplosionLifeSpan;
 uniform bool uUseNoise;
 
-#pragma glslify: noise = require(glsl-noise/simplex/2d)
+#define PI 3.14159265359
+
+mat2 rotate(float uAge) {
+  return (mat2(cos(uAge), sin(uAge), -sin(uAge), cos(uAge)));
+}
 
 void main() {
 
