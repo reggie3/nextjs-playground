@@ -44,13 +44,16 @@ const ExplosionPlanes = ({
       if (explosion.isActive && particle.mesh.visible && particle.direction) {
         particle.mesh.position.addScaledVector(
           particle.direction,
-          speed + Math.random() * speed - Math.random() * speed
+          Math.random() * speed
         );
         const age = currentTime - explosionCreatedAtSeconds;
         // particle.mesh.scale.x = (lifespan - age) / lifespan;
         // particle.mesh.scale.y = (lifespan - age) / lifespan;
-        (particle.mesh.material as ShaderMaterial).uniforms.uAge.value =
-          currentTime - explosion.createdAtSeconds;
+        (particle.mesh.material as ShaderMaterial).uniforms.uAge.value = age;
+        // attempt to do the rotation in the shader
+        // particle.mesh.rotation.x = Math.random() * Math.PI * 0.75;
+        // particle.mesh.rotation.y = Math.random() * Math.PI * 0.75;
+        // particle.mesh.rotation.z = Math.random() * Math.PI * 0.75;
       }
 
       if (

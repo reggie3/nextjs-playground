@@ -3,6 +3,8 @@ import { useFrame } from "@react-three/fiber";
 import { useRef } from "react";
 import * as THREE from "three";
 import { BloomMaterial } from "../../Materials/BloomMaterial";
+import { GlowMaterial } from "../../Materials/GlowMaterial";
+import { AtmosphereMaterial } from "../threeJsGlobe/Globe/AtmosphereMaterial";
 import useGlowingPointLightControl from "./useGlowingPointLightControls";
 
 export interface GlowingPointLightProps {
@@ -22,28 +24,34 @@ const GlowingPointLight = ({
   setRef,
 }: GlowingPointLightProps) => {
   // console.log({ color, intensity, distance, decay, position, setRef });
-  const glowRingsRef = useRef<THREE.Mesh[]>([]);
-  const rgbColor = new THREE.Color(color).toArray();
+  const ballRef = useRef<THREE.Mesh>();
+  const glowRef = useRef<THREE.Mesh>();
 
-  const { intensity: bloomIntensity, radiance: bloomRadiance } =
-    useGlowingPointLightControl();
+  const { intensity: bloomIntensity, radiance } = useGlowingPointLightControl();
 
   useFrame(() => {
-    glowRingsRef.current.forEach((ring) => {
-      //   console.log("ring", ring);
-      //   debugger;
-      if (ring) {
-        // const material as THREE.Material = ring.material
-        // console.log("updating ring");
-        (ring.material as THREE.ShaderMaterial).uniforms.color.value = rgbColor;
-        (ring.material as THREE.ShaderMaterial).uniforms.intensity.value =
-          bloomIntensity;
-        (ring.material as THREE.ShaderMaterial).uniforms.radiance.value =
-          bloomRadiance;
-        //   (ring.material as THREE.Material).opacity = 0.5;
-        //   (ring.material as THREE.Material).color = new THREE.Color(color);
-      }
-    });
+    const rgbColor = new THREE.Color(color).toArray();
+
+    if (ballRef.current) {
+      // (ballRef.current.material as THREE.ShaderMaterial).uniforms.color.value =
+      //   rgbColor;
+      // (
+      //   ballRef.current.material as THREE.ShaderMaterial
+      // ).uniforms.intensity.value = bloomIntensity;
+      // (
+      //   ballRef.current.material as THREE.ShaderMaterial
+      // ).uniforms.radiance.value = radiance;
+    }
+    if (glowRef.current) {
+      (glowRef.current.material as THREE.ShaderMaterial).uniforms.color.value =
+        rgbColor;
+      // (
+      //   glowRef.current.material as THREE.ShaderMaterial
+      // ).uniforms.intensity.value = bloomIntensity;
+      // (
+      //   glowRef.current.material as THREE.ShaderMaterial
+      // ).uniforms.radiance.value = radiance;
+    }
   });
 
   return (
@@ -55,44 +63,23 @@ const GlowingPointLight = ({
         castShadow
         userData={{ name: "glowing-point-light" }}
       >
-        <Dodecahedron
-          args={[0.1, 10]}
-          ref={(ref: THREE.Mesh) => {
-            glowRingsRef.current.push(ref);
-          }}
-        >
-          {/* <meshBasicMaterial /> */}
-          {/* @ts-ignore Property 'bloomMaterial' does not exist on type 'JSX.IntrinsicElements'. */}
-          <bloomMaterial
-            key={BloomMaterial.key}
+        <Dodecahedron args={[0.2, 10]} ref={glowRef}>
+          {/* @ts-ignore Property 'glowMaterial' does not exist on type 'JSX.IntrinsicElements'. */}
+          <glowMaterial
+            key={GlowMaterial.key}
             blending={THREE.AdditiveBlending}
             side={THREE.BackSide}
           />
         </Dodecahedron>
-        {/* <Dodecahedron
-          args={[0.15, 10]}
-          ref={(ref: THREE.Mesh) => {
-            glowRingsRef.current.push(ref);
-          }}
-        >
-          <meshBasicMaterial transparent opacity={0.75} />
+        <Dodecahedron args={[0.08, 10]} ref={ballRef}>
+          {/* @ts-ignore Property 'bloomMaterial' does not exist on type 'JSX.IntrinsicElements'. */}
+          {/* <bloomMaterial
+            key={BloomMaterial.key}
+            blending={THREE.AdditiveBlending}
+            side={THREE.BackSide}
+          /> */}
+          <meshStandardMaterial />
         </Dodecahedron>
-        <Dodecahedron
-          args={[0.2, 10]}
-          ref={(ref: THREE.Mesh) => {
-            glowRingsRef.current.push(ref);
-          }}
-        >
-          <meshBasicMaterial transparent opacity={0.5} />
-        </Dodecahedron>
-        <Dodecahedron
-          args={[0.25, 10]}
-          ref={(ref: THREE.Mesh) => {
-            glowRingsRef.current.push(ref);
-          }}
-        >
-          <meshBasicMaterial transparent opacity={0.25} />
-        </Dodecahedron> */}
       </pointLight>
     </group>
   );
