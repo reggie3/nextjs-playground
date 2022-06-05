@@ -20,12 +20,13 @@ const ExplosionPlanes = ({
   explosion,
 }: MultiPlanesProps) => {
   const particlesRef = useRef<{ mesh: THREE.Mesh; direction?: Vector3 }[]>([]);
-  const { color, number, size, speed, lifespan } = useParticlesControls();
+  const { color, number, size, speed, lifespan, useNoise } =
+    useParticlesControls();
   const isActiveRef = useRef<boolean>(false);
   const colorRGB = new THREE.Color(color);
 
   const dispatch = useDispatch();
-  useFrame(({ clock }) => {
+  useFrame(({ size, clock }) => {
     if (!explosion) return;
 
     const currentTime = clock.getElapsedTime();
@@ -49,8 +50,12 @@ const ExplosionPlanes = ({
         const age = currentTime - explosionCreatedAtSeconds;
         // particle.mesh.scale.x = (lifespan - age) / lifespan;
         // particle.mesh.scale.y = (lifespan - age) / lifespan;
-        (particle.mesh.material as ShaderMaterial).uniforms.uAge.value =
-          currentTime - explosion.createdAtSeconds;
+        const { uniforms } = particle.mesh.material as ShaderMaterial;
+
+        uniforms.uAge.value = currentTime - explosion.createdAtSeconds;
+        uniforms.uResolution.value.x = size.width;
+        uniforms.uResolution.value.y = size.height;
+        uniforms.uUseNoise.value = useNoise;
       }
 
       if (
@@ -94,6 +99,13 @@ const ExplosionPlanes = ({
               v3Color={[colorRGB.r, colorRGB.g, colorRGB.b]}
               uExplosionLifeSpan={lifespan}
               transparent={true}
+              uRotationRandomSpeed={[
+                Math.random() * 2 - 1,
+                Math.random() * 2 - 1,
+                Math.random() * 2 - 1,
+              ]}
+              doubleSided={true}
+              side={THREE.DoubleSide}
             />
           </Plane>
         );

@@ -2,7 +2,7 @@ import { useControls } from "leva";
 
 const useExplosionsControls = () => {
   // @ts-ignore
-  const [{ cameraPos, cameraZoom, orbitControls }, set] = useControls(
+  const [{ cameraPos, cameraZoom, orbitControls, useNoise }, set] = useControls(
     "Camera Controls",
     // @ts-ignore
     () => ({
@@ -35,6 +35,7 @@ const useExplosionsControls = () => {
           max: 5,
           step: 0.1,
         },
+        useNoise: { label: "noise", value: false },
       })
     );
   return {
@@ -49,6 +50,7 @@ const useExplosionsControls = () => {
     lifespan,
     isAutoModeEnabled: autoMode,
     autoModeInterval,
+    useNoise,
   };
 };
 

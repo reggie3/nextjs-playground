@@ -1,6 +1,7 @@
 {
   "cSpell.words": [
     "autoclear",
+    "cdylib",
     "clsx",
     "glsl",
     "glslify",
@@ -8,8 +9,10 @@
     "linewidth",
     "maath",
     "modulehash",
+    "nextjs",
     "Phong",
     "prefetch",
+    "rustc",
     "unproject",
     "unprojected",
     "wdyr",
