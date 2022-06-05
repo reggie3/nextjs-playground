@@ -1,0 +1,7 @@
+.wrapper {
+  color: orange;
+  display: flex;
+  justify-content: center;
+  word-break: keep-all;
+  white-space: nowrap;
+}

@@ -1,29 +1,15 @@
 import { Stars, useContextBridge } from "@react-three/drei";
 import { OrbitControls } from "@react-three/drei";
 import { OrthographicCamera } from "@react-three/drei";
-import { ThreeEvent } from "@react-three/fiber";
 import { Canvas } from "@react-three/fiber";
-import {
-  EffectComposer,
-  DepthOfField,
-  Bloom,
-  Noise,
-  Vignette,
-  Selection,
-} from "@react-three/postprocessing";
-import {
-  ForwardRefExoticComponent,
-  RefAttributes,
-  useEffect,
-  useRef,
-} from "react";
+import { useEffect, useRef } from "react";
 import { ReactReduxContext } from "react-redux";
 
 import { MissileCommandContent } from "./components/MissileCommandContent";
 import { GAME_FIELD_HEIGHT, GAME_FIELD_WIDTH } from "./missileCommandGlobals";
 import sfx from "./soundEffects";
 import useMissileCommandControls from "./useMissileCommandControls";
-import { Howl, Howler } from "howler";
+import { Howler } from "howler";
 
 const MissileCommand = () => {
   const {
@@ -82,20 +68,7 @@ const MissileCommand = () => {
           makeDefault
           zoom={cameraZoom}
         />
-        <Selection>
-          <MissileCommandContent ref={contentRef} />
-        </Selection>
-        {/* <EffectComposer> */}
-        {/* <DepthOfField
-            focusDistance={0}
-            focalLength={0.02}
-            bokehScale={2}
-            height={480}
-          /> */}
-        {/* <Bloom luminanceThreshold={0} luminanceSmoothing={0.9} height={300} /> */}
-        {/* <Noise opacity={0.5} /> */}
-        {/* <Vignette eskil={false} offset={0.1} darkness={1.1} /> */}
-        {/* </EffectComposer> */}
+        <MissileCommandContent ref={contentRef} />
       </ReduxProvider>
       {shouldUseOrbitControls && <OrbitControls />}
       <Stars

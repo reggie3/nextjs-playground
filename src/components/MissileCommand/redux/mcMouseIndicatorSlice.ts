@@ -12,7 +12,7 @@ const initialState = {
 };
 
 export const mcMouseIndicatorSlice = createSlice({
-  name: "counter",
+  name: "mcMouseIndicator",
   initialState,
   reducers: {
     setIndicatorMode: (

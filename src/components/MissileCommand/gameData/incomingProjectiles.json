@@ -3,18 +3,21 @@
     "speed": 0.025,
     "projectileColor": "#ff0000",
     "explosionColor": "#cc0000",
-    "blastRadius": 0.25
+    "blastRadius": 0.25,
+    "score": 10
   },
   "incomingProjectile2": {
     "speed": 0.035,
     "projectileColor": "#ff0000",
     "explosionColor": "#ee0000",
-    "blastRadius": 0.35
+    "blastRadius": 0.35,
+    "score": 20
   },
   "incomingProjectile3": {
     "speed": 0.045,
     "projectileColor": "#ff0000",
     "explosionColor": "#ff0000",
-    "blastRadius": 0.55
+    "blastRadius": 0.55,
+    "score": 30
   }
 }

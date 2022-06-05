@@ -3982,7 +3982,7 @@
   dependencies:
     "debounce" "^1.2.1"
 
-"react@*", "react@^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0", "react@^16 || ^17", "react@^16 || ^17 || ^18", "react@^16.11.0  || >=17.0.0 || >=18.0.0", "react@^16.8 || ^17.0", "react@^16.8 || ^17.0 || ^18.0", "react@^16.8.0  || >=17.0.0 || >=18.0.0", "react@^16.8.0 || ^17.0.0 || ^18.0.0", "react@^16.9.0 || ^17.0.0 || ^18", "react@^17.0.0 || ^18.0.0", "react@^17.0.2 || ^18.0.0-0", "react@^18.0.0", "react@^18.1.0", "react@>= 16.3.0", "react@>= 16.8", "react@>= 16.8.0", "react@>= 16.8.0 || 17.x.x || ^18.0.0-0", "react@>=16.13", "react@>=16.6.0", "react@>=16.8", "react@>=16.8 || ^17.0.0 || ^18.0.0", "react@>=16.8.0", "react@>=17.0", "react@>=18.0", "react@18.1.0":
+"react@*", "react@^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0", "react@^16 || ^17", "react@^16 || ^17 || ^18", "react@^16.11.0  || >=17.0.0 || >=18.0.0", "react@^16.8 || ^17.0", "react@^16.8 || ^17.0 || ^18.0", "react@^16.8.0  || >=17.0.0 || >=18.0.0", "react@^16.8.0 || ^17.0.0 || ^18.0.0", "react@^16.9.0 || ^17.0.0 || ^18", "react@^17.0.0 || ^18.0.0", "react@^17.0.2 || ^18.0.0-0", "react@^18.0.0", "react@^18.1.0", "react@>= 16.3.0", "react@>= 16.8", "react@>= 16.8.0", "react@>= 16.8.0 || 17.x.x || ^18.0.0-0", "react@>=16.13", "react@>=16.6.0", "react@>=16.8", "react@>=16.8 || ^17.0.0 || ^18.0.0", "react@>=16.8.0", "react@>=16.8.x", "react@>=17.0", "react@>=18.0", "react@18.1.0":
   "integrity" "sha512-4oL8ivCz5ZEPyclFQXaNksK3adutVS8l2xzZU0cqEFrE9Sb7fC0EFK5uEk74wIreL1DERyjvsU915j1pcT2uEQ=="
   "resolved" "https://registry.npmjs.org/react/-/react-18.1.0.tgz"
   "version" "18.1.0"
@@ -4327,6 +4327,13 @@
   "integrity" "sha1-scPcRtlEmLV4t/05hbgaznExzH0="
   "resolved" "https://registry.npmjs.org/stats.js/-/stats.js-0.17.0.tgz"
   "version" "0.17.0"
+
+"stop-runaway-react-effects@^2.0.0":
+  "integrity" "sha512-XFuYgkLwrtga4Py71q7uELwuxBw4fReD32nlYBv+mII12NXPYkLJvSonKjNYE2XHTqG22yWCBSl4w9pBNBZiBg=="
+  "resolved" "https://registry.npmjs.org/stop-runaway-react-effects/-/stop-runaway-react-effects-2.0.0.tgz"
+  "version" "2.0.0"
+  dependencies:
+    "@babel/runtime" "^7.9.2"
 
 "string_decoder@^1.1.1":
   "integrity" "sha512-hkRX8U1WjJFd8LsDJ2yQ/wWWxaopEsABU1XfkM8A+j0+85JAGppt16cr1Whg6KIbb4okU6Mql6BOj+uup/wKeA=="

@@ -16,7 +16,7 @@ const initialState = {
 };
 
 export const incomingProjectilesSlice = createSlice({
-  name: "counter",
+  name: "incomingProjectiles",
   initialState,
   reducers: {
     addIncomingProjectile: (
