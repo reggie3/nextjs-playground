@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Vector3 } from "three";
 import { Explosion, IncomingProjectile } from "../../mcTypes";
 import { addExplosion } from "../../redux/explosionsSlice";
+import { incrementScore } from "../../redux/gameDataSlice";
 import {
   addIncomingProjectile,
   removeIncomingProjectile,
@@ -14,6 +15,7 @@ import { MissileCommandRootState } from "../../redux/store";
 import sfx from "../../soundEffects";
 import useMissileCommandControls from "../../useMissileCommandControls";
 import getProjectile from "../../utilities/getProjectile";
+import incomingProjectileData from "../../gameData/incomingProjectiles.json";
 
 type Props = {
   projectileMeshes: Record<string, THREE.Mesh | THREE.Points>;
@@ -55,13 +57,13 @@ const useIncomingProjectiles = ({ projectileMeshes }: Props) => {
           }
           // don't move projectiles that have been intercepted
           if (projectile.status === "intercepted") {
-            // if (incomingProjectileMesh) {
-            //   console.log(incomingProjectileMesh);
-            // }
-            // const pos = incomingProjectileMesh.position;
-            // incomingProjectileMesh.scale.x += 0.01;
-            // incomingProjectileMesh.scale.y += 0.01;
-            //incomingProjectileMesh.position.set(pos.x, pos.y, pos.z);
+            dispatch(
+              incrementScore(
+                // @ts-ignore determine why it is saying score is not defined
+                incomingProjectileData[projectile.incomingType].score
+              )
+            );
+
             dispatch(removeIncomingProjectile(projectile.id));
             delete projectileMeshes[projectile.id];
             return;
@@ -83,7 +85,6 @@ const useIncomingProjectiles = ({ projectileMeshes }: Props) => {
             dispatch(addExplosion(incomingProjectileHit));
             dispatch(removeIncomingProjectile(projectile.id));
             delete projectileMeshes[projectile.id];
-            debugger;
             sfx.groundImpact.play();
 
             return;

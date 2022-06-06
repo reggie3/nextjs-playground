@@ -11,7 +11,7 @@ const initialState = {
 };
 
 export const interceptorsSlice = createSlice({
-  name: "counter",
+  name: "interceptors",
   initialState,
   reducers: {
     addInterceptor: (

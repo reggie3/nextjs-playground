@@ -1,1 +1,1 @@
-export { default as Particles } from "./Explosions";
+export { default as Explosions } from "./Explosions";

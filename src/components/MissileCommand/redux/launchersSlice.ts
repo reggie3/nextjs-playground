@@ -11,7 +11,7 @@ const initialState = {
 };
 
 export const launchersSlice = createSlice({
-  name: "counter",
+  name: "launchers",
   initialState,
   reducers: {
     addLauncher: (state: LaunchersState, action: PayloadAction<Launcher>) => {

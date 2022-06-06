@@ -25,7 +25,7 @@ const ExplosionPlanes = ({
   const colorRGB = new THREE.Color(color);
 
   const dispatch = useDispatch();
-  useFrame(({ clock }) => {
+  useFrame(({ size, clock }) => {
     if (!explosion) return;
 
     const currentTime = clock.getElapsedTime();
@@ -44,13 +44,14 @@ const ExplosionPlanes = ({
       if (explosion.isActive && particle.mesh.visible && particle.direction) {
         particle.mesh.position.addScaledVector(
           particle.direction,
-          speed + Math.random() * speed - Math.random() * speed
+          Math.random() * speed
         );
         const age = currentTime - explosionCreatedAtSeconds;
-        // particle.mesh.scale.x = (lifespan - age) / lifespan;
-        // particle.mesh.scale.y = (lifespan - age) / lifespan;
-        (particle.mesh.material as ShaderMaterial).uniforms.uAge.value =
-          currentTime - explosion.createdAtSeconds;
+        const { uniforms } = particle.mesh.material as ShaderMaterial;
+
+        uniforms.uAge.value = age;
+        uniforms.uResolution.value.x = size.width;
+        uniforms.uResolution.value.y = size.height;
       }
 
       if (
@@ -93,6 +94,14 @@ const ExplosionPlanes = ({
               key={ParticleExplosionMaterial.key}
               v3Color={[colorRGB.r, colorRGB.g, colorRGB.b]}
               uExplosionLifeSpan={lifespan}
+              transparent={true}
+              uRotationRandomSpeed={[
+                Math.random() * 2 - 1,
+                Math.random() * 2 - 1,
+                Math.random() * 2 - 1,
+              ]}
+              doubleSided={true}
+              side={THREE.DoubleSide}
             />
           </Plane>
         );

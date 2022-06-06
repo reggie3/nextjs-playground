@@ -16,6 +16,7 @@ import * as THREE from "three";
 import { ShaderMaterial } from "three";
 import { activateParticleExplosion } from "../../redux/particleExplosionsSlice";
 import sfx from "../../soundEffects";
+import { incrementScore } from "../../redux/gameDataSlice";
 
 type Props = {
   explosionMeshes: Record<string, THREE.Mesh>;
