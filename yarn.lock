@@ -1001,7 +1001,7 @@
   "resolved" "https://registry.npmjs.org/@types/scheduler/-/scheduler-0.16.2.tgz"
   "version" "0.16.2"
 
-"@types/three@^0.134.0", "@types/three@^0.140.0":
+"@types/three@^0.140.0":
   "integrity" "sha512-YPJLSIY6uKUOp1k6BZYDq5GtEIdhfeK04UCbc9IPAVbdn/RNjkfrbnyd7smrsNkJhc0IFASLpd3AAYgwqgXKVQ=="
   "resolved" "https://registry.npmjs.org/@types/three/-/three-0.140.0.tgz"
   "version" "0.140.0"
@@ -3298,11 +3298,6 @@
   dependencies:
     "yallist" "^4.0.0"
 
-"maath@^0.0.2":
-  "integrity" "sha512-GF8JisJYw45KUzdQXsr3jVfnNx6Ey/Ih1hro1Hd86wl2XlkTk38HMNm7ovuigBRSCPGaFA4ZMGlqRYTvMmo2Sg=="
-  "resolved" "https://registry.npmjs.org/maath/-/maath-0.0.2.tgz"
-  "version" "0.0.2"
-
 "make-iterator@^1.0.0":
   "integrity" "sha512-pxiuXh0iVEq7VM7KMIhs5gxsfxCux2URptUQaXo4iZZJxBAzTPOLE2BumO5dbfVYq/hBJFBR/a1mFDmOx5AGmw=="
   "resolved" "https://registry.npmjs.org/make-iterator/-/make-iterator-1.0.1.tgz"
@@ -4513,7 +4508,7 @@
     "potpack" "^1.0.1"
     "zstddec" "^0.0.2"
 
-"three@^0.134.0", "three@^0.140.2", "three@>= 0.107.0 < 0.140.0", "three@>= 0.123.0", "three@>=0.103.0", "three@>=0.122.0", "three@>=0.126", "three@>=0.133", "three@>=0.136.0", "three@>=0.137":
+"three@^0.140.2", "three@>= 0.107.0 < 0.140.0", "three@>= 0.123.0", "three@>=0.103.0", "three@>=0.122.0", "three@>=0.126", "three@>=0.133", "three@>=0.136.0", "three@>=0.137":
   "integrity" "sha512-DdT/AHm/TbZXEhQKQpGt5/iSgBrmXpjU26FNtj1KhllVPTKj1eG4X/ShyD5W2fngE+I1s1wa4ttC4C3oCJt7Ag=="
   "resolved" "https://registry.npmjs.org/three/-/three-0.140.2.tgz"
   "version" "0.140.2"

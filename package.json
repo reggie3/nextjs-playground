@@ -29,7 +29,6 @@
     "glslify-loader": "^2.0.0",
     "howler": "^2.2.3",
     "leva": "^0.9.27",
-    "maath": "^0.0.2",
     "next": "12.1.6",
     "next-redux-wrapper": "^7.0.5",
     "plop": "^3.1.0",
