@@ -26,7 +26,7 @@ const initialState = {
 };
 
 export const particleExplosionsSlice = createSlice({
-  name: "counter",
+  name: "particleExplosions",
   initialState,
   reducers: {
     activateParticleExplosion: (

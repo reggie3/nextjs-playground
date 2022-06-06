@@ -11,7 +11,7 @@ const initialState = {
 };
 
 export const explosionsSlice = createSlice({
-  name: "counter",
+  name: "explosions",
   initialState,
   reducers: {
     addExplosion: (

@@ -1,29 +1,16 @@
 import { Stars, useContextBridge } from "@react-three/drei";
 import { OrbitControls } from "@react-three/drei";
 import { OrthographicCamera } from "@react-three/drei";
-import { ThreeEvent } from "@react-three/fiber";
 import { Canvas } from "@react-three/fiber";
-import {
-  EffectComposer,
-  DepthOfField,
-  Bloom,
-  Noise,
-  Vignette,
-  Selection,
-} from "@react-three/postprocessing";
-import {
-  ForwardRefExoticComponent,
-  RefAttributes,
-  useEffect,
-  useRef,
-} from "react";
+import { useEffect, useRef } from "react";
 import { ReactReduxContext } from "react-redux";
 
 import { MissileCommandContent } from "./components/MissileCommandContent";
 import { GAME_FIELD_HEIGHT, GAME_FIELD_WIDTH } from "./missileCommandGlobals";
 import sfx from "./soundEffects";
 import useMissileCommandControls from "./useMissileCommandControls";
-import { Howl, Howler } from "howler";
+import { Howler } from "howler";
+import { useRouter } from "next/router";
 
 const MissileCommand = () => {
   const {
@@ -38,6 +25,8 @@ const MissileCommand = () => {
 
   const contentRef = useRef<MissileCommandContentHandle>(null);
   const cameraRef = useRef<THREE.Camera>();
+
+  const { pathname, isReady } = useRouter();
   // Need this to make Redux work inside the canvas
   const ReduxProvider = useContextBridge(ReactReduxContext);
 
@@ -48,14 +37,8 @@ const MissileCommand = () => {
     }
   };
 
-  useEffect(() => {
-    console.log((isMuted ? "Muted" : "Unmuted") + " sound effects");
-    Howler.mute(isMuted);
-    sfx.toggleMute(isMuted);
-  }, [isMuted]);
-
-  useEffect(() => {
-    if (!shouldUseOrbitControls && cameraRef.current) {
+  const resetCamera = () => {
+    if (cameraRef.current) {
       cameraRef.current.position.set(0, 5.5, 5);
       cameraRef.current.lookAt(0, 5.5, 5);
 
@@ -63,6 +46,24 @@ const MissileCommand = () => {
       cameraRef.current.zoom = 55;
       // @ts-ignore updateProjectionMatrix does not exist on OrthographicCamera
       cameraRef.current.updateProjectionMatrix();
+    }
+  };
+
+  useEffect(() => {
+    console.log((isMuted ? "Muted" : "Unmuted") + " sound effects");
+    Howler.mute(isMuted);
+    sfx.toggleMute(isMuted);
+  }, [isMuted]);
+
+  useEffect(() => {
+    if (pathname.indexOf("missile-command") !== -1 && isReady) {
+      resetCamera();
+    }
+  }, [pathname, isReady]);
+
+  useEffect(() => {
+    if (!shouldUseOrbitControls) {
+      resetCamera();
     }
   }, [shouldUseOrbitControls]);
 
@@ -82,20 +83,7 @@ const MissileCommand = () => {
           makeDefault
           zoom={cameraZoom}
         />
-        <Selection>
-          <MissileCommandContent ref={contentRef} />
-        </Selection>
-        {/* <EffectComposer> */}
-        {/* <DepthOfField
-            focusDistance={0}
-            focalLength={0.02}
-            bokehScale={2}
-            height={480}
-          /> */}
-        {/* <Bloom luminanceThreshold={0} luminanceSmoothing={0.9} height={300} /> */}
-        {/* <Noise opacity={0.5} /> */}
-        {/* <Vignette eskil={false} offset={0.1} darkness={1.1} /> */}
-        {/* </EffectComposer> */}
+        <MissileCommandContent ref={contentRef} />
       </ReduxProvider>
       {shouldUseOrbitControls && <OrbitControls />}
       <Stars

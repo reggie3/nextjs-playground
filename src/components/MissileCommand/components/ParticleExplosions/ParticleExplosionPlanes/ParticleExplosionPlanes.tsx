@@ -100,6 +100,14 @@ const ParticleExplosionPlanes = ({
               key={ParticleExplosionMaterial.key}
               v3Color={[colorRGB.r, colorRGB.g, colorRGB.b]}
               uExplosionLifeSpan={lifespan}
+              transparent={true}
+              uRotationRandomSpeed={[
+                Math.random() * 2 - 1,
+                Math.random() * 2 - 1,
+                Math.random() * 2 - 1,
+              ]}
+              doubleSided={true}
+              side={THREE.DoubleSide}
             />
           </Plane>
         );

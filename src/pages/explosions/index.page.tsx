@@ -1,14 +1,14 @@
 import React from "react";
 import { Provider } from "react-redux";
-import { Particles } from "../../components/ExplosionsDemo";
+import { Explosions } from "../../components/ExplosionsDemo";
 import { explosionsStore } from "../../components/ExplosionsDemo/redux/store";
 
-const ParticlesHome = () => {
+const ExplosionsHome = () => {
   return (
     <Provider store={explosionsStore}>
-      <Particles />
+      <Explosions />
     </Provider>
   );
 };
 
-export default ParticlesHome;
+export default ExplosionsHome;

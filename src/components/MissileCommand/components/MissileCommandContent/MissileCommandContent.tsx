@@ -11,6 +11,7 @@ import { McClickableBackground } from "../McClickableBackground";
 import { McFloor } from "./McFloor";
 import { Launchers } from "../Launchers";
 import { ParticleExplosions } from "../ParticleExplosions";
+import { McScore } from "../McScore";
 
 type MissileCommandContentProps = {};
 
@@ -51,7 +52,7 @@ const MissileCommandContent: React.ForwardRefRenderFunction<
       {/* <Stars ref={starsRef} /> */}
       <ambientLight intensity={1} />
       <pointLight position={[0, 2, -2]} />
-
+      <McScore />
       <Box
         visible={false}
         userData={{ name: "reference-block" }}
@@ -70,6 +71,7 @@ const MissileCommandContent: React.ForwardRefRenderFunction<
       <Launchers />
       <ParticleExplosions />
       <McFloor />
+
       {false && (
         <Plane
           name="debug-plane"

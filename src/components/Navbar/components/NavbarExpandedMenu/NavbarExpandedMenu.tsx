@@ -30,7 +30,7 @@ const links = [
     isDisabled: true,
   },
   { href: "/missile-command", label: "Missile Command" },
-  { href: "/particles", label: "Particles" },
+  { href: "/explosions", label: "Explosions" },
 ];
 
 const containerVariants: Variants = {
