@@ -10,6 +10,7 @@ import { GAME_FIELD_HEIGHT, GAME_FIELD_WIDTH } from "./missileCommandGlobals";
 import sfx from "./soundEffects";
 import useMissileCommandControls from "./useMissileCommandControls";
 import { Howler } from "howler";
+import { useRouter } from "next/router";
 
 const MissileCommand = () => {
   const {
@@ -24,6 +25,8 @@ const MissileCommand = () => {
 
   const contentRef = useRef<MissileCommandContentHandle>(null);
   const cameraRef = useRef<THREE.Camera>();
+
+  const { pathname, isReady } = useRouter();
   // Need this to make Redux work inside the canvas
   const ReduxProvider = useContextBridge(ReactReduxContext);
 
@@ -34,14 +37,8 @@ const MissileCommand = () => {
     }
   };
 
-  useEffect(() => {
-    console.log((isMuted ? "Muted" : "Unmuted") + " sound effects");
-    Howler.mute(isMuted);
-    sfx.toggleMute(isMuted);
-  }, [isMuted]);
-
-  useEffect(() => {
-    if (!shouldUseOrbitControls && cameraRef.current) {
+  const resetCamera = () => {
+    if (cameraRef.current) {
       cameraRef.current.position.set(0, 5.5, 5);
       cameraRef.current.lookAt(0, 5.5, 5);
 
@@ -49,6 +46,24 @@ const MissileCommand = () => {
       cameraRef.current.zoom = 55;
       // @ts-ignore updateProjectionMatrix does not exist on OrthographicCamera
       cameraRef.current.updateProjectionMatrix();
+    }
+  };
+
+  useEffect(() => {
+    console.log((isMuted ? "Muted" : "Unmuted") + " sound effects");
+    Howler.mute(isMuted);
+    sfx.toggleMute(isMuted);
+  }, [isMuted]);
+
+  useEffect(() => {
+    if (pathname.indexOf("missile-command") !== -1 && isReady) {
+      resetCamera();
+    }
+  }, [pathname, isReady]);
+
+  useEffect(() => {
+    if (!shouldUseOrbitControls) {
+      resetCamera();
     }
   }, [shouldUseOrbitControls]);
 
