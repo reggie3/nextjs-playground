@@ -63,23 +63,23 @@ const GlowingPointLight = ({
         castShadow
         userData={{ name: "glowing-point-light" }}
       >
-        <Dodecahedron args={[0.2, 10]} ref={glowRef}>
-          {/* @ts-ignore Property 'glowMaterial' does not exist on type 'JSX.IntrinsicElements'. */}
+        {/* <Dodecahedron args={[0.2, 10]} ref={glowRef}>
+          // {/* @ts-ignore Property 'glowMaterial' does not exist on type 'JSX.IntrinsicElements'. *
           <glowMaterial
             key={GlowMaterial.key}
             blending={THREE.AdditiveBlending}
             side={THREE.BackSide}
           />
-        </Dodecahedron>
-        <Dodecahedron args={[0.08, 10]} ref={ballRef}>
+        </Dodecahedron> */}
+        <Sphere args={[0.08, 20]} ref={ballRef}>
           {/* @ts-ignore Property 'bloomMaterial' does not exist on type 'JSX.IntrinsicElements'. */}
           {/* <bloomMaterial
             key={BloomMaterial.key}
             blending={THREE.AdditiveBlending}
             side={THREE.BackSide}
           /> */}
-          <meshStandardMaterial />
-        </Dodecahedron>
+          <meshStandardMaterial color={color} />
+        </Sphere>
       </pointLight>
     </group>
   );
