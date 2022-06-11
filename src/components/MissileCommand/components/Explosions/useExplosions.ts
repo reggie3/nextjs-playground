@@ -17,9 +17,10 @@ import { ShaderMaterial } from "three";
 import { activateParticleExplosion } from "../../redux/particleExplosionsSlice";
 import sfx from "../../soundEffects";
 import { incrementScore } from "../../redux/gameDataSlice";
+import { ExplosionMeshRefs } from "./Explosions";
 
 type Props = {
-  explosionMeshes: Record<string, THREE.Mesh>;
+  explosionMeshes: ExplosionMeshRefs;
 };
 
 const EXPLOSION_LIFE_SPAN_SECONDS = 2;
@@ -139,19 +140,27 @@ const useExplosions = ({ explosionMeshes }: Props) => {
         delete explosionMeshes[explosion.id];
         return;
       } else {
-        (explosionMeshes[explosion.id].material as THREE.Material).transparent =
-          true;
+        const { core, shell } = explosionMeshes[explosion.id];
+        (shell.material as THREE.Material).transparent = true;
+
         // scale the explosion based on the first half of a sin wave
         const scale = Math.sin(
           (currentTimeSeconds - explosion.time) / (explosionLifeSpan / Math.PI)
         );
-        explosionMeshes[explosion.id].scale.x = scale;
-        explosionMeshes[explosion.id].scale.y = scale;
-        explosionMeshes[explosion.id].scale.z = scale;
+        shell.scale.x = scale;
+        shell.scale.y = scale;
+        shell.scale.z = scale;
+        (shell.material as ShaderMaterial).uniforms.uAge.value =
+          currentTimeSeconds - explosion.time;
 
-        const material = explosionMeshes[explosion.id]
-          .material as ShaderMaterial;
-        material.uniforms.uAge.value = currentTimeSeconds - explosion.time;
+        if (core) {
+          (core.material as THREE.Material).transparent = true;
+          core.scale.x = scale;
+          core.scale.y = scale;
+          core.scale.z = scale;
+        }
+        // (core.material as ShaderMaterial).uniforms.uAge.value =
+        //   currentTimeSeconds - explosion.time;
 
         if (explosion.type === "interceptor") {
           destroyProjectiles(

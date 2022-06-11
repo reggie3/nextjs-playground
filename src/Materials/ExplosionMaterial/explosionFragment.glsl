@@ -5,9 +5,15 @@ uniform vec3 v3Color;
 uniform float uExplosionLifeSpan;
 
 void main() {
-  float colorintensity = (sin(((uAge / uExplosionLifeSpan) - (vertexUV[1] + .75)) * 25.));
-  float a = colorintensity * 0.25;
-  vec3 scaledColor = v3Color * (colorintensity + .5);
+  // float colorintensity = (sin(((uAge / uExplosionLifeSpan) - (vertexUV.y + .75)) * 25.));
+  float colorIntensity = 1.0;
+  float a = colorIntensity;
 
-  gl_FragColor = vec4(scaledColor, a);
+  float horizontalColorStrips = 1.0 - (sin(((1.0 - vertexUV.y) * uAge) / 0.03));
+  vec3 movingColor = v3Color * horizontalColorStrips;
+
+  vec3 scaledColor = v3Color * (colorIntensity + 0.7);
+  float alpha = step(0.5, horizontalColorStrips);
+
+  gl_FragColor = vec4(movingColor, alpha - 0.25);
 }

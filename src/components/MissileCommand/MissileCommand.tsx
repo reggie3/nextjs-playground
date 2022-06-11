@@ -22,7 +22,6 @@ const MissileCommand = () => {
   type MissileCommandContentHandle = React.ElementRef<
     typeof MissileCommandContent
   >;
-
   const contentRef = useRef<MissileCommandContentHandle>(null);
   const cameraRef = useRef<THREE.Camera>();
 
@@ -39,6 +38,7 @@ const MissileCommand = () => {
 
   const resetCamera = () => {
     if (cameraRef.current) {
+      console.log("in cmaera reset");
       cameraRef.current.position.set(0, 5.5, 5);
       cameraRef.current.lookAt(0, 5.5, 5);
 
@@ -57,7 +57,10 @@ const MissileCommand = () => {
 
   useEffect(() => {
     if (pathname.indexOf("missile-command") !== -1 && isReady) {
-      resetCamera();
+      console.log("resetting camera");
+      setTimeout(() => {
+        resetCamera();
+      }, 1000);
     }
   }, [pathname, isReady]);
 

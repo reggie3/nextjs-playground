@@ -77,7 +77,9 @@ const MissileCommandContent: React.ForwardRefRenderFunction<
           name="debug-plane"
           args={[GAME_FIELD_WIDTH, GAME_FIELD_WIDTH]}
           position={[0, 0, -50]}
-        />
+        >
+          <meshBasicMaterial color="hotpink" />
+        </Plane>
       )}
     </group>
   );

@@ -55,3 +55,10 @@ export interface ParticleExplosion {
   createdAtSeconds: number;
   isActive: boolean;
 }
+
+export interface City{
+  id: string:
+  position: [number, number, number];
+  createdAtSeconds: number;
+  health: number;
+}

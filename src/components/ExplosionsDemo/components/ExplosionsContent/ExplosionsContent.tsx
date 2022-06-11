@@ -1,10 +1,8 @@
 import { ThreeEvent, useThree } from "@react-three/fiber";
 import ParticlesClickableBackground from "../ExplosionsClickableBackground/ExplosionsClickableBackground";
-import { Box, OrbitControls, Sphere, Stars } from "@react-three/drei";
-import { useEffect, useState, useRef } from "react";
+import { Stars } from "@react-three/drei";
+import { useEffect, useRef } from "react";
 import useParticlesControls from "../../useExplosionsControls";
-import { ExplosionPlanes } from "../ExplosionPlanes";
-import { v4 as uuidV4 } from "uuid";
 import { Explosion } from "../../particleExplosionsTypes";
 import { activateExplosion } from "../../redux/explosionsSlice";
 import { useDispatch, useSelector } from "react-redux";
@@ -33,7 +31,6 @@ const ParticlesContent = () => {
   };
 
   const onClick = (event: ThreeEvent<MouseEvent>) => {
-    console.log(event.point.x, event.point.y);
     lastParticleTimeRef.current = clock.getElapsedTime();
     const newExplosion = getNewExplosion(event.point.x, event.point.y);
 

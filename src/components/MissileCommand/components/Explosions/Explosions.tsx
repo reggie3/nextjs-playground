@@ -10,13 +10,18 @@ import { MissileCommandRootState } from "../../redux/store";
 import useExplosions from "./useExplosions";
 import { InterceptorExplosionMaterial } from "../../../../Materials/InterceptorExplosionMaterial";
 
+export type ExplosionMeshRefs = Record<
+  string,
+  { shell: THREE.Mesh; core: THREE.Mesh }
+>;
+
 const Explosions = () => {
   const lightRef = useRef();
 
   const { explosions } = useSelector(
     (state: MissileCommandRootState) => state.explosionsState
   );
-  const explosionMeshRefs = useRef<Record<string, THREE.Mesh>>({});
+  const explosionMeshRefs = useRef<ExplosionMeshRefs>({});
 
   const { getExplosionColor, getExplosionRadius, getExplosionLifeSpan } =
     useExplosions({
@@ -50,6 +55,7 @@ const Explosions = () => {
         return (
           <group key={explosion.id}>
             <Sphere
+              name="explosion-shell"
               position={[
                 explosion.position[0],
                 explosion.type === "incoming" ? 0 : explosion.position[1],
@@ -58,7 +64,10 @@ const Explosions = () => {
               ref={(ref: THREE.Mesh) => {
                 if (ref) {
                   // ref.material.transparent = true;
-                  explosionMeshRefs.current[explosion.id] = ref;
+                  explosionMeshRefs.current[explosion.id] = {
+                    shell: ref,
+                    core: null,
+                  };
                 }
               }}
               args={[radius, 10]}
@@ -89,6 +98,35 @@ const Explosions = () => {
                 />
               )}
             </Sphere>
+            {explosion.type === "incoming" && (
+              <Sphere
+                name="explosion-core"
+                position={[
+                  explosion.position[0],
+                  explosion.type === "incoming" ? 0 : explosion.position[1],
+                  -3 * radius,
+                ]}
+                ref={(ref: THREE.Mesh) => {
+                  if (ref) {
+                    // ref.material.transparent = true;
+                    explosionMeshRefs.current[explosion.id].core = ref;
+                  }
+                }}
+                args={[radius * 0.95, 10]}
+              >
+                {/* @ts-ignore Property 'interceptorExplosionMaterial' does not exist on type 'JSX.IntrinsicElements'. */}
+                {/* <explosionMaterial
+                key={ExplosionMaterial.key}
+                v3Color={[1, 1, 1]}
+                uExplosionLifeSpan={explosionLifeSpan}
+              /> */}
+                <meshBasicMaterial
+                  transparent
+                  opacity={0.4}
+                  color={[1, 1, 0]}
+                />
+              </Sphere>
+            )}
             {explosion.type === "incoming" && (
               <pointLight
                 args={[threeColor, 1, 100]}
