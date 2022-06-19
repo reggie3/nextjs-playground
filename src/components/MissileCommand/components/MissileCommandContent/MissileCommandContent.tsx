@@ -1,6 +1,6 @@
 import { Box, Plane } from "@react-three/drei";
 import { useFrame, useThree } from "@react-three/fiber";
-import { forwardRef, useImperativeHandle, useRef } from "react";
+import { forwardRef, useEffect, useImperativeHandle, useRef } from "react";
 import { GAME_FIELD_WIDTH } from "../../missileCommandGlobals";
 import useMissileCommandControls from "../../useMissileCommandControls";
 import { Explosions } from "../Explosions";
@@ -12,6 +12,8 @@ import { McFloor } from "./McFloor";
 import { Launchers } from "../Launchers";
 import { ParticleExplosions } from "../ParticleExplosions";
 import { McScore } from "../McScore";
+import useCities from "../Cities/useCities";
+import { Cities } from "../Cities";
 
 type MissileCommandContentProps = {};
 
@@ -28,6 +30,7 @@ const MissileCommandContent: React.ForwardRefRenderFunction<
   const starsRef = useRef<THREE.Mesh>(null);
   const { camera, mouse, viewport, size } = useThree();
   const { aspect } = viewport;
+  const { createCities } = useCities();
 
   const { cameraPos, cameraZoom, setCameraControls } =
     useMissileCommandControls();
@@ -45,6 +48,13 @@ const MissileCommandContent: React.ForwardRefRenderFunction<
   useImperativeHandle(forwardedRef, () => ({
     onClickCanvas,
   }));
+
+  useEffect(() => {
+    createCities(3);
+    // only run once
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <group>
@@ -71,6 +81,7 @@ const MissileCommandContent: React.ForwardRefRenderFunction<
       <Launchers />
       <ParticleExplosions />
       <McFloor />
+      <Cities />
 
       {false && (
         <Plane

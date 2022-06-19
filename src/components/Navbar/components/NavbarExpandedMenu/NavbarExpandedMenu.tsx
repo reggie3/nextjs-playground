@@ -29,7 +29,7 @@ const links = [
     label: "Space Shooter",
     isDisabled: true,
   },
-  { href: "/missile-command", label: "Missile Command" },
+  { href: "/missile-command", label: "Missile Command  🚧" },
   { href: "/explosions", label: "Explosions" },
 ];
 
