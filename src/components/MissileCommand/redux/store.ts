@@ -6,9 +6,11 @@ import mcMouseIndicatorReducer from "./mcMouseIndicatorSlice";
 import launchersReducer from "./launchersSlice";
 import particleExplosionsSliceReducer from "./particleExplosionsSlice";
 import gameDataSliceReducer from "./gameDataSlice";
+import citiesReducer from "./citiesSlice";
 
 export const missileCommandStore = configureStore({
   reducer: {
+    citiesState: citiesReducer,
     explosionsState: explosionsReducer,
     incomingProjectilesState: incomingProjectilesReducer,
     interceptorsState: interceptorsReducer,

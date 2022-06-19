@@ -38,7 +38,6 @@ const MissileCommand = () => {
 
   const resetCamera = () => {
     if (cameraRef.current) {
-      console.log("in cmaera reset");
       cameraRef.current.position.set(0, 5.5, 5);
       cameraRef.current.lookAt(0, 5.5, 5);
 
