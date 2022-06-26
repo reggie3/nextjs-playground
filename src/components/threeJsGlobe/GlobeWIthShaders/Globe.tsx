@@ -9,6 +9,7 @@ import {
   EARTH_Y_TO_X_SCALE,
   UNIVERSAL_SCALE,
 } from "../globeConstants";
+import { NumVec3 } from "../../MissileCommand/mcTypes";
 
 type Props = {};
 
@@ -16,7 +17,7 @@ const INITIAL_EARTH_ARGS = [
   EARTH_RADIUS_KM_EQUATOR,
   20000 * UNIVERSAL_SCALE,
   20000 * UNIVERSAL_SCALE,
-] as [number, number, number];
+] as NumVec3;
 
 const Globe = (props: Props) => {
   const globeRef = useRef<Mesh>(null);

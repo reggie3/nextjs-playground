@@ -6,16 +6,16 @@ import { IncomingProjectileStatus } from "./redux/incomingProjectilesSlice";
 export type LauncherTypes = keyof typeof launcherData;
 export type InterceptorTypes = keyof typeof interceptorProjectileData;
 export type IncomingProjectileTypes = keyof typeof incomingProjectileData;
-
 export type ProjectileTypes = "incoming" | "interceptor";
+export type NumVec3 = [number, number, number];
 
 interface Projectile {
-  origin: [number, number, number];
-  direction: [number, number, number];
+  origin: NumVec3;
+  direction: NumVec3;
   speed: number;
   id: string;
   projectileType: ProjectileTypes;
-  position: [number, number, number];
+  position: NumVec3;
 }
 
 export interface IncomingProjectile extends Projectile {
@@ -25,40 +25,40 @@ export interface IncomingProjectile extends Projectile {
 
 export interface Interceptor extends Projectile {
   interceptorType: InterceptorTypes;
-  targetPosition: [number, number, number];
+  targetPosition: NumVec3;
 }
 
 export interface ProjectileImpact {
   id: string;
   type: IncomingProjectileTypes;
-  position: [number, number, number];
+  position: NumVec3;
 }
 
 export interface Explosion {
   id: string;
   type: ProjectileTypes;
   specificType: IncomingProjectileTypes | InterceptorTypes;
-  position: [number, number, number];
+  position: NumVec3;
   time: number;
 }
 
 export interface Launcher {
   id: string;
-  position: [number, number, number];
+  position: NumVec3;
   type: LauncherTypes;
   targetId?: string;
 }
 
 export interface ParticleExplosion {
   id: string;
-  position: [number, number, number];
+  position: NumVec3;
   createdAtSeconds: number;
   isActive: boolean;
 }
 
 export interface CityData {
   id: string;
-  position: [number, number, number];
+  position: NumVec3;
   createdAtSeconds: number;
   health: number;
   numBuildings: number;

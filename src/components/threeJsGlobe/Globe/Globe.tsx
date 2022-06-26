@@ -13,6 +13,7 @@ import LocationMarker, {
   LocationMarkerData,
 } from "../LocationMarker/LocationMarker";
 import LocationMarkers from "../LocationMarkers/LocationMarkers";
+import { NumVec3 } from "../../MissileCommand/mcTypes";
 
 type Props = {};
 
@@ -20,7 +21,7 @@ export const INITIAL_EARTH_ARGS = [
   EARTH_RADIUS_KM_EQUATOR,
   20000 * UNIVERSAL_SCALE,
   20000 * UNIVERSAL_SCALE,
-] as [number, number, number];
+] as NumVec3;
 
 const locations: LocationMarkerData[] = [
   { coords: [23.6345, -102.5528], name: "Mexico City" },

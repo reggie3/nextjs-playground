@@ -3,7 +3,7 @@ import { useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { v4 as uuidV4 } from "uuid";
 import { MissileCommandRootState } from "../../redux/store";
-import { Interceptor, Launcher } from "../../mcTypes";
+import { Interceptor, Launcher, NumVec3 } from "../../mcTypes";
 import { Vector3 } from "three";
 import launcherData from "../../gameData/launchers.json";
 import interceptorData from "../../gameData/interceptors.json";
@@ -81,7 +81,7 @@ const useLaunchers = () => {
               Z_INTERCEPTORS,
             ],
             speed: interceptorData.interceptor1.speed,
-            direction: normalizedDirectionArray as [number, number, number],
+            direction: normalizedDirectionArray as NumVec3,
             position: launcher.position,
           };
           dispatch(addInterceptor(newInterceptor));
