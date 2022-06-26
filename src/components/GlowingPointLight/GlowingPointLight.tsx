@@ -1,10 +1,8 @@
-import { Dodecahedron, Sphere } from "@react-three/drei";
+import { Sphere } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import { useRef } from "react";
 import * as THREE from "three";
-import { BloomMaterial } from "../../Materials/BloomMaterial";
-import { GlowMaterial } from "../../Materials/GlowMaterial";
-import { AtmosphereMaterial } from "../threeJsGlobe/Globe/AtmosphereMaterial";
+import { NumVec3 } from "../MissileCommand/mcTypes";
 import useGlowingPointLightControl from "./useGlowingPointLightControls";
 
 export interface GlowingPointLightProps {
@@ -12,7 +10,7 @@ export interface GlowingPointLightProps {
   intensity: number;
   distance: number;
   decay: number;
-  position: [number, number, number];
+  position: NumVec3;
   setRef: (ref: THREE.PointLight) => void;
 }
 const GlowingPointLight = ({

@@ -1,9 +1,10 @@
 import { Box, Sphere } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import React from "react";
+import { NumVec3 } from "../../MissileCommand/mcTypes";
 import { EARTH_RADIUS_KM_EQUATOR } from "../globeConstants";
 
-const SPHERE_SIZE = [0.5, 10, 10] as [number, number, number];
+const SPHERE_SIZE = [0.5, 10, 10] as NumVec3;
 const LIGHT_DISTANCE = EARTH_RADIUS_KM_EQUATOR + 20;
 
 const PointLightExample = () => {

@@ -4,7 +4,7 @@ import React, { useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import * as THREE from "three";
 import { v4 as uuidV4 } from "uuid";
-import { Interceptor, Launcher } from "../../mcTypes";
+import { Interceptor, Launcher, NumVec3 } from "../../mcTypes";
 import { addInterceptor } from "../../redux/interceptorsSlice";
 import interceptorData from "../../gameData/interceptors.json";
 import { MissileCommandRootState } from "../../redux/store";
@@ -41,13 +41,13 @@ const McClickableBackground = ({}: McClickableBackgroundProps) => {
 
     const newInterceptor: Interceptor = {
       id: uuidV4(),
-      targetPosition: event.point.toArray() as [number, number, number],
+      targetPosition: event.point.toArray() as NumVec3,
       projectileType: "interceptor",
-      origin: interceptorOrigin.toArray() as [number, number, number],
+      origin: interceptorOrigin.toArray() as NumVec3,
       speed: interceptorData.interceptor1.speed,
-      direction: normalizedDirectionArray as [number, number, number],
+      direction: normalizedDirectionArray as NumVec3,
       interceptorType: "interceptor1",
-      position: interceptorOrigin.toArray() as [number, number, number],
+      position: interceptorOrigin.toArray() as NumVec3,
     };
     dispatch(addInterceptor(newInterceptor));
   };

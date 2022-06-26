@@ -1,8 +1,8 @@
-import { Vector3 } from "three";
+import { NumVec3 } from "../MissileCommand/mcTypes";
 
 export interface Explosion {
   id: string;
-  position: [number, number, number];
+  position: NumVec3;
   createdAtSeconds: number;
   isActive: boolean;
 }

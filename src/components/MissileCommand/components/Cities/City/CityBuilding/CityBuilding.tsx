@@ -1,12 +1,13 @@
 import { Plane } from "@react-three/drei";
 import { useRef } from "react";
 import * as THREE from "three";
+import { NumVec3 } from "../../../../mcTypes";
 
 export interface CityBuildingProps {
-  position: [number, number, number];
+  position: NumVec3;
 }
 
-const BUILDING_MAX_HEIGHT = 0.55;
+export const BUILDING_MAX_HEIGHT = 0.55;
 const BUILDING_MAX_WIDTH = 0.35;
 const X_POS_JITTER = 0.5;
 
@@ -26,12 +27,6 @@ const CityBuilding = ({ position }: CityBuildingProps) => {
   const yPos = useRef(position[1] + buildingHeight.current / 2);
   const xPos = useRef(position[0] + Math.random() * X_POS_JITTER);
 
-  console.log(
-    "CityBuilding",
-    position,
-    buildingHeight.current,
-    buildingWidth.current
-  );
   return (
     <Plane
       args={[buildingWidth.current, buildingHeight.current, 2]}

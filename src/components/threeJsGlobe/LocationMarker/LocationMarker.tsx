@@ -6,6 +6,7 @@ import { Material, Mesh, PointLight, Vector3 } from "three";
 import { useFrame } from "@react-three/fiber";
 import styles from "./locationMarker.module.css";
 import { LocationMarkerLabel } from "../LocationMakerLabel";
+import { NumVec3 } from "../../MissileCommand/mcTypes";
 
 console.log(styles);
 export interface LocationMarkerData {
@@ -24,7 +25,7 @@ const getPositionFromLatLong = (latitude: number, longitude: number) => {
   const y = EARTH_RADIUS_KM_EQUATOR * Math.sin(latitude);
   const z = EARTH_RADIUS_KM_EQUATOR * Math.cos(latitude) * Math.cos(longitude);
 
-  return [x, y, z] as [number, number, number];
+  return [x, y, z] as NumVec3;
 };
 
 const MARKER_HEIGHT = 5;

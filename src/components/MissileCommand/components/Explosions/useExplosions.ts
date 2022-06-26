@@ -5,6 +5,7 @@ import {
   IncomingProjectileTypes,
   InterceptorTypes,
   Explosion,
+  NumVec3,
 } from "../../mcTypes";
 import { removeExplosion } from "../../redux/explosionsSlice";
 import interceptorData from "../../gameData/interceptors.json";
@@ -16,7 +17,6 @@ import * as THREE from "three";
 import { ShaderMaterial } from "three";
 import { activateParticleExplosion } from "../../redux/particleExplosionsSlice";
 import sfx from "../../soundEffects";
-import { incrementScore } from "../../redux/gameDataSlice";
 import { ExplosionMeshRefs } from "./Explosions";
 
 type Props = {
@@ -88,7 +88,7 @@ const useExplosions = ({ explosionMeshes }: Props) => {
   // destroy incoming projectiles in this projectiles blast radius
   const destroyProjectiles = (
     interceptorType: InterceptorTypes,
-    explosionPosition: [number, number, number],
+    explosionPosition: NumVec3,
     scale: number,
     timeSeconds: number
   ) => {
