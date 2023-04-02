@@ -4,7 +4,15 @@ import React, { ReactElement, useState } from "react";
 import KeyboardDoubleArrowDownIcon from "@mui/icons-material/KeyboardDoubleArrowDown";
 import { NavbarExpandedMenu } from "./components/NavbarExpandedMenu";
 import { motion } from "framer-motion";
-import { AnimatedHomeIcon } from "../AnimatedHomeIcon";
+
+import dynamic from "next/dynamic";
+
+const AnimatedHomeIcon = dynamic(
+  () => import("../AnimatedHomeIcon").then((mod) => mod.AnimatedHomeIcon),
+  {
+    ssr: false,
+  }
+);
 
 const MoreIcon = ({ isOpen }: { isOpen: boolean }) => {
   const theme = useTheme();
@@ -38,6 +46,7 @@ function NavBar(): ReactElement {
         zIndex: 100,
         position: "fixed",
       }}
+      data-testid="nav-bar"
     >
       <Box
         sx={{

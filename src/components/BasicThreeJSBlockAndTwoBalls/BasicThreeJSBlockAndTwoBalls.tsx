@@ -3,7 +3,7 @@ import { Canvas } from "@react-three/fiber";
 import { HomePageVisualizationContent } from "./components/HomePageVisualizationContent";
 import { OrbitControls } from "@react-three/drei";
 
-const HomePageVisualization = () => {
+const BasicThreeJSBlockAndTwoBalls = () => {
   return (
     <Canvas dpr={[1, 2]} camera={{ position: [0, 0, 6] }} shadows>
       <HomePageVisualizationContent />
@@ -12,4 +12,4 @@ const HomePageVisualization = () => {
   );
 };
 
-export default HomePageVisualization;
+export default BasicThreeJSBlockAndTwoBalls;

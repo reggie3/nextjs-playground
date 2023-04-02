@@ -1,7 +1,7 @@
 import Head from "next/head";
 import { ReactElement } from "react";
 import { Box } from "@mui/material";
-import { HomePageVisualization } from "../components/HomePageVisualization";
+import { BasicThreeJSBlockAndTwoBalls } from "../components/BasicThreeJSBlockAndTwoBalls";
 
 // async function init() {
 //   const rustModule = await import("../wasm/add.wasm");
@@ -41,7 +41,7 @@ function Home() {
           left: 0,
         }}
       >
-        <HomePageVisualization />
+        <BasicThreeJSBlockAndTwoBalls />
       </Box>
     </>
   );

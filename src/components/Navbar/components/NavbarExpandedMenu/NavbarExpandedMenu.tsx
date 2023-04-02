@@ -4,6 +4,10 @@ import { motion, AnimatePresence, Variants } from "framer-motion";
 
 const links = [
   {
+    href: "/flow-field-one",
+    label: "Flow Field",
+  },
+  {
     href: "/audio-visualizers",
     label: "Audio Viz",
   },
@@ -18,6 +22,10 @@ const links = [
   {
     href: "/chasing-blobs",
     label: "Chasing Blobs",
+  },
+  {
+    href: "/basic-three-js",
+    label: "Basic Three JS Example",
   },
   {
     href: "/trigger-example",
