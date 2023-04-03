@@ -1,7 +1,7 @@
-import { useRef } from "react";
-import { NUMBER_OF_PARTICLES } from "../FlowFieldOne";
+import { useCallback, useEffect, useRef } from "react";
 import { useParticle } from "../useParticle";
 import { Particle } from "../useParticle/useParticle";
+import { useFlowFieldOneControls } from "../useFlowFieldOneControls";
 
 interface InitParticlesArgs {
   canvasContext: CanvasRenderingContext2D;
@@ -9,30 +9,39 @@ interface InitParticlesArgs {
 }
 
 const useParticles = () => {
+  const { numberOfParticles } = useFlowFieldOneControls();
+
   const particlesRef = useRef<Particle[]>([]);
   const canvasContextRef = useRef<CanvasRenderingContext2D>();
   const canvasSizeRef = useRef<[number, number]>([0, 0]);
 
   const { initParticle, updateParticle } = useParticle();
 
-  const initParticles = ({ canvasContext, canvasSize }: InitParticlesArgs) => {
-    console.count("initializing particles");
-    canvasContextRef.current = canvasContext;
-    canvasSizeRef.current = canvasSize;
+  const initParticles = useCallback(
+    ({ canvasContext, canvasSize }: InitParticlesArgs) => {
+      particlesRef.current = [];
 
-    for (let i = 0; i < NUMBER_OF_PARTICLES; i++) {
-      particlesRef.current.push(initParticle(canvasSize));
-    }
-  };
+      canvasContextRef.current = canvasContext;
+      canvasSizeRef.current = canvasSize;
 
-  const updateParticles = () => {
+      for (let i = 0; i < numberOfParticles; i++) {
+        particlesRef.current.push(initParticle(canvasSize));
+      }
+    },
+    [initParticle, numberOfParticles]
+  );
+
+  useEffect(() => {
+    initParticles({
+      canvasContext: canvasContextRef.current,
+      canvasSize: canvasSizeRef.current,
+    });
+  }, [initParticles, numberOfParticles]);
+
+  const animate = () => {
     particlesRef.current.forEach((particle) => {
       updateParticle(canvasContextRef.current, particle);
     });
-  };
-
-  const animate = () => {
-    updateParticles();
   };
 
   return { animate, initParticles };

@@ -30,7 +30,7 @@
     "glsl-rotate": "^1.1.0",
     "glslify-loader": "^2.0.0",
     "howler": "^2.2.3",
-    "leva": "^0.9.27",
+    "leva": "^0.9.34",
     "next": "12.1.6",
     "next-redux-wrapper": "^7.0.5",
     "plop": "^3.1.0",

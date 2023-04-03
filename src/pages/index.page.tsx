@@ -2,6 +2,7 @@ import Head from "next/head";
 import { ReactElement } from "react";
 import { Box } from "@mui/material";
 import { BasicThreeJSBlockAndTwoBalls } from "../components/BasicThreeJSBlockAndTwoBalls";
+import { FlowFieldOne } from "../components/FlowFieldOne";
 
 // async function init() {
 //   const rustModule = await import("../wasm/add.wasm");
@@ -41,7 +42,7 @@ function Home() {
           left: 0,
         }}
       >
-        <BasicThreeJSBlockAndTwoBalls />
+        <FlowFieldOne />
       </Box>
     </>
   );
