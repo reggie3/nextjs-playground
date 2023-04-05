@@ -9,5 +9,8 @@
 
 .canvas {
   background: black;
+  height: 100dvh;
+  width: 100dvw;
   position: absolute;
+  padding: 20px;
 }

@@ -4,6 +4,7 @@ import styles from "./flowFieldOne.module.css";
 import { useFlowField } from "./useFlowField";
 import { FlowField } from "./useFlowField/useFlowField";
 import { useWindowSize } from "../../hooks/useWindowSize";
+import { useFlowFieldOneControls } from "./useFlowFieldOneControls";
 
 export const NUMBER_OF_PARTICLES = 100;
 
@@ -18,6 +19,8 @@ const FlowFieldOne = () => {
 
   const { animate: animateParticles, initParticles } = useParticles();
   const { animate: animateFlowField, initFlowField } = useFlowField();
+
+  const requestAnimationRef = useRef<number>(null);
 
   useEffect(() => {
     if (canvas && !isInitialized && windowSize) {
@@ -60,22 +63,27 @@ const FlowFieldOne = () => {
   }, [windowSize]);
 
   useEffect(() => {
-    let ref: number;
+    return () => {
+      console.log("-- stopping animation");
+      requestAnimationRef.current &&
+        cancelAnimationFrame(requestAnimationRef.current);
+      setIsAnimationStarted(false);
+    };
+  }, []);
 
+  useEffect(() => {
     const animate = (delta: number) => {
       eraseCanvas();
       animateFlowField();
       animateParticles();
-      ref = requestAnimationFrame(animate);
+      requestAnimationRef.current = requestAnimationFrame(animate);
     };
+
     if (isInitialized && !isAnimationStarted) {
-      ref = requestAnimationFrame(animate);
+      console.log("++ starting animation");
+      requestAnimationRef.current = requestAnimationFrame(animate);
       setIsAnimationStarted(true);
     }
-
-    return () => {
-      // cancelAnimationFrame(ref);
-    };
   }, [
     animateFlowField,
     animateParticles,
@@ -85,14 +93,12 @@ const FlowFieldOne = () => {
   ]);
 
   return (
-    <div data-testid="flow-field-one" className={styles.flowFieldOneContainer}>
-      <canvas
-        id="canvas"
-        data-testid="flow-field-one-canvas"
-        className={styles.canvas}
-        ref={setCanvas}
-      />
-    </div>
+    <canvas
+      id="canvas"
+      data-testid="flow-field-one-canvas"
+      className={styles.canvas}
+      ref={setCanvas}
+    />
   );
 };
 export default FlowFieldOne;

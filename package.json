@@ -25,6 +25,7 @@
     "@wasm-tool/wasm-pack-plugin": "^1.6.0",
     "@welldone-software/why-did-you-render": "^7.0.1",
     "clsx": "^1.1.1",
+    "color-convert": "^2.0.1",
     "framer-motion": "^6.3.4",
     "glsl-noise": "^0.0.0",
     "glsl-rotate": "^1.1.0",
@@ -44,6 +45,7 @@
     "uuid": "^8.3.2"
   },
   "devDependencies": {
+    "@types/color-convert": "^2.0.0",
     "@types/howler": "^2.2.7",
     "@types/node": "^17.0.31",
     "@types/react": "^18.0.9",

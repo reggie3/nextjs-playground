@@ -1,6 +1,9 @@
-import { useRef } from "react";
+import { useCallback, useRef } from "react";
 import { useFlowField } from "../useFlowField";
 import { useWindowSize } from "../../../hooks/useWindowSize";
+import { useFlowFieldOneControls } from "../useFlowFieldOneControls";
+
+import convert from "color-convert";
 
 export interface Particle {
   x: number;
@@ -12,12 +15,31 @@ export interface Particle {
   trailLength: number;
   angle: number;
   timer: number;
+  color: string;
 }
 
 const useParticle = () => {
   const { getCellProperties } = useFlowField();
   const particleRef = useRef<Particle>();
   const windowSize = useWindowSize();
+  const { centerColor, colorWidth } = useFlowFieldOneControls();
+  console.log({ centerColor });
+  const centerColorRef = useRef(centerColor);
+  const colorWidthRef = useRef(colorWidth);
+
+  const getColor = useCallback(() => {
+    // console.log({ centerColor });
+    centerColorRef.current = centerColor;
+    colorWidthRef.current = colorWidth;
+
+    const hslColor = convert.hex.hsl(centerColorRef.current);
+
+    return `hsl(${
+      hslColor[0] +
+      Math.random() * colorWidthRef.current -
+      colorWidthRef.current / 2
+    },100%,50%)`;
+  }, [centerColor, colorWidth]);
 
   const initParticle = (canvasSize: [number, number]) => {
     const trailLength = Math.floor(Math.random() * 200 + 10);
@@ -31,6 +53,7 @@ const useParticle = () => {
       trailLength,
       angle: 0,
       timer: trailLength * 2,
+      color: getColor(),
     };
 
     particleRef.current = particle;
@@ -46,6 +69,7 @@ const useParticle = () => {
     if (!angle) return;
 
     particle.timer = Math.max(0, particle.timer - 1);
+
     if (particle.timer >= 1) {
       particle.angle = angle;
 
@@ -64,9 +88,12 @@ const useParticle = () => {
       if (particle.positionHistory.length > particle.trailLength) {
         particle.positionHistory.shift();
       }
-    } else if (particle.positionHistory.length > 1) {
-      particle.positionHistory.shift();
-    } else {
+    }
+    //  else if (particle.positionHistory.length > 1) {
+    //   particle.positionHistory.shift();
+
+    // }
+    else {
       resetParticle(particle);
     }
 
@@ -88,7 +115,7 @@ const useParticle = () => {
       particle.positionHistory.forEach((historyItem) => {
         ctx.lineTo(historyItem[0], historyItem[1]);
       });
-
+      ctx.strokeStyle = particle.color;
       ctx.stroke();
     }
   };
@@ -97,6 +124,8 @@ const useParticle = () => {
     particle.x = Math.floor(Math.random() * windowSize[0]);
     particle.y = Math.floor(Math.random() * windowSize[1]);
     particle.positionHistory = [[particle.x, particle.y]];
+    particle.timer = particle.trailLength * 2;
+    particle.color = getColor();
   };
 
   return { initParticle, updateParticle };

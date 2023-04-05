@@ -3,7 +3,7 @@ import { useFlowFieldOneControls } from "../useFlowFieldOneControls";
 import { useWindowSize } from "../../../hooks/useWindowSize";
 
 interface InitFlowFieldArgs {
-  canvasContext: CanvasRenderingContext2D;
+  canvasContext?: CanvasRenderingContext2D;
 }
 
 export type FlowField = number[];
@@ -12,51 +12,54 @@ let flowField: FlowField = [];
 const useFlowField = () => {
   const canvasContextRef = useRef<CanvasRenderingContext2D>();
   const windowSize = useWindowSize();
-  const { curve, flowFieldCellSize, zoom } = useFlowFieldOneControls();
+  const { isDebug, curve, flowFieldCellSize, zoom } = useFlowFieldOneControls();
 
   const numColsRowsRef = useRef<{ cols: number; rows: number }>({
     cols: 0,
     rows: 0,
   });
 
-  const flowFieldCellSizeRef = useRef(10);
-
-  const setFlowFieldValues = useCallback(() => {
-    for (let y = 0; y < numColsRowsRef.current.rows; y++) {
-      for (let x = 0; x < numColsRowsRef.current.cols; x++) {
-        let angle = (Math.cos(x * zoom) + Math.sin(y * zoom)) * curve;
-        flowField.push(angle);
-      }
-    }
-  }, [curve, zoom]);
+  const flowFieldCellSizeRef = useRef(flowFieldCellSize);
+  const isDebugRef = useRef(isDebug);
+  const zoomRef = useRef(zoom);
+  const curveRef = useRef(curve);
 
   const initFlowField = useCallback(
     ({ canvasContext }: InitFlowFieldArgs) => {
-      if (!windowSize || !canvasContext) return null;
+      if (canvasContext) {
+        canvasContextRef.current = canvasContext;
+      }
+      if (!windowSize || !canvasContextRef.current) return null;
 
-      console.log({ curve });
-      console.log({ zoom });
       flowField = [];
 
-      canvasContextRef.current = canvasContext;
+      flowFieldCellSizeRef.current = flowFieldCellSize;
+      zoomRef.current = zoom;
+      curveRef.current = curve;
 
       numColsRowsRef.current = {
-        cols: Math.floor(windowSize[0] / flowFieldCellSize),
-        rows: Math.floor(windowSize[1] / flowFieldCellSize),
+        cols: Math.floor(windowSize[0] / flowFieldCellSizeRef.current),
+        rows: Math.floor(windowSize[1] / flowFieldCellSizeRef.current),
       };
 
-      setFlowFieldValues();
+      for (let y = 0; y < numColsRowsRef.current.rows; y++) {
+        for (let x = 0; x < numColsRowsRef.current.cols; x++) {
+          let angle =
+            (Math.cos(x * zoomRef.current) + Math.sin(y * zoomRef.current)) *
+            curveRef.current;
+          flowField.push(angle);
+        }
+      }
 
+      console.log({ flowField });
       return flowField;
     },
-    [curve, flowFieldCellSize, setFlowFieldValues, windowSize, zoom]
+    [curve, flowFieldCellSize, windowSize, zoom]
   );
 
   useEffect(() => {
-    initFlowField({
-      canvasContext: canvasContextRef.current,
-    });
-  }, [curve, initFlowField, zoom]);
+    initFlowField({});
+  }, [curve, flowFieldCellSize, initFlowField, windowSize, zoom]);
 
   useEffect(() => {
     if (windowSize) {
@@ -68,6 +71,10 @@ const useFlowField = () => {
       };
     }
   }, [flowFieldCellSize, windowSize]);
+
+  useEffect(() => {
+    isDebugRef.current = isDebug;
+  }, [isDebug]);
 
   const drawFlowField = () => {
     for (let c = 0; c < numColsRowsRef.current.cols; c++) {
@@ -87,7 +94,9 @@ const useFlowField = () => {
   };
 
   const animate = () => {
-    drawFlowField();
+    if (isDebugRef.current) {
+      drawFlowField();
+    }
   };
 
   const getCellProperties = (particlePos: [number, number]) => {
@@ -99,7 +108,7 @@ const useFlowField = () => {
     return { angle };
   };
 
-  return { animate, initFlowField, getCellProperties };
+  return { animate, getCellProperties, initFlowField };
 };
 
 export default useFlowField;
