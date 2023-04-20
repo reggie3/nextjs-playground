@@ -23,12 +23,11 @@ const useParticle = () => {
   const particleRef = useRef<Particle>();
   const windowSize = useWindowSize();
   const { centerColor, colorWidth } = useFlowFieldOneControls();
-  console.log({ centerColor });
+
   const centerColorRef = useRef(centerColor);
   const colorWidthRef = useRef(colorWidth);
 
-  const getColor = useCallback(() => {
-    // console.log({ centerColor });
+  const getColor = () => {
     centerColorRef.current = centerColor;
     colorWidthRef.current = colorWidth;
 
@@ -39,7 +38,7 @@ const useParticle = () => {
       Math.random() * colorWidthRef.current -
       colorWidthRef.current / 2
     },100%,50%)`;
-  }, [centerColor, colorWidth]);
+  };
 
   const initParticle = (canvasSize: [number, number]) => {
     const trailLength = Math.floor(Math.random() * 200 + 10);
@@ -88,12 +87,7 @@ const useParticle = () => {
       if (particle.positionHistory.length > particle.trailLength) {
         particle.positionHistory.shift();
       }
-    }
-    //  else if (particle.positionHistory.length > 1) {
-    //   particle.positionHistory.shift();
-
-    // }
-    else {
+    } else {
       resetParticle(particle);
     }
 
@@ -115,6 +109,7 @@ const useParticle = () => {
       particle.positionHistory.forEach((historyItem) => {
         ctx.lineTo(historyItem[0], historyItem[1]);
       });
+
       ctx.strokeStyle = particle.color;
       ctx.stroke();
     }
@@ -125,7 +120,6 @@ const useParticle = () => {
     particle.y = Math.floor(Math.random() * windowSize[1]);
     particle.positionHistory = [[particle.x, particle.y]];
     particle.timer = particle.trailLength * 2;
-    particle.color = getColor();
   };
 
   return { initParticle, updateParticle };
