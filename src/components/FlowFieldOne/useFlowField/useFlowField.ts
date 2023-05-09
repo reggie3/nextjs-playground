@@ -101,7 +101,7 @@ const useFlowField = () => {
 
   const getCellProperties = (particlePos: [number, number]) => {
     let x = Math.floor(particlePos[0] / flowFieldCellSize);
-    let y = Math.floor(particlePos[1] / flowFieldCellSize);
+    let y = Math.max(0, Math.floor(particlePos[1] / flowFieldCellSize));
     const index = y * numColsRowsRef.current.cols + x;
 
     const angle = flowField[index];

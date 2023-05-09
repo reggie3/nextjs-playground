@@ -1,4 +1,4 @@
-import { Box, TextField } from "@mui/material";
+import { Box, TextField, Typography } from "@mui/material";
 import useResizeObserver from "use-resize-observer";
 
 import React, { ChangeEvent, useEffect, useRef, useState } from "react";
@@ -9,6 +9,7 @@ import {
   PlaybackControls,
   PlaybackStatus,
 } from "../../components/audioVisualizers/PlaybackControls";
+import { InformationBox } from "../../components/InformationBox";
 
 type Props = {};
 
@@ -146,6 +147,12 @@ const AudioVisualizers = (props: Props) => {
           onClickControls={onClickControls}
         />
       </Box>
+      <InformationBox style={{ bottom: 70 }}>
+        <Typography>Basic Audio Visualizer</Typography>
+        <Typography variant="body2">
+          A basic audio visualizer that displays visuals on an HTML canvas
+        </Typography>
+      </InformationBox>
     </Box>
   );
 };

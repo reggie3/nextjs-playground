@@ -37,8 +37,8 @@ const links = [
     label: "Space Shooter",
     isDisabled: true,
   },
-  { href: "/missile-command", label: "Missile Command  🚧" },
-  { href: "/explosions", label: "Explosions" },
+  { href: "/missile-command", label: "Three JS Missile Command  🚧" },
+  { href: "/explosions", label: "Three JS Particle Demo" },
 ];
 
 const containerVariants: Variants = {

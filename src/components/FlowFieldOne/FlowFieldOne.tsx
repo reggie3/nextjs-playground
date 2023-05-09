@@ -2,12 +2,9 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { useParticles } from "./useParticles";
 import styles from "./flowFieldOne.module.css";
 import { useFlowField } from "./useFlowField";
-import { FlowField } from "./useFlowField/useFlowField";
 import { useWindowSize } from "../../hooks/useWindowSize";
-import { useFlowFieldOneControls } from "./useFlowFieldOneControls";
 import { InformationBox } from "../InformationBox";
 import Typography from "@mui/material/Typography";
-import Link from "next/link";
 import { CustomLink } from "../CustomLink";
 
 export const NUMBER_OF_PARTICLES = 100;
@@ -105,19 +102,17 @@ const FlowFieldOne = () => {
         ref={setCanvas}
       />
       <InformationBox>
-        <>
-          <Typography>Reactive Flow Field</Typography>
-          <Typography variant="body2">
-            Based on the&nbsp;
-            <CustomLink href="https://youtu.be/MJNy2mdCt20" color="secondary">
-              Flow Field Tutorials from Frank&apos;s Laboratory
-            </CustomLink>
-          </Typography>
-          <Typography variant="body1">
-            This version uses React to enable changing flow field parameters in
-            real time.
-          </Typography>
-        </>
+        <Typography>Reactive Flow Field</Typography>
+        <Typography variant="body2">
+          Based on the&nbsp;
+          <CustomLink href="https://youtu.be/MJNy2mdCt20" color="secondary">
+            Flow Field Tutorials by &quot;Frank&apos;s Laboratory&quot;
+          </CustomLink>
+        </Typography>
+        <Typography variant="body1">
+          This version uses React to enable changing flow field parameters in
+          real time.
+        </Typography>
       </InformationBox>
     </>
   );
